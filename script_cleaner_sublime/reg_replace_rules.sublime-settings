@@ -305,18 +305,6 @@
 			"find": "\\:23( |\\n)",
 			"name": "24fps_frame_to_milliseconds_23",
 			"replace": ",958\\1"
-		},
-		"spaces_to_zerowidth_spaces":
-		{
-			"find": " ",
-			"name": "spaces_to_zerowidth_spaces",
-			"replace": "​"
-		},
-		"firsthalf_8_to_0":
-		{
-			"find": "​(8)(.)",
-			"name": "firsthalf_8_to_0",
-			"replace": "​0\\1"
 		}
 	},
 	"results_in_panel": false,
