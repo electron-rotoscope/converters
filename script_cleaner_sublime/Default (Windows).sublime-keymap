@@ -1,0 +1,86 @@
+[
+    {
+        "keys": ["ctrl+shift+u"],
+        "command": "reopen", "args": {"encoding": "UTF-8" }
+    },
+    {
+        "keys": ["ctrl+shift+a"],
+        "caption": "Remove Zero Width Spaces",
+        "command": "reg_replace",
+        "args": {
+            "replacements": [
+                "remove_zero_width_spaces"
+            ]
+        }
+    },
+    {
+        "keys": ["ctrl+shift+x"],
+        "caption": "Capscript - Not messing with case before colons",
+        "command": "reg_replace",
+        "args": {
+            "replacements": [
+                "capscript00_fix_weird_dashes",
+                "capscript00_fix_long_dashes",
+                "capscript00_fix_weird_whitespace",
+                "capscript01_remove_trailing_spaces",
+                "capscript02_remove_leading_spaces",
+                "capscript03_remove_extra_linereturns",
+                "capscript03_remove_extra_spaces",
+                "capscript04_collapse_exclamations",
+                "capscript05_collapse_questionmarks",
+                "capscript06_replace_ellipses",
+                "capscript07_dumb_singlequotes",
+                "capscript08_dumbify_doublequotes",
+                "capscript09a_chevron",
+                "capscript09b_chevron",
+                "capscript10_eithercasecolor",
+                "capscript11_eithercasefavorite",
+                "capscript12_lowercase_squarebrackets",
+                "capscript14_colon_newline"
+            ]
+        }
+    },
+    {
+        "keys": ["ctrl+shift+c"],
+        "caption": "Capscript - Capitalizing before colons",
+        "command": "reg_replace",
+        "args": {
+            "replacements": [
+                "capscript00_fix_weird_dashes",
+                "capscript00_fix_long_dashes",
+                "capscript00_fix_weird_whitespace",
+                "capscript01_remove_trailing_spaces",
+                "capscript02_remove_leading_spaces",
+                "capscript03_remove_extra_linereturns",
+                "capscript03_remove_extra_spaces",
+                "capscript04_collapse_exclamations",
+                "capscript05_collapse_questionmarks",
+                "capscript06_replace_ellipses",
+                "capscript07_dumb_singlequotes",
+                "capscript08_dumbify_doublequotes",
+                "capscript09a_chevron",
+                "capscript09b_chevron",
+                "capscript10_eithercasecolor",
+                "capscript11_eithercasefavorite",
+                "capscript12_lowercase_squarebrackets",
+                "capscript14_colon_newline",
+                "capscript15_precolon_uppercase"
+            ]
+        }
+    },
+    {
+        "keys": ["ctrl+shift+v"],
+        "caption": "Capscript - Extras",
+        "command": "reg_replace",
+        "args": {
+            "replacements": [
+                "capscriptx1_remove_titles",
+                "capscriptx2a_bring_up_single_names",
+                "capscriptx2b_bring_up_double_names",
+                "capscriptx3_remove_vo_and_archive",
+                "capscriptx4_format_applause",
+                "capscriptx5_remove_timecodes"
+            ]
+        }
+    }
+]
