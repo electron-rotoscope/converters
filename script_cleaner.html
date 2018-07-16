@@ -248,6 +248,11 @@
 			color: rgb(68, 139, 196);
 			cursor: pointer;
 		}
+		
+		.buttonrow {
+			padding-top: 6px;
+			padding-bottom: -10px;
+		}
 
 		input {
 			display: inline-block;
@@ -272,6 +277,11 @@
 			box-shadow: 0 5px rgb(64, 64, 64);
 			transform: translateY(4px);
 		}
+		
+		.notes {
+			padding-top: 30px;
+			font-family: monospace;
+		}
 	</style>
 </head>
 <body>
@@ -285,7 +295,7 @@
 		</h3>
 		<textarea id="input" autofocus rows="16" placeholder="Paste here"></textarea>
 	</div>
-	<div align="center">
+	<div align="center" class="buttonrow">
 		<input type="button" value="Clean Input" onclick="cleanInput();" title="Clean text for captioning - Don't mess with case">
 	</div>
 	<div>
@@ -295,7 +305,7 @@
 		</h3>
 		<textarea id="output" rows="16" placeholder="Output"></textarea>			
 	</div>
-	<div align="center">
+	<div align="center" class="buttonrow">
 		<input type="button" value="Uppercase Speakers in Output" onclick="uppercaseSpeakersOutput();" title="Clean text for captioning make UPPERCASE before colons">
 		<input type="button" value="Extras on Output" onclick="extrasOutput();" title="Extra code that would normally be somewhat dangerous">
 		<input type="button" value="Double Lines on Output" onclick="doubleOutputLines();" title="Make all single line returns doubled">
