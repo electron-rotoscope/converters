@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!-- template from https://codebeautify.org -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Script Cleaner</title>
+	<script language="javascript" type="text/javascript">
+		function mainclean(str){
+			//weird dashes
+			str = str.replace(/\u058A|\u05BE|\u1806|\u2010|\u2011|\u2012|\u2015|\uFE63|\uFF0D/gm, "-");
+
+			//long dashes
+			str = str.replace(/\u2013|\u2014/gm, "-- ");
+			
+			//weird whitespace
+			str = str.replace(/\t|\u1680|\u2000|\u2001|\u2002|\u2003|\u2004|\u2005|\u2006|\u2007|\u2008|\u2009|\u200A|\u202F|\u205F|\u3000|\u180E|\u200B|\u200C|\u200D|\u2060|\uFEFF|\u00A0/gm, " ");
+			
+			//trailing spaces
+			str = str.replace(/[ ]+$/gm, "");
+			
+			//leading spaces
+			str = str.replace(/^[ ]+/gm, "");
+			
+			//extra spaces
+			str = str.replace(/[ ][ ]+/gm, " ");
+			
+			//collapse exclamations
+			str = str.replace(/!!+/gm, "!");
+			
+			//collapse question marks
+			str = str.replace(/\?\?+/gm, "?");
+			
+			//ellipses
+			str = str.replace(/\u2026/gm, "...");
+			
+			//dumbify singlequotes
+			str = str.replace(/\u2018|\u2019/gm, "\'");
+			
+			//dumbify doublequotes
+			str = str.replace(/\u201C|\u201D/gm, "\"");
+			
+			//chevrons to squares
+			str = str.replace(/</gm, "\[");
+			str = str.replace(/>/gm, "\]");
+			
+			//canadian spelling
+			str = str.replace(/(c|C)olor/gm, "$1olour");
+			str = str.replace(/(f|F)avorite/gm, "$1avourite");
+
+			//lowercase inside square brackets
+			str = str.replace(/\[(.*?)\]/gm,
+				function(wholematch, firstbracket) {
+					return "[" + firstbracket.toLowerCase() + "]";
+				});
+
+			//colon newlines become same line
+			str = str.replace(/\:\n/gm, "\: ");
+
+			return str;
+		}
+
+		function uppercasespeakers(str){
+
+			//uppercase anything 30 chars or fewer before a colon
+			str = str.replace(/^(.{1,30}?)\:/gm,
+				function(wholematch, firstbracket) {
+					return firstbracket.toUpperCase() + "\:";
+				});
+			return str;
+		}
+
+		function extrastuff(str){
+
+			// remove "Title" by itself and the next line
+			str = str.replace(/^Title\n.*/gm, "");
+
+			// Single words in allcaps all by themselves on a line treat as speakers
+			str = str.replace(/^([A-Z]{2,})\n/gm, "$1\: ");
+
+			// Two words in allcaps with / or + or & between them treat as speakers
+			str = str.replace(/^([A-Z]{2,})(\/| \/ |\+| \+ |\&| \& | )([A-Z]{1,})\n/gm, "$1$2$3\: ");
+
+			// remove VO and ARCHIVE at the end of speaker IDs
+			str = str.replace(/[ ](VO|V\/O|\(VO\)|\(V\/O\)|ARCHIVE|\(ARCHIVE\))\:/gm, "\:");
+
+			// reformat many variations of applause
+			str = str.replace(/\(Applause\)|\(Audience Applause\)|\((music|Music|MUSIC)\: Play (in|on|off)( |\+| \+ |\/| \/ )Applause\)/gm, "[applause]");
+
+			// remove timecodes
+			str = str.replace(/^\d+(\:|\;|\'|\-|\^)\d+(\:|\;|\'|\-|\^)?(\d+)?(\:|\;|\'|\-|\^)?(\d+)?([ |\t])?/gm, "");
+
+			return str;
+		}
+
+		function doublelines(str){
+
+			//double all line returns (should be used with extralines to remove all the giant ones this makes)
+			str = str.replace(/\n/gm, "\n\n");
+
+			return str;
+		}
+
+		function extralines(str){
+
+			//anywhere with more than two line returns, reduce to 2
+			str = str.replace(/\n\n+/gm, "\n\n");
+
+			return str;
+		}
+
+		function cleanInput () {
+
+			var str = document.getElementById("input").value;
+		
+			str = mainclean(str);
+		
+			str = extralines(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function uppercaseSpeakersOutput () {
+
+			var str = document.getElementById("output").value;
+		
+			str = uppercasespeakers(str);
+		
+			str = extralines(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function extrasOutput () {
+
+			var str = document.getElementById("output").value;
+		
+			str = extrastuff(str);
+		
+			str = extralines(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function doubleOutputLines () {
+
+			var str = document.getElementById("output").value;
+		
+			str = doublelines(str);
+		
+			str = extralines(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function getSample()
+		{
+			var str =
+			"Here are some weird dashes \u058A \u05BE \u1806 \u2010 \u2011 \u2012 \u2015 \uFE63 \uFF0D\n\n" +
+			"These are \u2013 different varieties of long dashes \u2014\n\n" +
+			"good\tlord\u1680you\u2000wouldn\'t\u2001believe\u2002the\u2003variety\u2004of\u2005separator\u2006characters\u2007in\u2008unicode\u2009also\u200Aknown\u202Fas\u205Fwhitespace\u3000characters\u180Ethere\'s\u200Bjust\u200Cso\u200Dvery\u2060many\uFEFFof\u00A0them\n\n" +
+			"This line has trailing spaces    \n\n" +
+			"    This line has leading spaces\n\n" +
+			"  This   line   has both trailing and leading      and extra spaces    \n\n" +
+			"Oh my god!!!!!! Extra exclamation and question marks aren't needed in captions?????\n\n" +
+			"\u2026The ellipsis character isn\'t good for captions either\n\n" +
+			"Neither are \u2018smart\u2019 single or \u201Cdouble\u201D quotes\n\n" +
+			"<CHEVRONS> should be squares and with lowercase contents, and color, Color, favorite, and Favorite should be spelled Canadian-ly\n\n" +
+			"Speaker One:\nThe words I speak should really be on the same line as my name\n\n" +
+			"Speaker Two: The plan is: don\'t make anything but my speaker ID in all uppercase\n\n" +
+			"Little did the two of them know: anything this long probably isn\'t a speaker ID\n\n" +
+			"EXTRA STUFF BELOW\n\n" +
+			"Title\n" +
+			"This is a title that should be removed\n\n" +
+			"BOB\n" +
+			"Welcome to the Great White North!\n\n" +
+			"BOB\/DOUG\n" +
+			"How\'s it goin eh?\n\n" +
+			"BOB \/  DOUG\n" +
+			"How\'s it goin eh?\n\n" +
+			"BOB\+DOUG\n" +
+			"How\'s it goin eh?\n\n" +
+			"BOB \+ DOUG\n" +
+			"How\'s it goin eh?\n\n" +
+			"BOB\&DOUG\n" +
+			"How\'s it goin eh?\n\n" +
+			"BOB \& DOUG\n" +
+			"How\'s it goin eh?\n\n" +
+			"JOHN GIELGUD VO: But soft, what light through yonder window breaks?\n\n" +
+			"JOHN GIELGUD V\/O: But soft, what light through yonder window breaks?\n\n" +
+			"JOHN GIELGUD (VO): But soft, what light through yonder window breaks?\n\n" +
+			"JOHN GIELGUD (V\/O): But soft, what light through yonder window breaks?\n\n" +
+			"JOHN GIELGUD ARCHIVE: But soft, what light through yonder window breaks?\n\n" +
+			"JOHN GIELGUD (ARCHIVE): But soft, what light through yonder window breaks?\n\n" +
+			"\(Applause\)\n" +
+			"\(Audience Applause\)\n" +
+			"\(music\: Play in Applause\)\n" +
+			"\(Music\: Play in\+Applause\)\n" +
+			"\(MUSIC\: Play in \+ Applause\)\n" +
+			"\(MUSIC\: Play in\/Applause\)\n" +
+			"\(MUSIC\: Play in \/ Applause\)\n" +
+			"\(MUSIC\: Play on Applause\)\n" +
+			"\(MUSIC\: Play off Applause\)\n" +
+			"00\:00\:00\:00	Line 1\n" +
+			"00\;00\;00\;00	Line 2\n" +
+			"00\:00\;00\;00	Line 3\n" +
+			"00\:00\:00\;00	Line 4\n" +
+			"00\:00\:00\;00	Line 5\n" +
+			"00\'00\'00\'00	Line 6\n" +
+			"00\-00\-00\-00	Line 7\n" +
+			"00\^00\^00\^00	Line 8\n\n" +
+			"00\:00\:00\:00 Line 1\n" +
+			"0\:00\:00\:00	Line 2\n" +
+			"00\:00\:00	Line 3\n" +
+			"0\:00\:00	Line 4\n"
+
+			document.getElementById('input').value = str;
+		}
+
+		function copyOutput () {
+			document.querySelector("#output").select();
+
+			document.execCommand('copy');
+		}
+	</script>
+	<style>
+		body {
+			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+		}
+
+		h1 {
+			color: rgb(64, 64, 64);
+		}
+
+		textarea {
+			font-family: monospace;
+			width: 100%;
+		}
+
+		.copypaster {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+			color: rgb(68, 139, 196);
+			cursor: pointer;
+		}
+
+		input {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: rgb(255, 255, 255);
+			background-color: rgb(128, 128, 128);
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px rgb(64, 64, 64);
+		}
+
+		input:hover, input:active {
+			background-color: rgb(96, 96, 96);
+		}
+
+		input:active {
+			box-shadow: 0 5px rgb(64, 64, 64);
+			transform: translateY(4px);
+		}
+	</style>
+</head>
+<body>
+	<h1>
+		Script Cleaner for Captioning
+	</h1>
+	<div>
+		<h3>
+			Input Text
+			<span class="copypaster" onclick="getSample()">get sample</span>
+		</h3>
+		<textarea id="input" autofocus rows="20" placeholder="Paste here"></textarea>
+	</div>
+	<div align="center">
+		<input type="button" value="Clean Input" onclick="cleanInput();" title="Clean text for captioning - Don't mess with case">
+	</div>
+	<div>
+		<h3>
+			Output Text
+			<span class="copypaster" onclick="copyOutput();">Copy Output</span>
+		</h3>
+		<textarea id="output" rows="20" placeholder="Output"></textarea>			
+	</div>
+	<div align="center">
+		<input type="button" value="Uppercase Speakers in Output" onclick="uppercaseSpeakersOutput();" title="Clean text for captioning make UPPERCASE before colons">
+		<input type="button" value="Extras on Output" onclick="extrasOutput();" title="Extra code that would normally be somewhat dangerous">
+		<input type="button" value="Double Lines on Output" onclick="doubleOutputLines();" title="Make all single line returns doubled">
+	</div>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<!-- template from https://codebeautify.org -->
+<!-- SCC documentation at http://www.theneitherworld.com/mcpoodle/SCC_TOOLS/DOCS/CC_CHARS.HTML -->
+<!-- SCC documentation at http://www.theneitherworld.com/mcpoodle/SCC_TOOLS/DOCS/CC_CODES.HTML -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>SCC Decoder</title>
+	<script language="javascript" type="text/javascript">
+		function separateintobytes(str){
+			str = str.replace(/Scenarist SCC V1\.0/g, "Decoded");
+			str = str.replace(/Scenarist_SCC V1\.0/g, "Decoded");
+			str = str.replace(/\t(..)(..)/g, "\t{{$1}}{{$2}}");
+			str = str.replace(/ (..)(..)/g, "_{{$1}}{{$2}}");
+			return str;
+		}
+		
+		function zerofirstparitybit(str){
+			str = str.replace(/\{\{8(.)\}\}/g, "{{0$1}}");
+			str = str.replace(/\{\{9(.)\}\}/g, "{{1$1}}");
+			str = str.replace(/\{\{a(.)\}\}/g, "{{2$1}}");
+			str = str.replace(/\{\{b(.)\}\}/g, "{{3$1}}");
+			str = str.replace(/\{\{c(.)\}\}/g, "{{4$1}}");
+			str = str.replace(/\{\{d(.)\}\}/g, "{{5$1}}");
+			str = str.replace(/\{\{e(.)\}\}/g, "{{6$1}}");
+			str = str.replace(/\{\{f(.)\}\}/g, "{{7$1}}");
+			return str;
+		}
+		
+		function turnbytesinto608commands(str){
+			str = str.replace(/\{\{11\}\}\{\{(..)\}\}/g, "{{11$1}}");
+			str = str.replace(/\{\{14\}\}\{\{(..)\}\}/g, "{{14$1}}");
+			str = str.replace(/\{\{17\}\}\{\{(..)\}\}/g, "{{17$1}}");
+			str = str.replace(/\{\{1420\}\}/g, "{Start Caption}");
+			str = str.replace(/\{\{142c\}\}/g, "{Clear Screen}");
+			str = str.replace(/\{\{142e\}\}/g, "{Clear Buffer}");
+			str = str.replace(/\{\{142f\}\}/g, "{End Caption}");
+			str = str.replace(/\{\{1150\}\}/g, "{Go To Row 00 Col 00}");
+			str = str.replace(/\{\{1152\}\}/g, "{Go To Row 00 Col 04}");
+			str = str.replace(/\{\{1154\}\}/g, "{Go To Row 00 Col 08}");
+			str = str.replace(/\{\{1156\}\}/g, "{Go To Row 00 Col 12}");
+			str = str.replace(/\{\{1158\}\}/g, "{Go To Row 00 Col 16}");
+			str = str.replace(/\{\{115a\}\}/g, "{Go To Row 00 Col 20}");
+			str = str.replace(/\{\{115c\}\}/g, "{Go To Row 00 Col 24}");
+			str = str.replace(/\{\{115e\}\}/g, "{Go To Row 00 Col 28}");
+			str = str.replace(/\{\{1170\}\}/g, "{Go To Row 02 Col 00}");
+			str = str.replace(/\{\{1172\}\}/g, "{Go To Row 02 Col 04}");
+			str = str.replace(/\{\{1174\}\}/g, "{Go To Row 02 Col 08}");
+			str = str.replace(/\{\{1176\}\}/g, "{Go To Row 02 Col 12}");
+			str = str.replace(/\{\{1178\}\}/g, "{Go To Row 02 Col 16}");
+			str = str.replace(/\{\{117a\}\}/g, "{Go To Row 02 Col 20}");
+			str = str.replace(/\{\{117c\}\}/g, "{Go To Row 02 Col 24}");
+			str = str.replace(/\{\{117e\}\}/g, "{Go To Row 02 Col 28}");
+			str = str.replace(/\{\{1450\}\}/g, "{Go To Row 14 Col 00}");
+			str = str.replace(/\{\{1452\}\}/g, "{Go To Row 14 Col 04}");
+			str = str.replace(/\{\{1454\}\}/g, "{Go To Row 14 Col 08}");
+			str = str.replace(/\{\{1456\}\}/g, "{Go To Row 14 Col 12}");
+			str = str.replace(/\{\{1458\}\}/g, "{Go To Row 14 Col 16}");
+			str = str.replace(/\{\{145a\}\}/g, "{Go To Row 14 Col 20}");
+			str = str.replace(/\{\{145c\}\}/g, "{Go To Row 14 Col 24}");
+			str = str.replace(/\{\{145e\}\}/g, "{Go To Row 14 Col 28}");
+			str = str.replace(/\{\{1470\}\}/g, "{Go To Row 15 Col 00}");
+			str = str.replace(/\{\{1472\}\}/g, "{Go To Row 15 Col 04}");
+			str = str.replace(/\{\{1474\}\}/g, "{Go To Row 15 Col 08}");
+			str = str.replace(/\{\{1476\}\}/g, "{Go To Row 15 Col 12}");
+			str = str.replace(/\{\{1478\}\}/g, "{Go To Row 15 Col 16}");
+			str = str.replace(/\{\{147a\}\}/g, "{Go To Row 15 Col 20}");
+			str = str.replace(/\{\{147c\}\}/g, "{Go To Row 15 Col 24}");
+			str = str.replace(/\{\{147e\}\}/g, "{Go To Row 15 Col 28}");
+			str = str.replace(/\{\{1721\}\}/g, "{Col +1}");
+			str = str.replace(/\{\{1722\}\}/g, "{Col +2}");
+			str = str.replace(/\{\{1723\}\}/g, "{Col +3}");
+			str = str.replace(/\{\{1130\}\}/g, "®");
+			str = str.replace(/\{\{1131\}\}/g, "°");
+			str = str.replace(/\{\{1132\}\}/g, "½");
+			str = str.replace(/\{\{1133\}\}/g, "¿");
+			str = str.replace(/\{\{1134\}\}/g, "™");
+			str = str.replace(/\{\{1135\}\}/g, "¢");
+			str = str.replace(/\{\{1136\}\}/g, "£");
+			str = str.replace(/\{\{1137\}\}/g, "\u266A");
+			str = str.replace(/\{\{1138\}\}/g, "à");
+			str = str.replace(/\{\{1139\}\}/g, "[non breaking space]");
+			str = str.replace(/\{\{113a\}\}/g, "è");
+			str = str.replace(/\{\{113b\}\}/g, "â");
+			str = str.replace(/\{\{113c\}\}/g, "ê");
+			str = str.replace(/\{\{113d\}\}/g, "î");
+			str = str.replace(/\{\{113e\}\}/g, "ô");
+			str = str.replace(/\{\{113f\}\}/g, "û");
+			str = str.replace(/\{\{00\}\}/g, "{null}");
+			str = str.replace(/\{\{20\}\}/g, " ");
+			str = str.replace(/\{\{21\}\}/g, "!");
+			str = str.replace(/\{\{22\}\}/g, "\"");
+			str = str.replace(/\{\{23\}\}/g, "#");
+			str = str.replace(/\{\{24\}\}/g, "\$");
+			str = str.replace(/\{\{25\}\}/g, "%");
+			str = str.replace(/\{\{26\}\}/g, "&");
+			str = str.replace(/\{\{27\}\}/g, "’");
+			str = str.replace(/\{\{28\}\}/g, "(");
+			str = str.replace(/\{\{29\}\}/g, ")");
+			str = str.replace(/\{\{2a\}\}/g, "á");
+			str = str.replace(/\{\{2b\}\}/g, "+");
+			str = str.replace(/\{\{2c\}\}/g, ",");
+			str = str.replace(/\{\{2d\}\}/g, "-");
+			str = str.replace(/\{\{2e\}\}/g, ".");
+			str = str.replace(/\{\{2f\}\}/g, "/");
+			str = str.replace(/\{\{30\}\}/g, "0");
+			str = str.replace(/\{\{31\}\}/g, "1");
+			str = str.replace(/\{\{32\}\}/g, "2");
+			str = str.replace(/\{\{33\}\}/g, "3");
+			str = str.replace(/\{\{34\}\}/g, "4");
+			str = str.replace(/\{\{35\}\}/g, "5");
+			str = str.replace(/\{\{36\}\}/g, "6");
+			str = str.replace(/\{\{37\}\}/g, "7");
+			str = str.replace(/\{\{38\}\}/g, "8");
+			str = str.replace(/\{\{39\}\}/g, "9");
+			str = str.replace(/\{\{3a\}\}/g, ":");
+			str = str.replace(/\{\{3b\}\}/g, ";");
+			str = str.replace(/\{\{3c\}\}/g, "<");
+			str = str.replace(/\{\{3d\}\}/g, "=");
+			str = str.replace(/\{\{3e\}\}/g, ">");
+			str = str.replace(/\{\{3f\}\}/g, "?");
+			str = str.replace(/\{\{40\}\}/g, "@");
+			str = str.replace(/\{\{41\}\}/g, "A");
+			str = str.replace(/\{\{42\}\}/g, "B");
+			str = str.replace(/\{\{43\}\}/g, "C");
+			str = str.replace(/\{\{44\}\}/g, "D");
+			str = str.replace(/\{\{45\}\}/g, "E");
+			str = str.replace(/\{\{46\}\}/g, "F");
+			str = str.replace(/\{\{47\}\}/g, "G");
+			str = str.replace(/\{\{48\}\}/g, "H");
+			str = str.replace(/\{\{49\}\}/g, "I");
+			str = str.replace(/\{\{4a\}\}/g, "J");
+			str = str.replace(/\{\{4b\}\}/g, "K");
+			str = str.replace(/\{\{4c\}\}/g, "L");
+			str = str.replace(/\{\{4d\}\}/g, "M");
+			str = str.replace(/\{\{4e\}\}/g, "N");
+			str = str.replace(/\{\{4f\}\}/g, "O");
+			str = str.replace(/\{\{50\}\}/g, "P");
+			str = str.replace(/\{\{51\}\}/g, "Q");
+			str = str.replace(/\{\{52\}\}/g, "R");
+			str = str.replace(/\{\{53\}\}/g, "S");
+			str = str.replace(/\{\{54\}\}/g, "T");
+			str = str.replace(/\{\{55\}\}/g, "U");
+			str = str.replace(/\{\{56\}\}/g, "V");
+			str = str.replace(/\{\{57\}\}/g, "W");
+			str = str.replace(/\{\{58\}\}/g, "X");
+			str = str.replace(/\{\{59\}\}/g, "Y");
+			str = str.replace(/\{\{5a\}\}/g, "Z");
+			str = str.replace(/\{\{5b\}\}/g, "[");
+			str = str.replace(/\{\{5c\}\}/g, "é");
+			str = str.replace(/\{\{5d\}\}/g, "]");
+			str = str.replace(/\{\{5e\}\}/g, "í");
+			str = str.replace(/\{\{5f\}\}/g, "ó");
+			str = str.replace(/\{\{60\}\}/g, "ú");
+			str = str.replace(/\{\{61\}\}/g, "a");
+			str = str.replace(/\{\{62\}\}/g, "b");
+			str = str.replace(/\{\{63\}\}/g, "c");
+			str = str.replace(/\{\{64\}\}/g, "d");
+			str = str.replace(/\{\{65\}\}/g, "e");
+			str = str.replace(/\{\{66\}\}/g, "f");
+			str = str.replace(/\{\{67\}\}/g, "g");
+			str = str.replace(/\{\{68\}\}/g, "h");
+			str = str.replace(/\{\{69\}\}/g, "i");
+			str = str.replace(/\{\{6a\}\}/g, "j");
+			str = str.replace(/\{\{6b\}\}/g, "k");
+			str = str.replace(/\{\{6c\}\}/g, "l");
+			str = str.replace(/\{\{6d\}\}/g, "m");
+			str = str.replace(/\{\{6e\}\}/g, "n");
+			str = str.replace(/\{\{6f\}\}/g, "o");
+			str = str.replace(/\{\{70\}\}/g, "p");
+			str = str.replace(/\{\{71\}\}/g, "q");
+			str = str.replace(/\{\{72\}\}/g, "r");
+			str = str.replace(/\{\{73\}\}/g, "s");
+			str = str.replace(/\{\{74\}\}/g, "t");
+			str = str.replace(/\{\{75\}\}/g, "u");
+			str = str.replace(/\{\{76\}\}/g, "v");
+			str = str.replace(/\{\{77\}\}/g, "w");
+			str = str.replace(/\{\{78\}\}/g, "x");
+			str = str.replace(/\{\{79\}\}/g, "y");
+			str = str.replace(/\{\{7a\}\}/g, "z");
+			str = str.replace(/\{\{7b\}\}/g, "ç");
+			str = str.replace(/\{\{7c\}\}/g, "÷");
+			str = str.replace(/\{\{7d\}\}/g, "Ñ");
+			str = str.replace(/\{\{7e\}\}/g, "ñ");
+			str = str.replace(/\{\{7f\}\}/g, "█");
+			return str;
+		}
+		
+		function removeunderscoresandnulls(str){
+			str = str.replace(/_/g, "");
+			str = str.replace(/\{null\}/g, "");
+			return str;
+		}
+		
+		function removecommands(str){
+			str = str.replace(/^(\d\d.\d\d.\d\d.\d\d)/gm, "Preload Starts at $1 -- ");
+			str = str.replace(/\t/g, "TAB");
+			str = str.replace(/\{Go To.*?\}/g, "\t");
+			str = str.replace(/\{Clear Screen}\}/g, "");
+			str = str.replace(/\{.*?\}/g, "");
+			str = str.replace(/TAB\t/g, "");
+			str = str.replace(/TAB\n/g, "\n");
+			return str;
+		}
+		
+		function removecurlysandunderscores(str){
+			str = str.replace(/\{/g, "");
+			str = str.replace(/\}/g, "");
+			str = str.replace(/_/g, " ");
+			return str;
+		}
+		
+		function deparity () {
+
+			var str = document.getElementById("input").value;
+		
+			str = separateintobytes(str);
+		
+			str = zerofirstparitybit(str);
+		
+			str = removecurlysandunderscores(str);
+		
+			document.getElementById('output').value = str;
+		}
+		
+		function decodeSCC () {
+
+			var str = document.getElementById("input").value;
+		
+			str = separateintobytes(str);
+		
+			str = zerofirstparitybit(str);
+		
+			str = turnbytesinto608commands(str);
+		
+			document.getElementById('output').value = str;
+		}
+		
+		function decodeSCCandclean () {
+
+			var str = document.getElementById("input").value;
+		
+			str = separateintobytes(str);
+		
+			str = zerofirstparitybit(str);
+		
+			str = turnbytesinto608commands(str);
+		
+			str = removeunderscoresandnulls(str);
+		
+			document.getElementById('output').value = str;
+		}
+		
+		
+		function decodeSCCandcleannocomms () {
+
+			var str = document.getElementById("input").value;
+		
+			str = separateintobytes(str);
+		
+			str = zerofirstparitybit(str);
+		
+			str = turnbytesinto608commands(str);
+		
+			str = removeunderscoresandnulls(str);
+		
+			str = removecommands(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function getSample()
+		{
+			var str = "Scenarist_SCC V1.0\n\n00:00:00;06\t9420 94ae 9454 5468 e973 20e9 7320 6120 7361 6d70 ece5 94f4 efe6 2061 ecec 20e3 6861 f261 e3f4 e5f2 7380 942f\n\n00:00:01;01\t9420 94ae 9452 97a2 f468 61f4 2061 f2e5 2070 ef73 73e9 62ec e520 e96e 94f2 97a2 6120 ceef f2f4 6820 c16d e5f2 e9e3 616e 20d3 4343 942f\n\n00:00:02;27\t942c\n\n00:00:03;20\t9420 94ae 9476 a120 a223 a425 26a7 942f\n\n00:00:04;20\t9420 94ae 9476 a829 2aab 2cad ae2f 942f\n\n00:00:05;20\t9420 94ae 9476 b031 32b3 34b5 b637 942f\n\n00:00:06;20\t9420 94ae 9476 38b9 ba3b bc3d 3ebf 942f\n\n00:00:07;27\t942c\n\n00:00:08;20\t9420 94ae 9476 40c1 c243 c445 46c7 942f\n\n00:00:09;20\t9420 94ae 9476 c849 4acb 4ccd ce4f 942f\n\n00:00:10;20\t9420 94ae 9476 d051 52d3 54d5 d657 942f\n\n00:00:11;20\t9420 94ae 9476 58d9 da5b dc5d 5edf 942f\n\n00:00:12;27\t942c\n\n00:00:13;20\t9420 94ae 9476 e061 62e3 64e5 e667 942f\n\n00:00:14;20\t9420 94ae 9476 68e9 ea6b ec6d 6eef 942f\n\n00:00:15;20\t9420 94ae 9476 70f1 f273 f475 76f7 942f\n\n00:00:16;20\t9420 94ae 9476 f879 7afb 7cfd fe7f 942f\n\n00:00:17;27\t942c\n\n00:00:18;19\t9420 94ae 9476 97a2 91b0 9131 9132 91b3 942f\n\n00:00:19;19\t9420 94ae 9476 97a2 9134 91b5 91b6 9137 942f\n\n00:00:20;18\t9420 94ae 9476 97a2 9138 91b9 91ba 913b 942f\n\n00:00:21;19\t9420 94ae 9476 97a2 91bc 913d 913e 91bf 942f\n\n00:00:22;27\t942c\n\n"
+
+			document.getElementById('input').value = str;
+		}
+
+		function copyOutput () {
+			document.querySelector("#output").select();
+
+			document.execCommand('copy');
+		}
+	</script>
+	<style>
+		body {
+			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+		}
+
+		h1 {
+			color: rgb(64, 64, 64);
+		}
+
+		textarea {
+			font-family: monospace;
+			width: 100%;
+		}
+
+		.copypaster {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+			color: rgb(68, 139, 196);
+			cursor: pointer;
+		}
+
+		input {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: rgb(255, 255, 255);
+			background-color: rgb(128, 128, 128);
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px rgb(64, 64, 64);
+		}
+
+		input:hover, input:active {
+			background-color: rgb(96, 96, 96);
+		}
+
+		input:active {
+			box-shadow: 0 5px rgb(64, 64, 64);
+			transform: translateY(4px);
+		}
+	</style>
+</head>
+<body>
+	<h1>
+		SCC Decoder
+	</h1>
+	<div>
+		<h3>
+			Input Text
+			<span class="copypaster" onclick="getSample()">get sample</span>
+		</h3>
+		<textarea id="input" autofocus rows="20" placeholder="Paste here"></textarea>
+	</div>
+	<div align="center">
+		<input type="button" value="Deparity" onclick="deparity();" title="Deparity byte values">
+		<input type="button" value="Decode" onclick="decodeSCC();" title="Decode SCC">
+		<input type="button" value="Decode Clean" onclick="decodeSCCandclean();" title="Decode SCC and remove underscores and nulls">
+		<input type="button" value="Decode Text Only" onclick="decodeSCCandcleannocomms();" title="Decode SCC and remove underscores and nulls and commands">
+	</div>
+	<div>
+		<h3>
+			Output Text
+			<span class="copypaster" onclick="copyOutput();">Copy Output</span>
+		</h3>
+		<textarea id="output" rows="20" placeholder="Output"></textarea>			
+	</div>
+</body>
+</html>
