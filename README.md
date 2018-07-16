@@ -8,6 +8,6 @@ human-readable for debugging and teaching
 [Script Cleaner](https://electron-rotoscope.github.io/converters/script_cleaner.html "Click here for live version")  
 This is a tool for prepping transcripts for captioning
 
-[timecalc](https://raw.githubusercontent.com/electron-rotoscope/converters/gh-pages/timecalc_py3_v1_4.py "Click here for something to copy from")  
+[timecalc](https://repl.it/@electron_rotosc/timecalcpy3v14 "Click here to run online")  
 This is a SMPTE timecode calculator that can perform a few functions that was written a few years ago
-It can either be run in a local copy of Python3 or online at a site like [this](https://repl.it/@electron_rotosc/EffectiveCleverSyndrome)
+It can either be run in a local copy of Python3  [download here](https://raw.githubusercontent.com/electron-rotoscope/converters/gh-pages/timecalc_py3_v1_4.py) or online at a site like repli.it linked above
