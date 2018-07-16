@@ -1,0 +1,110 @@
+[
+    {
+        "caption": "Remove Zero Width Spaces",
+        "command": "reg_replace",
+        "args": {
+            "replacements": [
+                "remove_zero_width_spaces"
+            ]
+        }
+    },
+    {
+        "caption": "Capscript - Not messing with case before colons",
+        "command": "reg_replace",
+        "args": {
+            "replacements": [
+                "capscript00_fix_weird_dashes",
+                "capscript00_fix_long_dashes",
+                "capscript00_fix_weird_whitespace",
+                "capscript01_remove_trailing_spaces",
+                "capscript02_remove_leading_spaces",
+                "capscript03_remove_extra_linereturns",
+                "capscript03_remove_extra_spaces",
+                "capscript04_collapse_exclamations",
+                "capscript05_collapse_questionmarks",
+                "capscript06_replace_ellipses",
+                "capscript07_dumb_singlequotes",
+                "capscript08_dumbify_doublequotes",
+                "capscript09a_chevron",
+                "capscript09b_chevron",
+                "capscript10_eithercasecolor",
+                "capscript11_eithercasefavorite",
+                "capscript12_lowercase_squarebrackets",
+                "capscript14_colon_newline"
+            ]
+        }
+    },
+        {
+        "caption": "Capscript - Capitalizing before colons",
+        "command": "reg_replace",
+        "args": {
+            "replacements": [
+                "capscript00_fix_weird_dashes",
+                "capscript00_fix_long_dashes",
+                "capscript00_fix_weird_whitespace",
+                "capscript01_remove_trailing_spaces",
+                "capscript02_remove_leading_spaces",
+                "capscript03_remove_extra_linereturns",
+                "capscript03_remove_extra_spaces",
+                "capscript04_collapse_exclamations",
+                "capscript05_collapse_questionmarks",
+                "capscript06_replace_ellipses",
+                "capscript07_dumb_singlequotes",
+                "capscript08_dumbify_doublequotes",
+                "capscript09a_chevron",
+                "capscript09b_chevron",
+                "capscript10_eithercasecolor",
+                "capscript11_eithercasefavorite",
+                "capscript12_lowercase_squarebrackets",
+                "capscript14_colon_newline",
+                "capscript15_precolon_uppercase"
+            ]
+        }
+    },
+        {
+        "caption": "Capscript - Extras",
+        "command": "reg_replace",
+        "args": {
+            "replacements": [
+                "capscriptx1_remove_titles",
+                "capscriptx2a_bring_up_single_names",
+                "capscriptx2b_bring_up_double_names",
+                "capscriptx3_remove_vo_and_archive",
+                "capscriptx4_format_applause",
+                "capscriptx5_remove_timecodes"
+            ]
+        }
+    },
+    {
+        "caption": "24fps to milliseconds",
+        "command": "reg_replace",
+        "args": {
+            "replacements": [
+                "24fps_frame_to_milliseconds_00",
+                "24fps_frame_to_milliseconds_01",
+                "24fps_frame_to_milliseconds_02",
+                "24fps_frame_to_milliseconds_03",
+                "24fps_frame_to_milliseconds_04",
+                "24fps_frame_to_milliseconds_05",
+                "24fps_frame_to_milliseconds_06",
+                "24fps_frame_to_milliseconds_07",
+                "24fps_frame_to_milliseconds_08",
+                "24fps_frame_to_milliseconds_09",
+                "24fps_frame_to_milliseconds_10",
+                "24fps_frame_to_milliseconds_11",
+                "24fps_frame_to_milliseconds_12",
+                "24fps_frame_to_milliseconds_13",
+                "24fps_frame_to_milliseconds_14",
+                "24fps_frame_to_milliseconds_15",
+                "24fps_frame_to_milliseconds_16",
+                "24fps_frame_to_milliseconds_17",
+                "24fps_frame_to_milliseconds_18",
+                "24fps_frame_to_milliseconds_19",
+                "24fps_frame_to_milliseconds_20",
+                "24fps_frame_to_milliseconds_21",
+                "24fps_frame_to_milliseconds_22",
+                "24fps_frame_to_milliseconds_23"
+            ]
+        }
+    }
+]
