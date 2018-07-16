@@ -308,6 +308,11 @@
 			color: rgb(68, 139, 196);
 			cursor: pointer;
 		}
+		
+		.buttonrow {
+			margin-top: 6px;
+			margin-bottom: -24px;
+		}
 
 		input {
 			display: inline-block;
@@ -332,6 +337,11 @@
 			box-shadow: 0 5px rgb(64, 64, 64);
 			transform: translateY(4px);
 		}
+		
+		.notes {
+			margin-top: 100px;
+			font-family: monospace;
+		}
 	</style>
 </head>
 <body>
@@ -345,7 +355,7 @@
 		</h3>
 		<textarea id="input" autofocus rows="20" placeholder="Paste here"></textarea>
 	</div>
-	<div align="center">
+	<div align="center" class="buttonrow">
 		<input type="button" value="Deparity" onclick="deparity();" title="Deparity byte values">
 		<input type="button" value="Decode" onclick="decodeSCC();" title="Decode SCC">
 		<input type="button" value="Decode Clean" onclick="decodeSCCandclean();" title="Decode SCC and remove underscores and nulls">
@@ -358,5 +368,11 @@
 		</h3>
 		<textarea id="output" rows="20" placeholder="Output"></textarea>			
 	</div>
+		<div class="notes">
+		Notes<br />
+		- Each button replaces what was in the Output box<br />
+		
+	</div>
+
 </body>
 </html>
