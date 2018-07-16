@@ -1,0 +1,325 @@
+{
+	"extended_back_references": true,
+	"find_highlight_color": "invalid",
+	"find_highlight_style": "outline",
+	"format": "3.0",
+	"multi_pass_max_sweeps": 100,
+	"replacements":
+	{
+		"remove_zero_width_spaces":
+		{
+			"find": "[​]+",
+			"name": "remove_zero_width_spaces",
+			"replace": ""
+		},
+		"capscript00_fix_weird_dashes":
+		{
+			"find": "[-֊־᠆‐‑‒―﹣－]",
+			"name": "capscript00_fix_weird_dashes",
+			"replace": "-"
+		},
+		"capscript00_fix_long_dashes":
+		{
+			"find": "[–—]",
+			"name": "capscript00_fix_long_dashes",
+			"replace": "-- "
+		},
+		"capscript00_fix_weird_whitespace":
+		{
+			"find": "[\t               　᠎​‌‍⁠﻿ ]",
+			"name": "capscript00_fix_weird_whitespace",
+			"replace": " "
+		},
+		"capscript01_remove_trailing_spaces":
+		{
+			"find": "[ ]+$",
+			"name": "capscript01_remove_trailing_spaces",
+			"replace": ""
+		},
+		"capscript02_remove_leading_spaces":
+		{
+			"find": "^[ ]+",
+			"name": "capscript02_remove_leading_spaces",
+			"replace": ""
+		},
+		"capscript03_remove_extra_linereturns":
+		{
+			"find": "\n\n+",
+			"name": "capscript03_remove_extra_linereturns",
+			"replace": "\n\n"
+		},
+		"capscript03_remove_extra_spaces":
+		{
+			"find": "[ ][ ]+",
+			"name": "capscript03_remove_extra_spaces",
+			"replace": " "
+		},
+		"capscript04_collapse_exclamations":
+		{
+			"find": "!!+",
+			"name": "capscript04_collapse_exclamations",
+			"replace": "!"
+		},
+		"capscript05_collapse_questionmarks":
+		{
+			"find": "\\?\\?+",
+			"name": "capscript05_collapse_questionmarks",
+			"replace": "?"
+		},
+		"capscript06_replace_ellipses":
+		{
+			"find": "…",
+			"name": "capscript06_replace_ellipses",
+			"replace": "..."
+		},
+		"capscript07_dumb_singlequotes":
+		{
+			"find": "‘|’",
+			"name": "capscript07_dumb_singlequotes",
+			"replace": "'"
+		},
+		"capscript08_dumbify_doublequotes":
+		{
+			"find": "“|”",
+			"name": "capscript08_dumbify_doublequotes",
+			"replace": "\""
+		},
+		"capscript09a_chevron":
+		{
+			"find": "<",
+			"name": "capscript09a_chevron",
+			"replace": "["
+		},
+		"capscript09b_chevron":
+		{
+			"find": ">",
+			"name": "capscript09b_chevron",
+			"replace": "]"
+		},
+		"capscript10_eithercasecolor":
+		{
+			"find": "(c|C)olor",
+			"name": "capscript10_eithercasecolor",
+			"replace": "\\1olour"
+		},
+		"capscript11_eithercasefavorite":
+		{
+			"find": "(f|F)avorite",
+			"name": "capscript11_eithercasefavorite",
+			"replace": "\\1avourite"
+		},
+		"capscript12_lowercase_squarebrackets":
+		{
+			"find": "\\[(.*)\\]",
+			"name": "capscript12_lowercase_squarebrackets",
+			"replace": "[\\L\\1]"
+		},
+		"capscript14_colon_newline":
+		{
+			"find": ":\n",
+			"name": "capscript14_colon_newline",
+			"replace": ": "
+		},
+		"capscript15_precolon_uppercase":
+		{
+			"find": "^(.{,30}?)\\:",
+			"name": "capscript15_precolon_uppercase",
+			"replace": "\\C\\1:"
+		},
+		"capscriptx1_remove_titles":
+		{
+			"find": "^Title\n.*",
+			"name": "capscriptx1_remove_titles",
+			"replace": ""
+		},
+		"capscriptx2a_bring_up_single_names":
+		{
+			"find": "^([A-Z]{2,})\n",
+			"name": "capscriptx2a_bring_single_names",
+			"replace": "\\1: "
+		},
+		"capscriptx2b_bring_up_double_names":
+		{
+			"find": "^([A-Z]{2,})(/| / |\\+| \\+ |\\&| \\& | )([A-Z]{1,})\n",
+			"name": "capscriptx2b_bring_up_double_names",
+			"replace": "\\1\\2\\3: "
+		},
+		"capscriptx3_remove_vo_and_archive":
+		{
+			"find": "[ ](VO|V/O|\\(VO\\)|\\(V/O\\)|ARCHIVE|\\(ARCHIVE\\))\\:",
+			"name": "capscriptx3_remove_vo_and_archive",
+			"replace": ":"
+		},
+		"capscriptx4_format_applause":
+		{
+			"find": "\\(Applause\\)|\\(Audience Applause\\)|\\((music|Music|MUSIC)\\: Play (in|on|off)( |\\+| \\+ |/| / )Applause\\)",
+			"name": "capscriptx4_format_applause",
+			"replace": "[applause]"
+		},
+		"capscriptx5_remove_timecodes":
+		{
+			"find": "^\\d+(\\:|\\;|\\'|\\-|\\^)\\d+(\\:|\\;|\\'|\\-|\\^)?(\\d+)?(\\:|\\;|\\'|\\-|\\^)?(\\d+)?([ |\t])?",
+			"name": "capscriptx5_remove_timecodes",
+			"replace": ""
+		},
+		"24fps_frame_to_milliseconds_00":
+		{
+			"find": "\\:00( |\\n)",
+			"name": "24fps_frame_to_milliseconds_00",
+			"replace": ",000\\1"
+		},
+		"24fps_frame_to_milliseconds_01":
+		{
+			"find": "\\:01( |\\n)",
+			"name": "24fps_frame_to_milliseconds_01",
+			"replace": ",042\\1"
+		},
+		"24fps_frame_to_milliseconds_02":
+		{
+			"find": "\\:02( |\\n)",
+			"name": "24fps_frame_to_milliseconds_02",
+			"replace": ",083\\1"
+		},
+		"24fps_frame_to_milliseconds_03":
+		{
+			"find": "\\:03( |\\n)",
+			"name": "24fps_frame_to_milliseconds_03",
+			"replace": ",125\\1"
+		},
+		"24fps_frame_to_milliseconds_04":
+		{
+			"find": "\\:04( |\\n)",
+			"name": "24fps_frame_to_milliseconds_04",
+			"replace": ",167\\1"
+		},
+		"24fps_frame_to_milliseconds_05":
+		{
+			"find": "\\:05( |\\n)",
+			"name": "24fps_frame_to_milliseconds_05",
+			"replace": ",208\\1"
+		},
+		"24fps_frame_to_milliseconds_06":
+		{
+			"find": "\\:06( |\\n)",
+			"name": "24fps_frame_to_milliseconds_06",
+			"replace": ",250\\1"
+		},
+		"24fps_frame_to_milliseconds_07":
+		{
+			"find": "\\:07( |\\n)",
+			"name": "24fps_frame_to_milliseconds_07",
+			"replace": ",292\\1"
+		},
+		"24fps_frame_to_milliseconds_08":
+		{
+			"find": "\\:08( |\\n)",
+			"name": "24fps_frame_to_milliseconds_08",
+			"replace": ",333\\1"
+		},
+		"24fps_frame_to_milliseconds_09":
+		{
+			"find": "\\:09( |\\n)",
+			"name": "24fps_frame_to_milliseconds_09",
+			"replace": ",375\\1"
+		},
+		"24fps_frame_to_milliseconds_10":
+		{
+			"find": "\\:10( |\\n)",
+			"name": "24fps_frame_to_milliseconds_10",
+			"replace": ",417\\1"
+		},
+		"24fps_frame_to_milliseconds_11":
+		{
+			"find": "\\:11( |\\n)",
+			"name": "24fps_frame_to_milliseconds_11",
+			"replace": ",458\\1"
+		},
+		"24fps_frame_to_milliseconds_12":
+		{
+			"find": "\\:12( |\\n)",
+			"name": "24fps_frame_to_milliseconds_12",
+			"replace": ",500\\1"
+		},
+		"24fps_frame_to_milliseconds_13":
+		{
+			"find": "\\:13( |\\n)",
+			"name": "24fps_frame_to_milliseconds_13",
+			"replace": ",542\\1"
+		},
+		"24fps_frame_to_milliseconds_14":
+		{
+			"find": "\\:14( |\\n)",
+			"name": "24fps_frame_to_milliseconds_14",
+			"replace": ",583\\1"
+		},
+		"24fps_frame_to_milliseconds_15":
+		{
+			"find": "\\:15( |\\n)",
+			"name": "24fps_frame_to_milliseconds_15",
+			"replace": ",625\\1"
+		},
+		"24fps_frame_to_milliseconds_16":
+		{
+			"find": "\\:16( |\\n)",
+			"name": "24fps_frame_to_milliseconds_16",
+			"replace": ",667\\1"
+		},
+		"24fps_frame_to_milliseconds_17":
+		{
+			"find": "\\:17( |\\n)",
+			"name": "24fps_frame_to_milliseconds_17",
+			"replace": ",708\\1"
+		},
+		"24fps_frame_to_milliseconds_18":
+		{
+			"find": "\\:18( |\\n)",
+			"name": "24fps_frame_to_milliseconds_18",
+			"replace": ",750\\1"
+		},
+		"24fps_frame_to_milliseconds_19":
+		{
+			"find": "\\:19( |\\n)",
+			"name": "24fps_frame_to_milliseconds_19",
+			"replace": ",792\\1"
+		},
+		"24fps_frame_to_milliseconds_20":
+		{
+			"find": "\\:20( |\\n)",
+			"name": "24fps_frame_to_milliseconds_20",
+			"replace": ",833\\1"
+		},
+		"24fps_frame_to_milliseconds_21":
+		{
+			"find": "\\:21( |\\n)",
+			"name": "24fps_frame_to_milliseconds_21",
+			"replace": ",875\\1"
+		},
+		"24fps_frame_to_milliseconds_22":
+		{
+			"find": "\\:22( |\\n)",
+			"name": "24fps_frame_to_milliseconds_22",
+			"replace": ",917\\1"
+		},
+		"24fps_frame_to_milliseconds_23":
+		{
+			"find": "\\:23( |\\n)",
+			"name": "24fps_frame_to_milliseconds_23",
+			"replace": ",958\\1"
+		},
+		"spaces_to_zerowidth_spaces":
+		{
+			"find": " ",
+			"name": "spaces_to_zerowidth_spaces",
+			"replace": "​"
+		},
+		"firsthalf_8_to_0":
+		{
+			"find": "​(8)(.)",
+			"name": "firsthalf_8_to_0",
+			"replace": "​0\\1"
+		}
+	},
+	"results_in_panel": false,
+	"selection_only": false,
+	"use_regex_module": true
+}
