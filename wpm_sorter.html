@@ -1,0 +1,175 @@
+<!-- template from https://codebeautify.org which is really quite amazing -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="https://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="robots" content="noindex,nofollow">
+	<meta name="google" content="notranslate">
+	<link rel="shortcut icon" href="https://electron-rotoscope.github.io/converters/favicon.ico" type="image/ico" />
+	<title>WPM Sorter</title>
+	<script language="javascript" type="text/javascript">
+		function sortBySecondColumn(a, b) {
+			x = a.toString().split('\t').slice(1).join('\t');
+			y = b.toString().split('\t').slice(1).join('\t');
+			xvar = parseInt(x)
+			yvar = parseInt(y)
+			if (xvar < yvar) return 1;
+			if (xvar > yvar) return -1;
+			return 0;
+		}
+
+		function sortLinesBySecondColumn(str) {
+			str = str.replace(/\r/g, '');
+			str = str.split('\n').sort(sortBySecondColumn).join('\n');
+			return str;
+		}
+
+		function expandNumbers(str){
+			//expand single digits
+			str = str.replace(/^(\d\d(\:|\;)\d\d(\:|\;)\d\d(\:|\;)\d\d)\t(\d)\t/gm, "$1\tWPM\: 000$5\t");
+
+			//expand double digits
+			str = str.replace(/^(\d\d(\:|\;)\d\d(\:|\;)\d\d(\:|\;)\d\d)\t(\d\d)\t/gm, "$1\tWPM\: 00$5\t");
+
+			//expand triple digits
+			str = str.replace(/^(\d\d(\:|\;)\d\d(\:|\;)\d\d(\:|\;)\d\d)\t(\d\d\d)\t/gm, "$1\tWPM\: 0$5\t");
+
+			//expand quadruple digits
+			str = str.replace(/^(\d\d(\:|\;)\d\d(\:|\;)\d\d(\:|\;)\d\d)\t(\d\d\d\d)\t/gm, "$1\tWPM\: $5\t");
+
+			return str;
+		}
+
+		function reorderWPMandTimecode(str){
+			//expand single digits
+			str = str.replace(/^(\d\d(\:|\;)\d\d(\:|\;)\d\d(\:|\;)\d\d)\t(WPM\: \d\d\d\d)\t/gm, "$5\t$1\t");
+
+			return str;
+		}
+
+		function sortInOrderOfWPM () {
+
+			var str = document.getElementById("input").value;
+		
+			str = sortLinesBySecondColumn(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function expandAndReorder () {
+
+			var str = document.getElementById("input").value;
+		
+			str = expandNumbers(str);
+		
+			str = reorderWPMandTimecode(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function getSample () {
+			var str =
+			"01:00:01:06\t1\tFRANK: Tonight on the show\n" +
+			"01:00:03:05\t15\tBOB: Wow!\tDOUG: Cripes!\n" +
+			"01:00:08:05\t1100\tBOB: We don't know what to say\n" +
+			"01:00:08:07\t0\t\n" +
+			"01:00:09:09\t200\tFRANK: I know it's incredible!\n" +
+			"01:00:10:23\t0\t\n"
+
+			document.getElementById('input').value = str;
+		}
+
+		function copyOutput () {
+			document.querySelector("#output").select();
+
+			document.execCommand('copy');
+		}
+	</script>
+	<style>
+		body {
+			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+		}
+
+		h1 {
+			color: rgb(64, 64, 64);
+		}
+
+		textarea {
+			font-family: monospace;
+			width: 100%;
+		}
+
+		.copypaster {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+			color: rgb(68, 139, 196);
+			cursor: pointer;
+		}
+		
+		.buttonrow {
+			margin-top: 6px;
+			margin-bottom: -24px;
+		}
+
+		input {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: rgb(255, 255, 255);
+			background-color: rgb(128, 128, 128);
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px rgb(64, 64, 64);
+		}
+
+		input:hover, input:active {
+			background-color: rgb(96, 96, 96);
+		}
+
+		input:active {
+			box-shadow: 0 5px rgb(64, 64, 64);
+			transform: translateY(4px);
+		}
+		
+		.notes {
+			margin-top: 100px;
+			font-family: monospace;
+		}
+	</style>
+</head>
+<body>
+	<h1>
+		WPM Sorter to see max WPM
+	</h1>
+	<div>
+		<h3>
+			Input Text
+			<span class="copypaster" onclick="getSample()">get sample</span>
+		</h3>
+		<textarea id="input" autofocus rows="16" placeholder="Paste here"></textarea>
+	</div>
+	<div align="center" class="buttonrow">
+		<input type="button" value="Sort In Order of WPM" onclick="sortInOrderOfWPM();" title="Reorder each line to put WPM first and put highest WPM first">
+		<input type="button" value="Just Put WPM First" onclick="expandAndReorder();" title="Reorder each line to put WPM first">
+	</div>
+	<div>
+		<h3>
+			Output Text
+			<span class="copypaster" onclick="copyOutput();">Copy Output</span>
+		</h3>
+		<textarea id="output" rows="16" placeholder="Output"></textarea>			
+	</div>
+	<div class="notes">
+		Notes<br />
+		- Coloured sections of a doc can be found with Ctrl-H > Format in libreoffice, and the pallete is located at libreoffice\share\palette\standard.soc if you need to add a custom colour<br />
+		
+	</div>
+</body>
+</html>
