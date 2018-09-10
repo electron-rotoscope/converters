@@ -92,7 +92,7 @@
 			str = str.replace(/\(Applause\)|\(Audience Applause\)|\((music|Music|MUSIC)\: Play (in|on|off)( |\+| \+ |\/| \/ )Applause\)/gm, "[applause]");
 
 			// remove timecodes
-			str = str.replace(/^\d+(\:|\;|\'|\-|\^)\d+(\:|\;|\'|\-|\^)?(\d+)?(\:|\;|\'|\-|\^)?(\d+)?([ |\t])?/gm, "");
+			str = str.replace(/^(\[+)?\d+(\:|\;|\'|\-|\^)\d+(\:|\;|\'|\-|\^)?(\d+)?(\:|\;|\'|\-|\^)?(\d+)?(\]+)?([ |\t])?/gm, "");
 
 			return str;
 		}
@@ -215,7 +215,9 @@
 			"00\:00\:00\:00 Line 1\n" +
 			"0\:00\:00\:00	Line 2\n" +
 			"00\:00\:00	Line 3\n" +
-			"0\:00\:00	Line 4\n"
+			"0\:00\:00	Line 4\n" +
+			"\[00\:00\:00\]	Line 5\n" +
+			"\[0\:00\:00\]	Line 6\n"
 
 			document.getElementById('input').value = str;
 		}
