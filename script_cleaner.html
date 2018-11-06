@@ -39,10 +39,10 @@
 			str = str.replace(/\u2026/gm, "...");
 			
 			//dumbify singlequotes
-			str = str.replace(/\u2018|\u2019/gm, "\'");
+			str = str.replace(/\u02B9|\u02BB|\u02BC|\u02BD|\u2018|\u2019/gm, "\'");
 			
 			//dumbify doublequotes
-			str = str.replace(/\u201C|\u201D/gm, "\"");
+			str = str.replace(/\u02BA|\u201C|\u201D/gm, "\"");
 			
 			//chevrons to squares
 			str = str.replace(/</gm, "\[");
@@ -168,6 +168,7 @@
 			"Oh my god!!!!!! Extra exclamation and question marks aren't needed in captions?????\n\n" +
 			"\u2026The ellipsis character isn\'t good for captions either\n\n" +
 			"Neither are \u2018smart\u2019 single or \u201Cdouble\u201D quotes\n\n" +
+			"People\u02B9s word processor\u02BBs decisions can seem \u02BCodd\u02BD to \u02BAus\u02BA" +
 			"<CHEVRONS> should be squares and with lowercase contents, and color, Color, favorite, and Favorite should be spelled Canadian-ly\n\n" +
 			"Speaker One:\nThe words I speak should really be on the same line as my name\n\n" +
 			"Speaker Two: The plan is: don\'t make anything but my speaker ID in all uppercase\n\n" +
