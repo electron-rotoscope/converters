@@ -29,6 +29,9 @@
 			//extra spaces
 			str = str.replace(/[ ][ ]+/gm, " ");
 			
+			//collapse mixed marks
+			str = str.replace(/\?!|!\?/gm, " ");
+			
 			//collapse exclamations
 			str = str.replace(/!!+/gm, "!");
 			
@@ -165,7 +168,7 @@
 			"This line has trailing spaces    \n\n" +
 			"    This line has leading spaces\n\n" +
 			"  This   line   has both trailing and leading      and extra spaces    \n\n" +
-			"Oh my god!!!!!! Extra exclamation and question marks aren't needed in captions?????\n\n" +
+			"Oh my god!!!!!! Extra exclamation and question marks aren't needed in captions????? WTF?! Why not!?\n\n" +
 			"\u2026The ellipsis character isn\'t good for captions either\n\n" +
 			"Neither are \u2018smart\u2019 single or \u201Cdouble\u201D quotes\n\n" +
 			"People\u02B9s word processor\u02BDs \u02BAdecisions\u02BA for what to use as quotes can seem \u02BBodd\u02BC to us\n\n" +
