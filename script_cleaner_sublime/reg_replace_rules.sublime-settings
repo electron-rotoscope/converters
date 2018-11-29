@@ -134,13 +134,13 @@
 		},
 		"capscriptx2a_bring_up_single_names":
 		{
-			"find": "^([A-Z]{2,})\n",
+			"find": "^([A-ZßÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖØÙÚÛÜ]{2,})\n",
 			"name": "capscriptx2a_bring_single_names",
 			"replace": "\\1: "
 		},
 		"capscriptx2b_bring_up_double_names":
 		{
-			"find": "^([A-Z]{2,})(/| / |\\+| \\+ |\\&| \\& | )([A-Z]{1,})\n",
+			"find": "^([A-ZßÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖØÙÚÛÜ]{2,})(/| / |\\+| \\+ |\\&| \\& | )([A-ZßÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖØÙÚÛÜ]{1,})\n",
 			"name": "capscriptx2b_bring_up_double_names",
 			"replace": "\\1\\2\\3: "
 		},
