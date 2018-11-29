@@ -83,10 +83,10 @@
 			str = str.replace(/^Title\n.*/gm, "");
 
 			// Single words in allcaps all by themselves on a line treat as speakers
-			str = str.replace(/^([A-Z]{2,})\n/gm, "$1\: ");
+			str = str.replace(/^([A-Z\u00DF\u00C0\u00C1\u00C2\u00C3\u00C4\u00C5\u00C7\u00C8\u00C9\u00CA\u00CB\u00CC\u00CD\u00CE\u00CF\u00D2\u00D3\u00D4\u00D5\u00D6\u00D8\u00D9\u00DA\u00DB\u00DC]{2,})\n/gm, "$1\: ");
 
 			// Two words in allcaps with / or + or & between them treat as speakers
-			str = str.replace(/^([A-Z]{2,})(\/| \/ |\+| \+ |\&| \& | )([A-Z]{1,})\n/gm, "$1$2$3\: ");
+			str = str.replace(/^([A-Z\u00DF\u00C0\u00C1\u00C2\u00C3\u00C4\u00C5\u00C7\u00C8\u00C9\u00CA\u00CB\u00CC\u00CD\u00CE\u00CF\u00D2\u00D3\u00D4\u00D5\u00D6\u00D8\u00D9\u00DA\u00DB\u00DC]{2,})(\/| \/ |\+| \+ |\&| \& | )([A-Z\u00DF\u00C0\u00C1\u00C2\u00C3\u00C4\u00C5\u00C7\u00C8\u00C9\u00CA\u00CB\u00CC\u00CD\u00CE\u00CF\u00D2\u00D3\u00D4\u00D5\u00D6\u00D8\u00D9\u00DA\u00DB\u00DC]{1,})\n/gm, "$1$2$3\: ");
 
 			// remove VO and ARCHIVE at the end of speaker IDs
 			str = str.replace(/[ ](VO|V\/O|\(VO\)|\(V\/O\)|ARCHIVE|\(ARCHIVE\))\:/gm, "\:");
