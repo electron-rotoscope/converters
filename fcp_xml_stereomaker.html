@@ -1,0 +1,145 @@
+
+<!-- template from https://codebeautify.org which is really quite amazing -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="https://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="robots" content="noindex,nofollow">
+	<meta name="google" content="notranslate">
+	<link rel="shortcut icon" href="https://electron-rotoscope.github.io/converters/favicon.ico" type="image/ico" />
+	<title>Script Cleaner</title>
+	<script language="javascript" type="text/javascript">
+		function mainreplacements(str){
+			//add stereo to sequence name
+			str = str.replace(/(ge)([<\"])/gm, "ge_stereo$2");
+
+			//change1
+			str = str.replace(/<mediatype>audio<\/mediatype>\n\t\t\t\t\t\t<trackindex>(\d)<\/trackindex>\n\t\t\t\t\t\t<clipindex>1<\/clipindex>/gm, "<mediatype>audio<\/mediatype>\n\t\t\t\t\t\t<trackindex>$1<\/trackindex>\n\t\t\t\t\t\t<clipindex>1<\/clipindex>\n\t\t\t\t\t\t<groupindex>1<\/groupindex>");
+
+			//change2
+			str = str.replace(/<numchannels>1<\/numchannels>\n\t\t\t\t\t<downmix>0<\/downmix>\n\t\t\t\t\t<channel>\n\t\t\t\t\t\t<index>1<\/index>\n\t\t\t\t\t<\/channel>\n\t\t\t\t<\/group>\n\t\t\t\t<group>\n\t\t\t\t\t<index>2<\/index>\n\t\t\t\t\t<numchannels>1<\/numchannels>\n\t\t\t\t\t<downmix>0<\/downmix>/gm, "<numchannels>2<\/numchannels>\n\t\t\t\t\t<downmix>0<\/downmix>\n\t\t\t\t\t<channel>\n\t\t\t\t\t\t<index>1<\/index>\n\t\t\t\t\t<\/channel>");
+
+			//change3
+			str = str.replace(/<value>0<\/value>\n\t\t\t\t\t\t\t<\/parameter>\n\t\t\t\t\t\t<\/effect>\n\t\t\t\t\t<\/filter>\n\t\t\t\t\t<sourcetrack>\n\t\t\t\t\t\t<mediatype>audio<\/mediatype>\n\t\t\t\t\t\t<trackindex>1<\/trackindex>/gm, "<value>-1<\/value>\n\t\t\t\t\t\t\t<\/parameter>\n\t\t\t\t\t\t<\/effect>\n\t\t\t\t\t<\/filter>\n\t\t\t\t\t<sourcetrack>\n\t\t\t\t\t\t<mediatype>audio<\/mediatype>\n\t\t\t\t\t\t<trackindex>1<\/trackindex>");
+
+			//change4
+			str = str.replace(/<value>0<\/value>\n\t\t\t\t\t\t\t<\/parameter>\n\t\t\t\t\t\t<\/effect>\n\t\t\t\t\t<\/filter>\n\t\t\t\t\t<sourcetrack>\n\t\t\t\t\t\t<mediatype>audio<\/mediatype>\n\t\t\t\t\t\t<trackindex>2<\/trackindex>/gm, "<value>1<\/value>\n\t\t\t\t\t\t\t<\/parameter>\n\t\t\t\t\t\t<\/effect>\n\t\t\t\t\t<\/filter>\n\t\t\t\t\t<sourcetrack>\n\t\t\t\t\t\t<mediatype>audio<\/mediatype>\n\t\t\t\t\t\t<trackindex>2<\/trackindex>");
+
+			return str;
+		}
+
+		function mainChanges () {
+
+			var str = document.getElementById("input").value;
+		
+			str = mainreplacements(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function getSample () {
+			var str =
+			"Knowledge\n\n" +
+			"Knowlege\n\n" +
+			"<mediatype>audio</mediatype>\n\t\t\t\t\t\t<trackindex>1</trackindex>\n\t\t\t\t\t\t<clipindex>1</clipindex>\n\n" +
+			"<mediatype>audio</mediatype>\n\t\t\t\t\t\t<trackindex>2</trackindex>\n\t\t\t\t\t\t<clipindex>1</clipindex>\n\n" +
+			"<numchannels>1</numchannels>\n\t\t\t\t\t<downmix>0</downmix>\n\t\t\t\t\t<channel>\n\t\t\t\t\t\t<index>1</index>\n\t\t\t\t\t</channel>\n\t\t\t\t</group>\n\t\t\t\t<group>\n\t\t\t\t\t<index>2</index>\n\t\t\t\t\t<numchannels>1</numchannels>\n\t\t\t\t\t<downmix>0</downmix>\n\n" +
+			"<value>0</value>\n\t\t\t\t\t\t\t</parameter>\n\t\t\t\t\t\t</effect>\n\t\t\t\t\t</filter>\n\t\t\t\t\t<sourcetrack>\n\t\t\t\t\t\t<mediatype>audio</mediatype>\n\t\t\t\t\t\t<trackindex>1</trackindex>\n\n" +
+			"<value>0</value>\n\t\t\t\t\t\t\t</parameter>\n\t\t\t\t\t\t</effect>\n\t\t\t\t\t</filter>\n\t\t\t\t\t<sourcetrack>\n\t\t\t\t\t\t<mediatype>audio</mediatype>\n\t\t\t\t\t\t<trackindex>2</trackindex>\n\n"
+
+			document.getElementById('input').value = str;
+		}
+
+		function copyOutput () {
+			document.querySelector("#output").select();
+
+			document.execCommand('copy');
+		}
+	</script>
+	<style>
+		body {
+			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+		}
+
+		h1 {
+			color: rgb(64, 64, 64);
+		}
+
+		textarea {
+			font-family: monospace;
+			width: 100%;
+		}
+
+		.copypaster {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+			color: rgb(68, 139, 196);
+			cursor: pointer;
+		}
+		
+		.buttonrow {
+			margin-top: 6px;
+			margin-bottom: -24px;
+		}
+
+		input {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: rgb(255, 255, 255);
+			background-color: rgb(128, 128, 128);
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px rgb(64, 64, 64);
+		}
+
+		input:hover, input:active {
+			background-color: rgb(96, 96, 96);
+		}
+
+		input:active {
+			box-shadow: 0 5px rgb(64, 64, 64);
+			transform: translateY(4px);
+		}
+		
+		.notes {
+			margin-top: 100px;
+			font-family: monospace;
+		}
+	</style>
+</head>
+<body>
+	<h1>
+		Script Cleaner for Captioning
+	</h1>
+	<div>
+		<h3>
+			Input Text
+			<span class="copypaster" onclick="getSample()">get sample</span>
+		</h3>
+		<textarea id="input" autofocus rows="16" placeholder="Paste here"></textarea>
+	</div>
+	<div align="center" class="buttonrow">
+		<input type="button" value="Main" onclick="mainChanges();" title="Main Changes">
+	</div>
+	<div>
+		<h3>
+			Output Text
+			<span class="copypaster" onclick="copyOutput();">Copy Output</span>
+		</h3>
+		<textarea id="output" rows="16" placeholder="Output"></textarea>			
+	</div>
+	<div class="notes">
+		Notes<br />
+		ge > ge_stereo<br />
+		assumes two mono tracks in source<br />
+	</div>
+</body>
+</html>
