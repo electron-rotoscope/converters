@@ -8,6 +8,9 @@ human-readable for debugging and teaching
 [Script Cleaner](https://electron-rotoscope.github.io/converters/script_cleaner.html "Click here for live version")  
 This is a tool for prepping transcripts for captioning
 
+[XML Cleaner for BellTor](https://electron-rotoscope.github.io/converters/belltor_xml_cleaner.html "Click here for live version")  
+This is a tool for prepping docx files as XMLs for BellTor
+
 [WPM Sorter](https://electron-rotoscope.github.io/converters/wpm_sorter.html "Click here for live version")  
 This sorts a tab-separated text document by the second column
 Used to see which line has the highest WPM
