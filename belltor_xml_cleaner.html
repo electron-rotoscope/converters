@@ -1,0 +1,182 @@
+<!-- template from https://codebeautify.org which is really quite amazing -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="https://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="robots" content="noindex,nofollow">
+	<meta name="google" content="notranslate">
+	<link rel="shortcut icon" href="https://electron-rotoscope.github.io/converters/favicon.ico" type="image/ico" />
+	<title>Script Cleaner</title>
+	<script language="javascript" type="text/javascript">
+		function mainclean(str){
+			//nbsp
+			str = str.replace(/\u00A0/gm, " ");
+			
+			//trailing spaces
+			str = str.replace(/[ ]+$/gm, "");
+			
+			//extra spaces
+			str = str.replace(/[ ][ ]+/gm, " ");
+			
+			//start of opening tag
+			str = str.replace(/\<[ ]*/gm, "\<");
+			
+			//start of closing tag
+			str = str.replace(/[ ]*\<\/[ ]*/gm, "\<\/");
+			
+			//end of tag
+			str = str.replace(/[ ]*\>/gm, "\>");
+
+			//Video opening tag
+			str = str.replace(/ \<Video\>/gm, "\<Video\>");
+
+			//Video closing tag
+			str = str.replace(/ \<\/Video\>/gm, "\<\/Video\>");
+
+			return str;
+		}
+
+		function cleanInput () {
+
+			var str = document.getElementById("input").value;
+		
+			str = mainclean(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function getSample () {
+			var str =
+			"<?xml version=\"1.0\" encoding=\"utf-8\" ?> \n" +
+			"<Video>\n" +
+			"\u00A0 <BELLMEDIAID>N/A</BELLMEDIAID> \n" +
+			"\u00A0 <ISRCCode>N/A</ISRCCode> \n" +
+			"\u00A0 <UPC>N/A</UPC> \n" +
+			"\u00A0 <Version>0</Version> \n" +
+			"\u00A0 <Title>SHOW TITLE 2 Showtime</Title>  \n" +
+			"\u00A0 <CopyRightDate>2019</CopyRightDate> \n" +
+			"\u00A0 <ReleaseYear>2019</ReleaseYear> \n" +
+			"\u00A0 <Genre>DRAMA</Genre> \n" +
+			"\u00A0 <Language>English</Language> \n" +
+			"\u00A0 <Length>45:40</Length> \n" +
+			"\u00A0 <Narrator>Alan Smithee</Narrator> \n" +
+			"\u00A0 <ProductionCompany>Production (Show Title 2) Inc.</ProductionCompany> \n" +
+			"\u00A0 <ExecutiveProducer>Alan Smithee</ ExecutiveProducer> \n" +
+			"\u00A0 <Director>Alan Smithee</Director> \n" +
+			"\u00A0 <DirectorofPhotography>Alan Smithee</ DirectorofPhotography > \n" +
+			"\u00A0 <ProductionHouse>//</ProductionHouse> \n" +
+			"\u00A0 <Distributor>//</Distributor> \n" +
+			"\u00A0 <Nationality>Canadian</Nationality> \n" +
+			"\u00A0 <Format>0</Format> \n" +
+			"\u00A0 <DownloadFormatID>-1</DownloadFormatID> \n" +
+			"\u00A0 <Aspect>16:9</Aspect> \n" +
+			"\u00A0 <FrameRate>59.94</FrameRate> \n" +
+			"\u00A0 <CloseCaption>1</CloseCaption> \n" +
+			"\u00A0 <AudioConfig>5.1</AudioConfig>\n" +
+			" \u00A0<DescribedAudio>1</DescribedAudio > 1-YES 0-NO\n" +
+			"\u00A0 <GridNumber>N/A</GridNumber> \n" +
+			"\u00A0 <MediaDescription>1080i</MediaDescription> \n" +
+			"  <CanadianContent>YES</CanadianContent>\n" +
+			"\u00A0 <Direction>0</Direction> \n" +
+			"\u00A0 <Facilities>0</Facilities> \n" +
+			"\u00A0 <SubmittedBy>Smith Alanee</SubmittedBy>\n" +
+			"\u00A0 <FileLocation>//</FileLocation> \n" +
+			"\u00A0 </Video>\n" +
+			""
+
+			document.getElementById('input').value = str;
+		}
+
+		function copyOutput () {
+			document.querySelector("#output").select();
+
+			document.execCommand('copy');
+		}
+	</script>
+	<style>
+		body {
+			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+		}
+
+		h1 {
+			color: rgb(64, 64, 64);
+		}
+
+		textarea {
+			font-family: monospace;
+			width: 100%;
+		}
+
+		.copypaster {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+			color: rgb(68, 139, 196);
+			cursor: pointer;
+		}
+		
+		.buttonrow {
+			margin-top: 6px;
+			margin-bottom: -24px;
+		}
+
+		input {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: rgb(255, 255, 255);
+			background-color: rgb(128, 128, 128);
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px rgb(64, 64, 64);
+		}
+
+		input:hover, input:active {
+			background-color: rgb(96, 96, 96);
+		}
+
+		input:active {
+			box-shadow: 0 5px rgb(64, 64, 64);
+			transform: translateY(4px);
+		}
+		
+		.notes {
+			margin-top: 100px;
+			font-family: monospace;
+		}
+	</style>
+</head>
+<body>
+	<h1>
+		XML Cleaner for BellTor
+	</h1>
+	<div>
+		<h3>
+			Input Text
+			<span class="copypaster" onclick="getSample()">get sample</span>
+		</h3>
+		<textarea id="input" autofocus rows="16" placeholder="Paste here"></textarea>
+	</div>
+	<div align="center" class="buttonrow">
+		<input type="button" value="Clean Input" onclick="cleanInput();" title="Clean text for captioning - Don't mess with case">
+	</div>
+	<div>
+		<h3>
+			Output Text
+			<span class="copypaster" onclick="copyOutput();">Copy Output</span>
+		</h3>
+		<textarea id="output" rows="16" placeholder="Output"></textarea>			
+	</div>
+	<div class="notes">
+		Notes<br />
+		- Based on a docx<br />
+		
+	</div>
+</body>
+</html>
