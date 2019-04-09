@@ -14,9 +14,6 @@
 			//nbsp
 			str = str.replace(/\u00A0/gm, " ");
 			
-			//trailing spaces
-			str = str.replace(/[ ]+$/gm, "");
-			
 			//extra spaces
 			str = str.replace(/[ ][ ]+/gm, " ");
 			
@@ -27,7 +24,10 @@
 			str = str.replace(/[ ]*\<\/[ ]*/gm, "\<\/");
 			
 			//end of tag
-			str = str.replace(/[ ]*\>/gm, "\>");
+			str = str.replace(/[ ]*\>[ ]*/gm, "\>");
+			
+			//trailing spaces (somewhat redundant)
+			str = str.replace(/[ ]+$/gm, "");
 
 			//Video opening tag
 			str = str.replace(/ \<Video\>/gm, "\<Video\>");
