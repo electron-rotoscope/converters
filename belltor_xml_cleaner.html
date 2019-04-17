@@ -35,6 +35,9 @@
 			//Video closing tag
 			str = str.replace(/ \<\/Video\>/gm, "\<\/Video\>");
 
+			//Fix 1-YES
+			str = str.replace(/\>1-YES/gm, "\> 1-YES");
+
 			return str;
 		}
 
