@@ -26,7 +26,7 @@
 		},
 		"capscript00_fix_weird_whitespace":
 		{
-			"find": "[\t               　᠎​‌‍⁠﻿  ]",
+			"find": "[\t               　᠎​‌‍⁠﻿   ]",
 			"name": "capscript00_fix_weird_whitespace",
 			"replace": " "
 		},
