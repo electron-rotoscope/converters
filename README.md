@@ -15,7 +15,7 @@ This is a tool for prepping docx files as XMLs for BellTor
 This sorts a tab-separated text document by the second column
 Used to see which line has the highest WPM
 
-[timecalc](https://repl.it/@electron_rotosc/timecalcpy3v14 "Click here to run online")  CAUTION DF CONVERTER CURRENTLY INACCURATE
+[timecalc](https://repl.it/@electron_rotosc/timecalcpy3v14 "Click here to run online") CAUTION DF CONVERTER CURRENTLY INACCURATE  
 This is a SMPTE timecode calculator that can perform a few functions that was written a few years ago
 It can either be run in a local copy of Python3  [download here](https://raw.githubusercontent.com/electron-rotoscope/converters/gh-pages/timecalc_py3_v1_4.py) or online at a site like repli.it linked above
 
