@@ -12,7 +12,7 @@
 	<script language="javascript" type="text/javascript">
 		function maintoast(str){
 			//remove columns 2, 3, 5
-			str = str.replace(/\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\"/gm, "$1\t$4\t$6");
+			str = str.replace(/\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\"/gm, "$1\t$4 in GB\t$6");
 
 			//TBs with decimal to GB (initial space so it doesnt match number 100)
 			str = str.replace(/\.(\d) TB/gm, "$1 00 GB");
@@ -25,7 +25,10 @@
 			str = str.replace(/\.\d GB/gm, " GB");
 
 			//Under 1 GB
-			str = str.replace(/\d+ MB|\d+\.\d+ MB|\d+ Bytes/gm, "\~0 GB");
+			str = str.replace(/\d+ MB|\d+\.\d+ MB|\d+ Bytes/gm, "0 GB");
+
+			//Remove GB
+			str = str.replace(/ GB/gm, "");
 
 			return str;
 		}
