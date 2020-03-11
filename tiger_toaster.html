@@ -15,21 +15,21 @@
 			str = str.replace(/\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\"/gm, "$1\t$4\t$6");
 
 			//TBs with decimal to GB (initial space so it doesnt match number 100)
-			str = str.replace(/\.(\d) TB/gm, "$1 00 GB");
-			str = str.replace(/ 00 GB/gm, "00 GB");
+			str = str.replace(/\.(\d) TB/gm, "$1 00");
+			str = str.replace(/ 00 GB/gm, "00");
 
 			//TBs without decimal
-			str = str.replace(/ TB/gm, "000 GB");
+			str = str.replace(/ TB/gm, "000");
 
 			//GBs with decimal
-			str = str.replace(/\.\d GB/gm, " GB");
+			str = str.replace(/\.\d GB/gm, "");
 
 			//Under 1 GB
-			str = str.replace(/\d+ MB|\d+\.\d+ MB|\d+ Bytes/gm, "0 GB");
+			str = str.replace(/\d+ MB|\d+\.\d+ MB|\d+\.\d+ B|\d+ B|\d+\.\d+ Bytes|\d+ Bytes/gm, "0");
 
 			//Remove GB
 			str = str.replace(/ GB/gm, "");
-			str = str.replace(/\tsize\t/gm, "\tsize in GB\t");
+			str = str.replace(/\tsize\t/gm, "\tsize in whole GB\t");
 
 			return str;
 		}
