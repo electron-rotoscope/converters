@@ -8,28 +8,22 @@
 	<meta name="robots" content="noindex,nofollow">
 	<meta name="google" content="notranslate">
 	<link rel="shortcut icon" href="https://electron-rotoscope.github.io/converters/favicon.ico" type="image/ico" />
-	<title>CSV Toaster</title>
+	<title>FTP Address Translator</title>
 	<script language="javascript" type="text/javascript">
 		function maintoast(str){
-			//remove columns 2, 3, 5
-			str = str.replace(/\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\"/gm, "$1\t$4\t$6");
+			//reorder and separate
+			str = str.replace(/ftp\:\/\/(.+?)\@(.+?)(\/.+\/)(.+)/gm, 
+"Server\:\n$2\n\n\
+Account\:\n$1\n\n\
+Path\:\n$3\n\n\
+File Name\:\n$4");
 
-			//TBs with decimal to GB (initial space so it doesnt match number 100)
-			str = str.replace(/\.(\d) TB/gm, "$1 00 GB");
-			str = str.replace(/ 00 GB/gm, "00 GB");
+			//flag as internal server
+			str = str.replace(/ftp-int\.jaxxcreative\.com|192\.168\.10\.10|ftp\.jaxxcreative\.com|ftp\.trianglepost\.com|66\.207\.202\.114/gm, "JAXX Internal");
 
-			//TBs without decimal
-			str = str.replace(/ TB/gm, "000 GB");
 
-			//GBs with decimal
-			str = str.replace(/\.\d GB/gm, " GB");
-
-			//Under 1 GB
-			str = str.replace(/\d+ MB|\d+\.\d+ MB|\d+ Bytes/gm, "0 GB");
-
-			//Remove GB
-			str = str.replace(/ GB/gm, "");
-			str = str.replace(/\tsize\t/gm, "\tsize in GB\t");
+			//replace spaces
+			str = str.replace(/%20/gm, " ");
 
 			return str;
 		}
@@ -115,7 +109,8 @@
 </head>
 <body>
 	<h1>
-		TigerSPACES CSV Toaster for Sheets
+		FTP Address Translator
+		<br>(from Browser format to FileZilla format)
 	</h1>
 	<div>
 		<h3>
@@ -125,7 +120,7 @@
 		<textarea id="input" autofocus rows="16" placeholder="Paste here"></textarea>
 	</div>
 	<div align="center" class="buttonrow">
-		<input type="button" value="Translate" onclick="toastInput();" title="Translate into something easier to read for FileZilla">
+		<input type="button" value="Translate" onclick="toastInput();" title="Translate into something easier to read for Filezilla">
 	</div>
 	<div>
 		<h3>
