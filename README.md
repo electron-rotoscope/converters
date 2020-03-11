@@ -11,6 +11,9 @@ This is a tool for prepping transcripts for captioning
 [Tiger CSV Toaster](https://electron-rotoscope.github.io/converters/tiger_toaster.html "Click here for live version")  
 This is a tool for prepping CSV exports from TigerSPACES for Sheets
 
+[FTP Link Translator](https://electron-rotoscope.github.io/converters/ftp_link_translator.html "Click here for live version")
+This is a tool for translating ftp addresses from external and browser-based format to internal and FileZilla based format
+
 [XML Cleaner for BellTor](https://electron-rotoscope.github.io/converters/belltor_xml_cleaner.html "Click here for live version")  
 This is a tool for prepping docx files as XMLs for BellTor
 
