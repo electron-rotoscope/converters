@@ -41,7 +41,7 @@
         }
     },
     {
-        "keys": ["ctrl+shift+c"],
+        "keys": ["ctrl+shift+alt+x"],
         "caption": "Capscript - Capitalizing before colons",
         "command": "reg_replace",
         "args": {
