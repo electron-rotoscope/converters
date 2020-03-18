@@ -15,8 +15,8 @@
 			str = str.replace(/\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\"/gm, "$1\t$4\t$6");
 
 			//TBs with decimal to GB (initial space so it doesnt match number 100)
-			str = str.replace(/\.(\d) TB/gm, "$1 00");
-			str = str.replace(/ 00 GB/gm, "00");
+			str = str.replace(/\.(\d) TB/gm, "$1 00_findme_");
+			str = str.replace(/ 00_findme_/gm, "00");
 
 			//TBs without decimal
 			str = str.replace(/ TB/gm, "000");
