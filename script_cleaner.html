@@ -54,6 +54,12 @@
 			//canadian spelling
 			str = str.replace(/(c|C)olor/gm, "$1olour");
 			str = str.replace(/(f|F)avorite/gm, "$1avourite");
+			
+			//expand ligatures Æ æ Œ œ \u00c6 \u00e6 \u0152 \u0153
+			str = str.replace(/\u00C6/gm, "AE");
+			str = str.replace(/\u00E6/gm, "ae");
+			str = str.replace(/\u0152/gm, "OE");
+			str = str.replace(/\u0153/gm, "oe");
 
 			//lowercase inside square brackets
 			str = str.replace(/\[(.*?)\]/gm,
