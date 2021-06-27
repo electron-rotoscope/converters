@@ -1,0 +1,253 @@
+<!-- template from https://codebeautify.org which is really quite amazing -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="https://www.w3.org/1999/xhtml" lang="en"><head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="robots" content="noindex,nofollow">
+	<meta name="google" content="notranslate">
+	<link rel="shortcut icon" href="https://electron-rotoscope.github.io/converters/favicon.ico" type="image/ico">
+	<title>Marker List Converter</title>
+	<script language="javascript" type="text/javascript">
+
+		function framesToMillisecondsMain(str){
+			//main
+			str = str.replace(/\:00([ \t\n])/gm, ",000$1");
+			str = str.replace(/\:01([ \t\n])/gm, ",042$1");
+			str = str.replace(/\:02([ \t\n])/gm, ",083$1");
+			str = str.replace(/\:03([ \t\n])/gm, ",125$1");
+			str = str.replace(/\:04([ \t\n])/gm, ",167$1");
+			str = str.replace(/\:05([ \t\n])/gm, ",208$1");
+			str = str.replace(/\:06([ \t\n])/gm, ",250$1");
+			str = str.replace(/\:07([ \t\n])/gm, ",292$1");
+			str = str.replace(/\:08([ \t\n])/gm, ",333$1");
+			str = str.replace(/\:09([ \t\n])/gm, ",375$1");
+			str = str.replace(/\:10([ \t\n])/gm, ",417$1");
+			str = str.replace(/\:11([ \t\n])/gm, ",458$1");
+			str = str.replace(/\:12([ \t\n])/gm, ",500$1");
+			str = str.replace(/\:13([ \t\n])/gm, ",542$1");
+			str = str.replace(/\:14([ \t\n])/gm, ",583$1");
+			str = str.replace(/\:15([ \t\n])/gm, ",625$1");
+			str = str.replace(/\:16([ \t\n])/gm, ",667$1");
+			str = str.replace(/\:17([ \t\n])/gm, ",708$1");
+			str = str.replace(/\:18([ \t\n])/gm, ",750$1");
+			str = str.replace(/\:19([ \t\n])/gm, ",792$1");
+			str = str.replace(/\:20([ \t\n])/gm, ",833$1");
+			str = str.replace(/\:21([ \t\n])/gm, ",875$1");
+			str = str.replace(/\:22([ \t\n])/gm, ",917$1");
+			str = str.replace(/\:23([ \t\n])/gm, ",958$1");
+
+			return str;
+		}
+
+		function millisecondsToFramesMain(str){
+			//main
+			str = str.replace(/[,\.]000([ \t\n])/gm, "\:00$1");
+			str = str.replace(/[,\.]042([ \t\n])/gm, "\:01$1");
+			str = str.replace(/[,\.]083([ \t\n])/gm, "\:02$1");
+			str = str.replace(/[,\.]125([ \t\n])/gm, "\:03$1");
+			str = str.replace(/[,\.]167([ \t\n])/gm, "\:04$1");
+			str = str.replace(/[,\.]208([ \t\n])/gm, "\:05$1");
+			str = str.replace(/[,\.]250([ \t\n])/gm, "\:06$1");
+			str = str.replace(/[,\.]292([ \t\n])/gm, "\:07$1");
+			str = str.replace(/[,\.]333([ \t\n])/gm, "\:08$1");
+			str = str.replace(/[,\.]375([ \t\n])/gm, "\:09$1");
+			str = str.replace(/[,\.]417([ \t\n])/gm, "\:10$1");
+			str = str.replace(/[,\.]458([ \t\n])/gm, "\:11$1");
+			str = str.replace(/[,\.]500([ \t\n])/gm, "\:12$1");
+			str = str.replace(/[,\.]542([ \t\n])/gm, "\:13$1");
+			str = str.replace(/[,\.]583([ \t\n])/gm, "\:14$1");
+			str = str.replace(/[,\.]625([ \t\n])/gm, "\:15$1");
+			str = str.replace(/[,\.]667([ \t\n])/gm, "\:16$1");
+			str = str.replace(/[,\.]708([ \t\n])/gm, "\:17$1");
+			str = str.replace(/[,\.]750([ \t\n])/gm, "\:18$1");
+			str = str.replace(/[,\.]792([ \t\n])/gm, "\:19$1");
+			str = str.replace(/[,\.]833([ \t\n])/gm, "\:20$1");
+			str = str.replace(/[,\.]875([ \t\n])/gm, "\:21$1");
+			str = str.replace(/[,\.]917([ \t\n])/gm, "\:22$1");
+			str = str.replace(/[,\.]958([ \t\n])/gm, "\:23$1");
+
+			return str;
+		}
+
+		function framesToMilliseconds () {
+
+			var str = document.getElementById("input").value;
+		
+			str = framesToMillisecondsMain(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function millisecondsToFrames () {
+
+			var str = document.getElementById("input").value;
+		
+			str = millisecondsToFramesMain(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function getFramesSample () {
+			var str =
+			"00:00:00:00\n" +
+			"00:T0:00:01 spaced sample text\n" +
+			"00:H0:00:02\ttabbed sample text\n" +
+			"00:I0:00:03\n" +
+			"00:S0:00:04 spaced sample text\n" +
+			"00:00:00:05\ttabbed sample text\n" +
+			"00:C0:00:06\n" +
+			"00:A0:00:07 spaced sample text\n" +
+			"00:N0:00:08\ttabbed sample text\n" +
+			"00:00:00:09\n" +
+			"00:B0:00:10 spaced sample text\n" +
+			"00:E0:00:11\ttabbed sample text\n" +
+			"00:00:00:12\n" +
+			"00:A0:00:13 spaced sample text\n" +
+			"00:N0:00:14\ttabbed sample text\n" +
+			"00:Y0:00:15\n" +
+			"00:T0:00:16 spaced sample text\n" +
+			"00:H0:00:17\ttabbed sample text\n" +
+			"00:I0:00:18\n" +
+			"00:N0:00:19 spaced sample text\n" +
+			"00:G0:00:20\ttabbed sample text\n" +
+			"00:00:00:21\n" +
+			"00:00:00:22 spaced sample text\n" +
+			"00:00:00:23\ttabbed sample text\n" +
+			""
+
+			document.getElementById('input').value = str;
+		}
+
+		function getMillisecondsSample () {
+			var str =
+			"00:00:00,000\n" +
+			"00:T0:00,042 spaced sample text\n" +
+			"00:H0:00,083\ttabbed sample text\n" +
+			"00:I0:00,125\n" +
+			"00:S0:00,167 spaced sample text\n" +
+			"00:00:00,208\ttabbed sample text\n" +
+			"00:C0:00,250\n" +
+			"00:A0:00,292 spaced sample text\n" +
+			"00:N0:00,333\ttabbed sample text\n" +
+			"00:00:00,375\n" +
+			"00:B0:00,417 spaced sample text\n" +
+			"00:E0:00,458\ttabbed sample text\n" +
+			"00:00:00,500\n" +
+			"00:A0:00,542 spaced sample text\n" +
+			"00:N0:00,583\ttabbed sample text\n" +
+			"00:Y0:00,625\n" +
+			"00:T0:00,667 spaced sample text\n" +
+			"00:H0:00,708\ttabbed sample text\n" +
+			"00:I0:00,750\n" +
+			"00:N0:00,792 spaced sample text\n" +
+			"00:G0:00,833\ttabbed sample text\n" +
+			"00:00:00,875\n" +
+			"00:00:00,917 spaced sample text\n" +
+			"00:00:00,958\ttabbed sample text\n" +
+			""
+
+			document.getElementById('input').value = str;
+		}
+
+		function copyOutput () {
+			document.querySelector("#output").select();
+
+			document.execCommand('copy');
+		}
+	</script>
+	<style>
+		body {
+			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+		}
+
+		h1 {
+			color: rgb(64, 64, 64);
+		}
+
+		textarea {
+			font-family: monospace;
+			width: 100%;
+		}
+
+		.copypaster {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+			color: rgb(68, 139, 196);
+			cursor: pointer;
+		}
+
+		.copypaster_separater {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+		}
+		
+		.buttonrow {
+			margin-top: 6px;
+			margin-bottom: -24px;
+		}
+
+		input {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: rgb(255, 255, 255);
+			background-color: rgb(128, 128, 128);
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px rgb(64, 64, 64);
+		}
+
+		input:hover, input:active {
+			background-color: rgb(96, 96, 96);
+		}
+
+		input:active {
+			box-shadow: 0 5px rgb(64, 64, 64);
+			transform: translateY(4px);
+		}
+		
+		.notes {
+			margin-top: 100px;
+			font-family: monospace;
+		}
+	</style>
+</head>
+<body>
+	<h1>
+		24fps Frames to and from Milliseconds
+	</h1>
+	<div>
+		<h3>
+			Input Text
+			<!-- This is in backwards order -->
+			<span class="copypaster" onclick="getMillisecondsSample()">get milliseconds sample</span>
+			<span class="copypaster_separater"> | </span>
+			<span class="copypaster" onclick="getFramesSample()">get frames sample</span>
+		</h3>
+		<textarea id="input" autofocus="" rows="16" placeholder="Paste here"></textarea>
+	</div>
+	<div class="buttonrow" align="center">
+		<input type="button" value="Frames to Milliseconds" onclick="framesToMilliseconds();" title="From Frames to Milliseconds">
+		<input type="button" value="Milliseconds to Frames" onclick="millisecondsToFrames();" title="From Milliseconds to Frames">
+	</div>
+	<div>
+		<h3>
+			Output Text
+			<span class="copypaster" onclick="copyOutput();">Copy Output</span>
+		</h3>
+		<textarea id="output" rows="16" placeholder="Output"></textarea>			
+	</div>
+	<div class="notes">
+		Notes<br>
+		this is for 24.00 only, 23.976 is way more complicated<br />
+	</div>
+
+
+</body></html>
