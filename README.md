@@ -30,3 +30,6 @@ This makes FCP XML v5 sequences from dual mono into stereo, with paired clips
 
 [Marker List Converter](https://electron-rotoscope.github.io/converters/marker_list_converter.html "Click here for live version")  
 This converts between the different ways NLEs export marker lists
+
+[24fps Frames to and from Milliseconds Converter](https://electron-rotoscope.github.io/converters/24fps_frame_to_from_milliseconds.html "Click here for live version")  
+This converts between frame counts like :00 (used in the video editing world) and millisecond counts like ,000 or .000 (used in the world of web standards and SRT)
