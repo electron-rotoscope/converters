@@ -18,7 +18,7 @@
 			str = str.replace(/<name>(.+)<\/name>/gm, "$1\tsize\tlastmodificationdate\txxhash64be\thashdate");
 
 			//file, size, lastmod, hashbe, hashdate
-			str = str.replace(/<file>.+\/(.+\.(?:wav|mxf))<\/file>\n<size>(.+)<\/size>\n<lastmodificationdate>(.+)<\/lastmodificationdate>\n<xxhash64be>(.+)<\/xxhash64be>\n(?:<xxhash64>.+<\/xxhash64>\n)?<hashdate>(.+)<\/hashdate>/g, "$1\t$2\t$3\t$4\t$5");
+			str = str.replace(/<file>(?:.+\/)?(.+\.(?:wav|mxf))<\/file>\n<size>(.+)<\/size>\n<lastmodificationdate>(.+)<\/lastmodificationdate>\n<xxhash64be>(.+)<\/xxhash64be>\n(?:<xxhash64>.+<\/xxhash64>\n)?<hashdate>(.+)<\/hashdate>/g, "$1\t$2\t$3\t$4\t$5");
 
 			//remove remaining tags
 			str = str.replace(/<.*>/gm, "");
@@ -44,20 +44,27 @@
 			"<hashlist version=\"1.1\">\n" +
 			"\n" +
 			"  <creatorinfo>  \n" +
-			"    <name>graveljf</name>\n" +
-			"    <username>graveljf</username>\n" +
-			"<hostname>jfgravel16po.local</hostname>\n" +
+			"    <name>persocom</name>\n" +
+			"    <username>persocom</username>\n" +
+			"<hostname>persocom.local</hostname>\n" +
 			"    <tool>mhl ver. 0.2.0</tool>\n" +
 			"    <startdate>2021-11-24T20:51:11Z</startdate>\n" +
 			"    <finishdate>2021-11-24T20:51:11Z</finishdate>\n" +
 			"  </creatorinfo>\n" +
 			"\n" +
 			"  <hash>\n" +
-			"    <file>A061RORU/A061RORU_BIN.wav</file>\n" +
-			"    <size>21600</size>\n" +
-			"    <lastmodificationdate>2021-11-24T20:30:31Z</lastmodificationdate>\n" +
-			"    <xxhash64be>6eb430906440ac80</xxhash64be>\n" +
+			"    <file>A061RORU/A000C000_000000_RORU.mxf</file>\n" +
+			"    <size>38735305444</size>\n" +
+			"    <lastmodificationdate>2021-11-24T20:31:04Z</lastmodificationdate>\n" +
+			"    <xxhash64be>37e8adebe27bd314</xxhash64be>\n" +
 			"    <hashdate>2021-11-24T20:51:11Z</hashdate>\n" +
+			"  </hash>\n" +
+			"  <hash>\n" +
+			"    <file>3_46_T1.wav</file>\n" +
+			"    <size>50793984</size>\n" +
+			"    <lastmodificationdate>2021-11-25T02:27:49Z</lastmodificationdate>\n" +
+			"    <xxhash64be>c14bd3fcfffddfc7</xxhash64be>\n" +
+			"    <hashdate>2021-11-25T02:28:11Z</hashdate>\n" +
 			"  </hash>\n" +
 			"    <creatorinfo>\n" +
 			"        <name>redlab</name>\n" +
