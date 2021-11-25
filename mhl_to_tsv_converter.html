@@ -1,0 +1,172 @@
+<!-- template from https://codebeautify.org which is really quite amazing -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="https://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="robots" content="noindex,nofollow">
+	<meta name="google" content="notranslate">
+	<link rel="shortcut icon" href="https://electron-rotoscope.github.io/converters/favicon.ico" type="image/ico" />
+	<title>MHL to TSV Converter</title>
+	<script language="javascript" type="text/javascript">
+		function mainreplacements(str){
+			//strip leading spaces and tabs
+			str = str.replace(/^ +| +$|\t/gm, "");
+
+			//header row
+			str = str.replace(/<name>(.+)<\/name>/gm, "$1\tsize\tlastmodificationdate\txxhash64be\thashdate");
+
+			//file, size, lastmod, hashbe, hashdate
+			str = str.replace(/<file>.+\/(.+\.(?:wav|mxf))<\/file>\n<size>(.+)<\/size>\n<lastmodificationdate>(.+)<\/lastmodificationdate>\n<xxhash64be>(.+)<\/xxhash64be>\n(?:<xxhash64>.+<\/xxhash64>\n)?<hashdate>(.+)<\/hashdate>/g, "$1\t$2\t$3\t$4\t$5");
+
+			//remove remaining tags
+			str = str.replace(/<.*>/gm, "");
+
+			//remove remaining line returns
+			str = str.replace(/\n\n+/gm, "\n");
+
+			return str;
+		}
+
+		function mainChanges () {
+
+			var str = document.getElementById("input").value;
+		
+			str = mainreplacements(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function getSample () {
+			var str =
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+			"<hashlist version=\"1.1\">\n" +
+			"\n" +
+			"  <creatorinfo>  \n" +
+			"    <name>graveljf</name>\n" +
+			"    <username>graveljf</username>\n" +
+			"<hostname>jfgravel16po.local</hostname>\n" +
+			"    <tool>mhl ver. 0.2.0</tool>\n" +
+			"    <startdate>2021-11-24T20:51:11Z</startdate>\n" +
+			"    <finishdate>2021-11-24T20:51:11Z</finishdate>\n" +
+			"  </creatorinfo>\n" +
+			"\n" +
+			"  <hash>\n" +
+			"    <file>A061RORU/A061RORU_BIN.wav</file>\n" +
+			"    <size>21600</size>\n" +
+			"    <lastmodificationdate>2021-11-24T20:30:31Z</lastmodificationdate>\n" +
+			"    <xxhash64be>6eb430906440ac80</xxhash64be>\n" +
+			"    <hashdate>2021-11-24T20:51:11Z</hashdate>\n" +
+			"  </hash>\n" +
+			"    <creatorinfo>\n" +
+			"        <name>redlab</name>\n" +
+			"        <username>redlab</username>\n" +
+			"        <hostname>redlab-north-mini.local</hostname>\n" +
+			"        <tool>Hedge 20.3 (Build 965)</tool>\n" +
+			"        <startdate>2021-11-25T01:16:59Z</startdate>\n" +
+			"        <finishdate>2021-11-25T05:20:12Z</finishdate>\n" +
+			"    </creatorinfo>\n" +
+			"    <hash>\n" +
+			"        <file>camera_media_20211124_AM/A061RORU/A061RORU/A061C001_211124_RORU.mxf</file>\n" +
+			"        <size>57581676844</size>\n" +
+			"        <lastmodificationdate>2021-11-24T20:35:40Z</lastmodificationdate>\n" +
+			"        <xxhash64be>755b654cee0a8926</xxhash64be>\n" +
+			"        <xxhash64>26890aee4c655b75</xxhash64>\n" +
+			"        <hashdate>2021-11-25T01:19:34Z</hashdate>\n" +
+			"    </hash>\n" +
+			""
+
+			document.getElementById('input').value = str;
+		}
+
+		function copyOutput () {
+			document.querySelector("#output").select();
+
+			document.execCommand('copy');
+		}
+	</script>
+	<style>
+		body {
+			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+		}
+
+		h1 {
+			color: rgb(64, 64, 64);
+		}
+
+		textarea {
+			font-family: monospace;
+			width: 100%;
+		}
+
+		.copypaster {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+			color: rgb(68, 139, 196);
+			cursor: pointer;
+		}
+		
+		.buttonrow {
+			margin-top: 6px;
+			margin-bottom: -24px;
+		}
+
+		input {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: rgb(255, 255, 255);
+			background-color: rgb(128, 128, 128);
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px rgb(64, 64, 64);
+		}
+
+		input:hover, input:active {
+			background-color: rgb(96, 96, 96);
+		}
+
+		input:active {
+			box-shadow: 0 5px rgb(64, 64, 64);
+			transform: translateY(4px);
+		}
+		
+		.notes {
+			margin-top: 100px;
+			font-family: monospace;
+		}
+	</style>
+</head>
+<body>
+	<h1>
+		MHL to TSV Converter
+	</h1>
+	<div>
+		<h3>
+			Input Text
+			<span class="copypaster" onclick="getSample()">get sample</span>
+		</h3>
+		<textarea id="input" autofocus rows="17" placeholder="Paste here"></textarea>
+	</div>
+	<div align="center" class="buttonrow">
+		<input type="button" value="Main" onclick="mainChanges();" title="Main Changes">
+	</div>
+	<div>
+		<h3>
+			Output Text
+			<span class="copypaster" onclick="copyOutput();">Copy Output</span>
+		</h3>
+		<textarea id="output" rows="17" placeholder="Output"></textarea>			
+	</div>
+	<div class="notes">
+		Notes<br />
+		this only keeps .wav and .mxf<br />
+	</div>
+</body>
+</html>
