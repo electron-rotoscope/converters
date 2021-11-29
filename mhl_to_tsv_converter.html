@@ -18,7 +18,7 @@
 			str = str.replace(/<name>(.+)<\/name>/gm, "$1\tsize\tlastmodificationdate\txxhash64be\thashdate");
 
 			//file, size, lastmod, hashbe, hashdate
-			str = str.replace(/<file>(?:.+\/)?(.+\.(?:wav|mxf))<\/file>\n<size>(.+)<\/size>\n<lastmodificationdate>(.+)<\/lastmodificationdate>\n<xxhash64be>(.+)<\/xxhash64be>\n(?:<xxhash64>.+<\/xxhash64>\n)?<hashdate>(.+)<\/hashdate>/g, "$1\t$2\t$3\t$4\t$5");
+			str = str.replace(/<file>(?:.+\/)?(.+\.(?:wav|mxf|WAV|MXF))<\/file>\n<size>(.+)<\/size>\n<lastmodificationdate>(.+)<\/lastmodificationdate>\n<xxhash64be>(.+)<\/xxhash64be>\n(?:<xxhash64>.+<\/xxhash64>\n)?<hashdate>(.+)<\/hashdate>/g, "$1\t$2\t$3\t$4\t$5");
 
 			//remove remaining tags
 			str = str.replace(/<.*>/gm, "");
