@@ -1,0 +1,186 @@
+<!-- template from https://codebeautify.org which is really quite amazing -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="https://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="robots" content="noindex,nofollow">
+	<meta name="google" content="notranslate">
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.png"/>
+	<title>MHL to TSV Converter</title>
+	<script language="javascript" type="text/javascript">
+
+		function mainselect(str_in){
+
+//in ascii / utf-8 the regex code  50427b506172612b23....20.+?2f(.+?)2e637562657d7d7d7d
+//translates to                    PB{Para+#.. .+?/(.+?)\.cube}}}}
+
+			//find only what we're looking for
+			str_out = str_in.match(/^ +<MediaReelNumber>(.+)<\/MediaReelNumber>\n +<MediaFrameRate.+\n +<MediaTimemapBA.+\n +<pLmVerTable.+\n +<ListMgt.+\n +<FieldsBlob.+\n +<VerType.+\n +<pRemoteTable.+\n +<pActive.+\n +<Locals.+\n +<Element.+\n +<ListMgt:.+\n +<FieldsBlob.+\n +<Name.+\n +<HasCorrection.+\n +<VerType.+\n +<ImplVersion.+\n +<IncludedInRecording.+\n +<FlatPassEnabled.+\n +<RGBAOutputEnabled.+\n +<Body.+50427b506172612b23....20.+?2f(.+?)2e637562657d7d7d7d/gmi);
+
+//this returns an array that must become a string. .toString() uses "," as a separator, so use .join("\n") instead
+
+			return str_out.join("\n");
+		}
+
+		function mainreplacementsv2(str){
+
+//in ascii / utf-8 the regex code  50427b506172612b23....20.+?2f(.+?)2e637562657d7d7d7d
+//translates to                    PB{Para+#.. .+?/(.+?)\.cube}}}}
+
+			//replace big list
+			str = str.replace(/^ +<MediaReelNumber>(.+)<\/MediaReelNumber>\n +<MediaFrameRate.+\n +<MediaTimemapBA.+\n +<pLmVerTable.+\n +<ListMgt.+\n +<FieldsBlob.+\n +<VerType.+\n +<pRemoteTable.+\n +<pActive.+\n +<Locals.+\n +<Element.+\n +<ListMgt:.+\n +<FieldsBlob.+\n +<Name.+\n +<HasCorrection.+\n +<VerType.+\n +<ImplVersion.+\n +<IncludedInRecording.+\n +<FlatPassEnabled.+\n +<RGBAOutputEnabled.+\n +<Body.+50427b506172612b23....20.+?2f(.+?)2e637562657d7d7d7d/gmi, "$1\t$2");
+
+			return str;
+		}
+
+//from https://www.w3resource.com/javascript-exercises/javascript-string-exercise-28.php
+
+//		function hex_to_ascii(str1)
+//			{
+//				var hex  = str1.toString();
+//				var ascii = '';
+//				for (var n = 0; n < hex.length; n += 2) {
+//					ascii += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+//				}
+//				return ascii;
+//			}
+
+		function hex_to_unicodev2(str){
+
+			str = str.replace(/\t(.+)/gmi, function (tab_then_hex) {
+				var hex  = tab_then_hex.substring(1);
+				var ascii = '\t';
+				for (var n = 0; n < hex.length; n += 2) {
+					ascii += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+				}
+				return ascii;
+			});
+
+			return str;
+		}
+
+		function mainV3 () {
+
+			var str = document.getElementById("input").value;
+		
+			str = mainselect(str);
+		
+			str = mainreplacementsv2(str);
+
+			str = hex_to_unicodev2(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function hexToUnicodev2 () {
+
+			var str = document.getElementById("output").value;
+		
+			str = hex_to_unicodev2(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function getSample () {
+			var str =
+			"no sample yet\n" +
+			""
+
+			document.getElementById('input').value = str;
+		}
+
+		function copyOutput () {
+			document.querySelector("#output").select();
+
+			document.execCommand('copy');
+		}
+	</script>
+	<style>
+		body {
+			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+		}
+
+		h1 {
+			color: rgb(64, 64, 64);
+		}
+
+		textarea {
+			font-family: monospace;
+			width: 100%;
+		}
+
+		.copypaster {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+			color: rgb(68, 139, 196);
+			cursor: pointer;
+		}
+		
+		.buttonrow {
+			margin-top: 6px;
+			margin-bottom: -24px;
+		}
+
+		input {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: rgb(255, 255, 255);
+			background-color: rgb(128, 128, 128);
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px rgb(64, 64, 64);
+		}
+
+		input:hover, input:active {
+			background-color: rgb(96, 96, 96);
+		}
+
+		input:active {
+			box-shadow: 0 5px rgb(64, 64, 64);
+			transform: translateY(4px);
+		}
+		
+		.notes {
+			margin-top: 100px;
+			font-family: monospace;
+		}
+	</style>
+</head>
+<body>
+	<h1>
+		LUT Extractor
+	</h1>
+	<div>
+		<h3>
+			Input Text
+			<span class="copypaster" onclick="getSample()">get sample</span>
+		</h3>
+		<textarea id="input" autofocus rows="17" placeholder="Paste here"></textarea>
+	</div>
+	<div align="center" class="buttonrow">
+		<input type="button" value="Main" onclick="mainV3();" title="Main Changes">
+	</div>
+	<div>
+		<h3>
+			Output Text
+			<span class="copypaster" onclick="copyOutput();">Copy Output</span>
+		</h3>
+		<textarea id="output" rows="17" placeholder="Output"></textarea>			
+	</div>
+	<div align="center" class="buttonrow">
+		<input type="button" value="EXTRA FUCTIONALITY -- Hex to Unicode v2" onclick="hexToUnicodev2();" title="Turn Hex-Encoded Lines after a tab into Unicode">
+	</div>
+	<div class="notes">
+		Notes<br />
+		this is designed for Resolve DRP XMLs<br />
+	</div>
+</body>
+</html>
