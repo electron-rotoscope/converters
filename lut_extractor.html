@@ -23,7 +23,7 @@
 			//find only what we're looking for
 			str_out = str_in.match(/^ +<MediaReelNumber>(.+)<\/MediaReelNumber>\n +<MediaFrameRate.+\n +<MediaTimemapBA.+\n +<pLmVerTable.+\n +<ListMgt.+\n +<FieldsBlob.+\n +<VerType.+\n +<pRemoteTable.+\n +<pActive.+\n +<Locals.+\n +<Element.+\n +<ListMgt:.+\n +<FieldsBlob.+\n +<Name.+\n +<HasCorrection.+\n +<VerType.+\n +<ImplVersion.+\n +<IncludedInRecording.+\n +<FlatPassEnabled.+\n +<RGBAOutputEnabled.+\n +<Body.+50427b506172612b23....20.+?2f(.+?)2e637562657d7d7d7d/gmi);
 
-//this returns an array that must become a string. .toString() uses "," as a separator, so use .join("\n") instead
+//.match() returns an array, but the rest of the code assumes a long string. .toString() uses "," as a separator, so using .join("\n") instead
 
 			return str_out.join("\n");
 		}
@@ -41,6 +41,8 @@
 
 //from https://www.w3resource.com/javascript-exercises/javascript-string-exercise-28.php
 
+//wanted to write this as a separate function but couldn't figure out how to call it from within .replace and append the tab at the start
+
 //		function hex_to_ascii(str1)
 //			{
 //				var hex  = str1.toString();
@@ -52,6 +54,8 @@
 //			}
 
 		function hex_to_unicodev2(str){
+
+//keep in mind this is specific to the search side of the regex starting with a single character and that character being a tab
 
 			str = str.replace(/\t(.+)/gmi, function (tab_then_hex) {
 				var hex  = tab_then_hex.substring(1);
