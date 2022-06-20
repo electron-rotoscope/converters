@@ -11,6 +11,9 @@ This is a tool for prepping transcripts for captioning
 [EDL with markers to TSV Toaster](https://electron-rotoscope.github.io/converters/edl_with_markers_toaster.html "Click here for live version")  
 This is a tool for prepping TSV exports from EDLs with marker lists
 
+[LUT Extractor](https://electron-rotoscope.github.io/converters/lut_extractor.html "Click here for live version")  
+This is a tool for extracting LUT files linked from DaVinci Resolve sequence xml files
+
 [Tiger CSV Toaster](https://electron-rotoscope.github.io/converters/tiger_toaster.html "Click here for live version")  
 This is a tool for prepping CSV exports from TigerSPACES for Sheets
 
