@@ -12,12 +12,30 @@
 	<script language="javascript" type="text/javascript">
 		function mainreplacements(str){
 			//header row
-			str = str.replace(/^000(\d\d\d)  (.+?)                V     C        (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) \n\*FROM CLIP NAME\:  (.+?) \n\*LOC\: \5 BLACK   (.+?) \n\*SOURCE FILE: \2/gm, "$1\t$2\t$7\t$8\t$3\t$4\t$5\t$6");
+			str = str.replace(/^000(\d\d\d)  (.+?)                V     C        (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) \n\*FROM CLIP NAME\:  (.+?) \n\*LOC\: \5 BLACK   (.+?) \n\*SOURCE FILE: \2/gmi, "$1\t$2\t$7\t$8\t$3\t$4\t$5\t$6");
+
+			return str;
+		}
+
+		function remove_title_lines(str){
+			//header row
+			str = str.replace(/^(?:TITLE:|FCM:).+\n/gmi, "");
 
 			return str;
 		}
 
 		function mainChanges () {
+
+			var str = document.getElementById("input").value;
+		
+			str = mainreplacements(str);
+		
+			str = remove_title_lines(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function mainChangesKeepTitleLines () {
 
 			var str = document.getElementById("input").value;
 		
@@ -119,6 +137,7 @@
 	</div>
 	<div align="center" class="buttonrow">
 		<input type="button" value="Main" onclick="mainChanges();" title="Main Changes">
+		<input type="button" value="Main - Keep Titles" onclick="mainChangesKeepTitleLines();" title="Main Changes, don't remove the TITLE and FCM lines">
 	</div>
 	<div>
 		<h3>
