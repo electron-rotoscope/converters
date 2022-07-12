@@ -12,7 +12,7 @@
 	<script language="javascript" type="text/javascript">
 		function mainreplacements(str){
 			//header row
-			str = str.replace(/^000(\d\d\d)  (.+?)                V     C        (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) \n\*FROM CLIP NAME\:  (.+?) \n\*LOC\: \5 BLACK   (.+?) \n\*SOURCE FILE: \2/gmi, "$1\t$2\t$7\t$8\t$3\t$4\t$5\t$6");
+			str = str.replace(/^000(\d\d\d)  (.+?)                V     C        (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) \n\*FROM CLIP NAME\:  (.+?) \n\*LOC\: \5 (?:BLACK|WHITE)   (.+?) \n\*SOURCE FILE: \2/gmi, "$1\t$2\t$7\t$8\t$3\t$4\t$5\t$6");
 
 			return str;
 		}
@@ -54,7 +54,7 @@
 			"*SOURCE FILE: A001C002_220504L1\n" +
 			"000002  B002C001_220505CV                V     C        19:03:05:12 19:03:13:02 01:00:06:14 01:00:14:04 \n" +
 			"*FROM CLIP NAME:  V102L-14A \n" +
-			"*LOC: 01:00:06:14 BLACK   TX2_201_002_010_B_TEST \n" +
+			"*LOC: 01:00:06:14 WHITE   TX2_201_002_010_B_TEST \n" +
 			"*SOURCE FILE: B002C001_220505CV\n" +
 			""
 
