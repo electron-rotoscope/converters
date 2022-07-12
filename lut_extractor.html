@@ -17,11 +17,11 @@
 
 		function mainselect(str_in){
 
-//in ascii / utf-8 the regex code  50427b506172612b23....20.+?2f(.+?)2e637562657d7d7d7d
-//translates to                    PB{Para+#.. .+?/(.+?)\.cube}}}}
+//in ascii / utf-8 the regex code  50427b506172612b23....20.+?2f(.+?)2e(?:63756265|646174)7d7d7d7d
+//translates to                    PB{Para+#.. .+?/(.+?)\.(?:cube|dat)}}}}
 
 			//find only what we're looking for
-			str_out = str_in.match(/^ +<MediaReelNumber>(.+)<\/MediaReelNumber>\n +<MediaFrameRate.+\n +<MediaTimemapBA.+\n +<pLmVerTable.+\n +<ListMgt.+\n +<FieldsBlob.+\n +<VerType.+\n +<pRemoteTable.+\n +<pActive.+\n +<Locals.+\n +<Element.+\n +<ListMgt:.+\n +<FieldsBlob.+\n +<Name.+\n +<HasCorrection.+\n +<VerType.+\n +<ImplVersion.+\n +<IncludedInRecording.+\n +<FlatPassEnabled.+\n +<RGBAOutputEnabled.+\n +<Body.+50427b506172612b23....20.+?2f(.+?)2e637562657d7d7d7d/gmi);
+			str_out = str_in.match(/^ +<MediaReelNumber>(.+)<\/MediaReelNumber>\n +<MediaFrameRate.+\n +<MediaTimemapBA.+\n +<pLmVerTable.+\n +<ListMgt.+\n +<FieldsBlob.+\n +<VerType.+\n +<pRemoteTable.+\n +<pActive.+\n +<Locals.+\n +<Element.+\n +<ListMgt:.+\n +<FieldsBlob.+\n +<Name.+\n +<HasCorrection.+\n +<VerType.+\n +<ImplVersion.+\n +<IncludedInRecording.+\n +<FlatPassEnabled.+\n +<RGBAOutputEnabled.+\n +<Body.+50427b506172612b23....20.+?2f(.+?)2e(?:63756265|646174)7d7d7d7d/gmi);
 
 //.match() returns an array, but the rest of the code assumes a long string. .toString() uses "," as a separator, so using .join("\n") instead
 
@@ -30,11 +30,11 @@
 
 		function mainreplacementsv2(str){
 
-//in ascii / utf-8 the regex code  50427b506172612b23....20.+?2f(.+?)2e637562657d7d7d7d
-//translates to                    PB{Para+#.. .+?/(.+?)\.cube}}}}
+//in ascii / utf-8 the regex code  50427b506172612b23....20.+?2f(.+?)2e(?:63756265|646174)7d7d7d7d
+//translates to                    PB{Para+#.. .+?/(.+?)\.(?:cube|dat)}}}}
 
 			//replace big list
-			str = str.replace(/^ +<MediaReelNumber>(.+)<\/MediaReelNumber>\n +<MediaFrameRate.+\n +<MediaTimemapBA.+\n +<pLmVerTable.+\n +<ListMgt.+\n +<FieldsBlob.+\n +<VerType.+\n +<pRemoteTable.+\n +<pActive.+\n +<Locals.+\n +<Element.+\n +<ListMgt:.+\n +<FieldsBlob.+\n +<Name.+\n +<HasCorrection.+\n +<VerType.+\n +<ImplVersion.+\n +<IncludedInRecording.+\n +<FlatPassEnabled.+\n +<RGBAOutputEnabled.+\n +<Body.+50427b506172612b23....20.+?2f(.+?)2e637562657d7d7d7d/gmi, "$1\t$2");
+			str = str.replace(/^ +<MediaReelNumber>(.+)<\/MediaReelNumber>\n +<MediaFrameRate.+\n +<MediaTimemapBA.+\n +<pLmVerTable.+\n +<ListMgt.+\n +<FieldsBlob.+\n +<VerType.+\n +<pRemoteTable.+\n +<pActive.+\n +<Locals.+\n +<Element.+\n +<ListMgt:.+\n +<FieldsBlob.+\n +<Name.+\n +<HasCorrection.+\n +<VerType.+\n +<ImplVersion.+\n +<IncludedInRecording.+\n +<FlatPassEnabled.+\n +<RGBAOutputEnabled.+\n +<Body.+50427b506172612b23....20.+?2f(.+?)2e(?:63756265|646174)7d7d7d7d/gmi, "$1\t$2");
 
 			return str;
 		}
