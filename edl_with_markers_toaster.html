@@ -12,14 +12,14 @@
 	<script language="javascript" type="text/javascript">
 		function remove_empty_markers(str){
 			//header row
-			str = str.replace(/^\*LOC\: \d\d\:\d\d\:\d\d\:\d\d (?:RED|GREEN|BLUE|CYAN|MAGENTA|YELOW|BLACK|WHITE) *\n/gmi, "");
+			str = str.replace(/^\*LOC\: \d\d\:\d\d\:\d\d\:\d\d (?:RED|GREEN|BLUE|CYAN|MAGENTA|YELLOW|BLACK|WHITE) *\n/gmi, "");
 
 			return str;
 		}
 
 		function mainreplacements(str){
 			//header row
-			str = str.replace(/^000(\d\d\d)  (.+?)                V     C        (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) \n\*FROM CLIP NAME\:  (.+?) \n\*LOC\: \5 (?:RED|GREEN|BLUE|CYAN|MAGENTA|YELOW|BLACK|WHITE)   (.+?) \n\*SOURCE FILE: \2/gmi, "$1\t$2\t$7\t$8\t$3\t$4\t$5\t$6");
+			str = str.replace(/^000(\d\d\d)  (.+?)                V     C        (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) \n\*FROM CLIP NAME\:  (.+?) \n\*LOC\: \5 (?:RED|GREEN|BLUE|CYAN|MAGENTA|YELLOW|BLACK|WHITE)   (.+?) \n\*SOURCE FILE: \2/gmi, "$1\t$2\t$7\t$8\t$3\t$4\t$5\t$6");
 
 			return str;
 		}
