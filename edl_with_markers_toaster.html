@@ -10,9 +10,16 @@
 	<link rel="shortcut icon" href="https://electron-rotoscope.github.io/converters/favicon.ico" type="image/ico" />
 	<title>MHL to TSV Converter</title>
 	<script language="javascript" type="text/javascript">
+		function remove_empty_markers(str){
+			//header row
+			str = str.replace(/^\*LOC\: \d\d\:\d\d\:\d\d\:\d\d (?:RED|GREEN|BLUE|CYAN|MAGENTA|YELOW|BLACK|WHITE) *\n/gmi, "");
+
+			return str;
+		}
+
 		function mainreplacements(str){
 			//header row
-			str = str.replace(/^000(\d\d\d)  (.+?)                V     C        (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) \n\*FROM CLIP NAME\:  (.+?) \n\*LOC\: \5 (?:BLACK|WHITE)   (.+?) \n\*SOURCE FILE: \2/gmi, "$1\t$2\t$7\t$8\t$3\t$4\t$5\t$6");
+			str = str.replace(/^000(\d\d\d)  (.+?)                V     C        (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) \n\*FROM CLIP NAME\:  (.+?) \n\*LOC\: \5 (?:RED|GREEN|BLUE|CYAN|MAGENTA|YELOW|BLACK|WHITE)   (.+?) \n\*SOURCE FILE: \2/gmi, "$1\t$2\t$7\t$8\t$3\t$4\t$5\t$6");
 
 			return str;
 		}
@@ -28,6 +35,8 @@
 
 			var str = document.getElementById("input").value;
 		
+			str = remove_empty_markers(str);
+		
 			str = mainreplacements(str);
 		
 			str = remove_title_lines(str);
@@ -38,6 +47,8 @@
 		function mainChangesKeepTitleLines () {
 
 			var str = document.getElementById("input").value;
+		
+			str = remove_empty_markers(str);
 		
 			str = mainreplacements(str);
 		
@@ -56,6 +67,11 @@
 			"*FROM CLIP NAME:  V102L-14A \n" +
 			"*LOC: 01:00:06:14 WHITE   TX2_201_002_010_B_TEST \n" +
 			"*SOURCE FILE: B002C001_220505CV\n" +
+			"000003  C001C004_220519PJ                V     C        21:33:15:12 21:33:45:12 01:00:14:14 01:00:44:04 \n" +
+			"*FROM CLIP NAME:  V102L-15A \n" +
+			"*LOC: 01:00:14:14 RED   TX2_201_002_010_C_TEST \n" +
+			"*LOC: 01:00:24:14 GREEN  \n" +
+			"*SOURCE FILE: C001C004_220519PJ\n" +
 			""
 
 			document.getElementById('input').value = str;
@@ -149,6 +165,7 @@
 	<div class="notes">
 		Notes<br />
 		this is really designed for a very specific EDL export format<br />
+		markers without text will be removed<br />
 	</div>
 </body>
 </html>
