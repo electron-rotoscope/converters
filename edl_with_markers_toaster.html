@@ -19,7 +19,7 @@
 
 		function mainreplacements(str){
 			//header row
-			str = str.replace(/^000(\d\d\d)  (.+?)                V     C        (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) \n\*FROM CLIP NAME\:  (.+?) \n\*LOC\: \5 (?:RED|GREEN|BLUE|CYAN|MAGENTA|YELLOW|BLACK|WHITE)   (.+?) \n\*SOURCE FILE: \2/gmi, "$1\t$2\t$7\t$8\t$3\t$4\t$5\t$6");
+			str = str.replace(/^000(\d\d\d)  (.+?)  +V     C        (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) (\d\d\:\d\d\:\d\d\:\d\d) \n\*FROM CLIP NAME\:  (.+?) \n\*LOC\: \5 (?:RED|GREEN|BLUE|CYAN|MAGENTA|YELLOW|BLACK|WHITE)   (.+?) \n\*SOURCE FILE: \2/gmi, "$1\t$2\t$7\t$8\t$3\t$4\t$5\t$6");
 
 			return str;
 		}
@@ -72,6 +72,10 @@
 			"*LOC: 01:00:14:14 RED   TX2_201_002_010_C_TEST \n" +
 			"*LOC: 01:00:24:14 GREEN  \n" +
 			"*SOURCE FILE: C001C004_220519PJ\n" +
+			"000004  H002C002_220622_RP5X             V     C        00:37:37:07 00:37:47:17 01:00:44:04 01:00:54:14 \n" +
+			"*FROM CLIP NAME:  V105B-1H-MOS \n" +
+			"*LOC: 01:00:44:04 WHITE   SB2_201_002_600_RF01 \n" +
+			"*SOURCE FILE: H002C002_220622_RP5X\n" +
 			""
 
 			document.getElementById('input').value = str;
