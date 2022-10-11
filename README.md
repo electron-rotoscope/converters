@@ -8,7 +8,7 @@ human-readable for debugging and teaching
 [Script Cleaner](https://electron-rotoscope.github.io/converters/script_cleaner.html "Click here for live version")  
 This is a tool for prepping transcripts for captioning
 
-[EDL Reel Replacer Toaster](https://electron-rotoscope.github.io/converters/edl_reel_replacer_toaster.html "Click here for live version")  
+[EDL Reel Replacement Toaster](https://electron-rotoscope.github.io/converters/edl_reel_replacement_toaster.html "Click here for live version")  
 This is a tool for replacing EDL reels with extracted reels from source paths exported as Comments. Meant for EDLs of sequences that link to non-unique filenames, so the Reel/Tape field is also neccessary to avoid linking to the wrong sourcefile
 
 [EDL with markers to TSV Toaster](https://electron-rotoscope.github.io/converters/edl_with_markers_toaster.html "Click here for live version")  
