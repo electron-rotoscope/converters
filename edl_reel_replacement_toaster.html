@@ -1,0 +1,242 @@
+<!-- template from https://codebeautify.org which is really quite amazing -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="https://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="robots" content="noindex,nofollow">
+	<meta name="google" content="notranslate">
+	<link rel="shortcut icon" href="https://electron-rotoscope.github.io/converters/favicon.ico" type="image/ico" />
+	<title>EDL Reel Replacement Toaster</title>
+	<script language="javascript" type="text/javascript">
+		function normalize_slashes(str){
+			str = str.replace(/\\/gmi, "/");
+
+			return str;
+		}
+
+		function remove_new_and_numbers(str){
+			str = str.replace(/(^\*.+?)(?:\.new)?(?:\.\d+)?( )?$/gmi, "$1$2");
+
+			return str;
+		}
+
+		function remove_mp4_and_mov(str){
+			str = str.replace(/(^\*.+?)(?:\.mp4|\.mov)/gmi, "$1");
+
+			return str;
+		}
+
+		function remove_prores_names(str){
+			str = str.replace(/(^\*.+?)_APPLE_PRORES(?:_422)?(?:_HQ)?/gmi, "$1");
+
+			return str;
+		}
+
+		function reelname_extract(str){
+			//create copy of comment line, starting with '----'
+			str = str.replace(/^\*(\/|[a-z]\:)(.+)?$/gmi, "----$1$2\n\*$1$2");
+
+			//remove trailing spaces
+			str = str.replace(/^(----.+?) +$/gmi, "$1");
+
+			//remove dcim and 100media
+			str = str.replace(/^(----.+?)(?:DCIM\/100MEDIA\/)$/gmi, "$1");
+			str = str.replace(/^(----.+?)(?:DCIM\/|100MEDIA\/)$/gmi, "$1");
+
+			//remove all but last foldername
+			str = str.replace(/^----(?:\/|[a-z]\:).+\/(.+)\/$/gmi, "----$1");
+
+			return str;
+		}
+
+		function replace_reel(str){
+			//if there's an M2 speed effect
+			str = str.replace(/^(\d+ +)(.+?)( .+)\n(m2 +)\2(.+)\n----(.+)\n/gmi, "$1$6$3\n$4$6$5\n");
+
+			//if there no speed effect
+			str = str.replace(/^(\d+ +)(.+?)( .+)\n----(.+)\n/gmi, "$1$4$3\n");
+
+			return str;
+		}
+
+		function add_toasted_to_name(str){
+			//just to mark that it's modified
+			str = str.replace(/(^TITLE:.+?)( +)$/gmi, "$1_Toasted$2");
+
+			return str;
+		}
+
+		function remove_title_lines(str){
+			//header row
+			str = str.replace(/^(?:TITLE:|FCM:).+\n/gmi, "");
+
+			return str;
+		}
+
+		function mainChanges () {
+
+			var str = document.getElementById("input").value;
+		
+			str = normalize_slashes(str);
+
+			str = remove_new_and_numbers(str);
+			str = remove_mp4_and_mov(str);
+			str = remove_prores_names(str);
+
+			str = reelname_extract(str);
+			str = replace_reel(str);
+
+			str = add_toasted_to_name(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function getSample () {
+			var str =
+			"TITLE:   PJ3 EP2 LOCKED SOURCE V2 COMMIT EXPORT.Copy.02.Copy.01 \n" +
+			"FCM: NON-DROP FRAME\n" +
+			"000001  FILE00012_APPLE_PRORES_422_HQ  V     C        00:03:46:02 00:03:46:23 01:00:03:20 01:00:04:16 \n" +
+			"M2      FILE00012_APPLE_PRORES_422_HQ           024.0 00:03:46:02 \n" +
+			"*\\VOLUMES\\PROJECT RAID 16TB\\PJ3_BACKUP\\DAY_03\\PJ3_110101_HELEMET-CAM_A\\DCIM\\100MEDIA\\ \n" +
+			"*IMAGE, FRAMEFLEX \n" +
+			"*FROM CLIP NAME:  FILE00012_APPLE_PRORES_422_HQ \n" +
+			"*SOURCE FILE: FILE00012_APPLE_PRORES_422_HQ\n" +
+			"000002  DJI_0009                     V     C        00:00:18:12 00:00:23:20 01:00:08:10 01:00:09:05 \n" +
+			"M2      DJI_0009                              163.6 00:00:18:12 \n" +
+			"*/VOLUMES/PROJECT RAID 24TB/PJ3_RAW MEDIA/DAY_15/PJ3_110201_MC3-DRONE_BS/100MEDIA/ \n" +
+			"*IMAGE, FRAMEFLEX \n" +
+			"*IMAGE, COLOR CORRECTION \n" +
+			"*FROM CLIP NAME:  DJI_0009.NEW.01 \n" +
+			"*SOURCE FILE: DJI_0009\n" +
+			"000003  DJI_0001.MP4                 V     C        00:00:03:08 00:00:04:23 01:00:10:10 01:00:11:06 \n" +
+			"*D:\\PJ3_RAW MEDIA\\220524_B-ROLL\\PJ3_220524_DJI-ACTION2_B\\\n" +
+			"*FROM CLIP NAME:  DJI_0001.NEW.01 \n" +
+			"*SOURCE FILE: DJI_0001.MP4\n" +
+			""
+
+			document.getElementById('input').value = str;
+		}
+
+		function copyOutput () {
+			document.querySelector("#output").select();
+
+			document.execCommand('copy');
+		}
+	</script>
+	<style>
+		body {
+			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+		}
+
+		h1 {
+			color: rgb(64, 64, 64);
+		}
+
+		textarea {
+			font-family: monospace;
+			width: 100%;
+		}
+
+		.copypaster {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+			color: rgb(68, 139, 196);
+			cursor: pointer;
+		}
+		
+		.buttonrow {
+			margin-top: 6px;
+			margin-bottom: -24px;
+		}
+
+		input {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: rgb(255, 255, 255);
+			background-color: rgb(128, 128, 128);
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px rgb(64, 64, 64);
+		}
+
+		input:hover, input:active {
+			background-color: rgb(96, 96, 96);
+		}
+
+		input:active {
+			box-shadow: 0 5px rgb(64, 64, 64);
+			transform: translateY(4px);
+		}
+		
+		.notes {
+			margin-top: 100px;
+			font-family: monospace;
+		}
+	</style>
+</head>
+<body>
+	<h1>
+		EDL Reel Replacement Toaster
+	</h1>
+	<div>
+		<h3>
+			Input Text
+			<span class="copypaster" onclick="getSample()">get sample</span>
+		</h3>
+		<textarea id="input" autofocus rows="17" placeholder="Paste here"></textarea>
+	</div>
+	<div align="center" class="buttonrow">
+		<input type="button" value="Main" onclick="mainChanges();" title="Main Changes">
+	</div>
+	<div>
+		<h3>
+			Output Text
+			<span class="copypaster" onclick="copyOutput();">Copy Output</span>
+		</h3>
+		<textarea id="output" rows="17" placeholder="Output"></textarea>			
+	</div>
+	<div class="notes">
+		<ol>
+			<li>With the avid project not currently open, copy the .avb file into any avid project at the appropriate frame rate</li>
+			<li>Open the avid project, then open the bin containing the sequence</li>
+			<li>Right click on the sequence > Commit Multicam Edits</li>
+			<li>Keep only the one with committed multicam edits, there should only be one Sequence in the bin you're working in</li>
+			<li>Right click in the blank part of the bin > Set Bin Display > enable Show Reference Clips</li>
+			<li>Right click on the Source Path column (you might need to enable it)</li>
+			<li>With the right click menu up, press Cmd+D (or Ctrl+D on windows)</li>
+			<li>Choose "Comments" as the column to copy to</li>
+			<li>Open Tools > List Tool and load the sequence</li>
+			<li>Only enable the one track you're looking at at once (probably V1)</li>
+			<li>
+				Definitely enable:<br />
+				Both Picture and Sound > Clip Comments<br />
+				<br />
+				Probably enable:<br />
+				Both Picture and Sound > Clip Names<br />
+				Both Picture and Sound > Source File Name<br />
+				Both Picture and Sound > Reel Names<br />
+				<br />
+				But an Avid editor might know better
+			</li>
+			<li>
+				Output Format: File_129<br />
+				Preview<br />
+				Save List<br />
+				Save .edl file
+			</li>
+			<li>
+				The EDL should include full source paths that look like<br />
+				*\VOLUMES\PROJRAID2 16TB\PJ3_CAMERA\DAY_03\PJ3_220101_DRONE-CAM_A\DCIM\100MEDIA\
+			</li>
+		</ol>
+	</div>
+</body>
+</html>
