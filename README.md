@@ -14,8 +14,8 @@ This is a tool for replacing EDL reels with extracted reels from source paths ex
 [EDL with markers to TSV Toaster](https://electron-rotoscope.github.io/converters/edl_with_markers_toaster.html "Click here for live version")  
 This is a tool for prepping TSV exports from EDLs with marker lists
 
-[LUT Extractor](https://electron-rotoscope.github.io/converters/lut_extractor.html "Click here for live version")  
-This is a tool for extracting LUT files linked from DaVinci Resolve sequence xml files
+[LUT Extractor](https://electron-rotoscope.github.io/converters/lut_extractor_v18.html "Click here for live version")  
+This is a tool for extracting LUT files linked from DaVinci Resolve 18 sequence xml files [v17 here](https://electron-rotoscope.github.io/converters/lut_extractor_v17.html "Click here for live version")
 
 [Tiger CSV Toaster](https://electron-rotoscope.github.io/converters/tiger_toaster.html "Click here for live version")  
 This is a tool for prepping CSV exports from TigerSPACES for Sheets
