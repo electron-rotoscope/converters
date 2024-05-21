@@ -1,0 +1,235 @@
+<!-- template from https://codebeautify.org which is really quite amazing -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="https://www.w3.org/1999/xhtml" lang="en"><head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="robots" content="noindex,nofollow">
+	<meta name="google" content="notranslate">
+	<link rel="shortcut icon" href="https://electron-rotoscope.github.io/converters/favicon.ico" type="image/ico">
+	<title>Marker List Converter</title>
+	<script language="javascript" type="text/javascript">
+
+		function removeResolveCSVTopLine(str){
+
+			str = str.replace(/\"#\",\"Reel\",\"Match\",\"V\",\"C\",\"Dur\",\"Source In\",\"Source Out\",\"Record In\",\"Record Out\",\"Name\",\"Comments\",\"Source Start\",\"Source End\",\"Source Duration\",\"Codec\",\"Source FPS\",\"Resolution\",\"Color\",\"Notes\",\"EDL Clip Name\",\"Marker Keywords\"\n/gm, "");
+
+			return str;
+		}
+
+		function resolveCSVtoAvidMain(str){
+
+			var operator_name = document.getElementById("operator").value;
+
+			str = str.replace(/\".*?\",\".*?\",\".*?\",\"(.*?)\",\".*?\",\".*?\",\"(.*?)\",\".*?\",\".*?\",\".*?\",\".*?\",\".*?\",\".*?\",\".*?\",\".*?\",\".*?\",\".*?\",\".*?\",\"(.*?)\",\"(.*?)\",\".*?\",\".*?\"/gm, operator_name + "\t$2\t$1\t$3\t$4\t1");
+
+			return str;
+		}
+
+		function removeResolveTSVTopLine(str){
+
+			str = str.replace(/\"#\"\t\"Reel\"\t\"Match\"\t\"V\"\t\"C\"\t\"Dur\"\t\"Source In\"\t\"Source Out\"\t\"Record In\"\t\"Record Out\"\t\"Name\"\t\"Comments\"\t\"Source Start\"\t\"Source End\"\t\"Source Duration\"\t\"Codec\"\t\"Source FPS\"\t\"Resolution\"\t\"Color\"\t\"Notes\"\t\"EDL Clip Name\"\t\"Marker Keywords\"\n/gm, "");
+
+			return str;
+		}
+
+		function resolveTSVtoAvidMain(str){
+
+			var operator_name = document.getElementById("operator").value;
+
+			str = str.replace(/\".*?\"\t\".*?\"\t\".*?\"\t\"(.*?)\"\t\".*?\"\t\".*?\"\t\"(.*?)\"\t\".*?\"\t\".*?\"\t\".*?\"\t\".*?\"\t\".*?\"\t\".*?\"\t\".*?\"\t\".*?\"\t\".*?\"\t\".*?\"\t\".*?\"\t\"(.*?)\"\t\"(.*?)\"\t\".*?\"\t\".*?\"/gm, operator_name + "\t$2\t$1\t$3\t$4\t1");
+
+			return str;
+		}
+		
+		function coloursToLowercase(str){
+
+			str = str.replace(/\t(Blue|Cyan|Green|Yellow|Red|Pink|Purple|Fuchsia|Rose|Lavender|Sky|Mint|Lemon|Sand|Cocoa|Cream)\t/gm,
+				function(wholematch, firstbracket) {
+					return "\t" + firstbracket.toLowerCase() + "\t";
+				});
+
+			return str;
+		}
+		
+		function doubleDoublequotesToSingleDoublequotes(str){
+
+			str = str.replace(/\"\"/gm, "\"");
+
+			return str;
+		}
+		
+		function singleDoublequotesToDoubleDoublequotes(str){
+
+			str = str.replace(/\"/gm, "\"\"");
+
+			return str;
+		}
+
+		function resolveCSVtoAvidInput () {
+
+			var str = document.getElementById("input").value;
+		
+			str = removeResolveCSVTopLine(str);
+		
+			str = resolveCSVtoAvidMain(str);
+		
+			str = coloursToLowercase(str);
+		
+			str = doubleDoublequotesToSingleDoublequotes(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function resolveTSVtoAvidInput () {
+
+			var str = document.getElementById("input").value;
+		
+			str = removeResolveTSVTopLine(str);
+		
+			str = resolveTSVtoAvidMain(str);
+		
+			str = coloursToLowercase(str);
+		
+			str = doubleDoublequotesToSingleDoublequotes(str);
+		
+			document.getElementById('output').value = str;
+		}
+
+		function getResolveCSVSample () {
+			var str =
+			"\"#\",\"Reel\",\"Match\",\"V\",\"C\",\"Dur\",\"Source In\",\"Source Out\",\"Record In\",\"Record Out\",\"Name\",\"Comments\",\"Source Start\",\"Source End\",\"Source Duration\",\"Codec\",\"Source FPS\",\"Resolution\",\"Color\",\"Notes\",\"EDL Clip Name\",\"Marker Keywords\"\n" +
+			"\"1\",\"\",\"\",\"V1\",\"C\",\"\",\"01:00:06:16\",\"01:00:06:17\",\"01:00:06:16\",\"01:00:06:17\",\"CLAVDIVS_the_1st\",\"\",\"\",\"\",\"\",\"\",\"0.000\",\"1920x1080\",\"Red\",\"Looks funny; 1\",\"\",\"\"\n" +
+			"\"2\",\"\",\"\",\"A1\",\"C\",\"\",\"01:00:16:12\",\"01:00:16:13\",\"01:00:16:12\",\"01:00:16:13\",\"CLAVDIVS_the_1st\",\"\",\"\",\"\",\"\",\"\",\"0.000\",\"1920x1080\",\"Cyan\",\"Sounds funny; 2\",\"\",\"\"\n" +
+			"\"3\",\"\",\"\",\"V1\",\"C\",\"\",\"01:00:21:13\",\"01:00:21:14\",\"01:00:21:13\",\"01:00:21:14\",\"CLAVDIVS_the_1st\",\"\",\"\",\"\",\"\",\"\",\"0.000\",\"1920x1080\",\"Red\",\"Looks like \"\"A weird thing\"\" again; 3\",\"\",\"\"\n"
+
+			document.getElementById('input').value = str;
+		}
+
+		function getResolveTSVSample () {
+			var str =
+			"\"#\"\t\"Reel\"\t\"Match\"\t\"V\"\t\"C\"\t\"Dur\"\t\"Source In\"\t\"Source Out\"\t\"Record In\"\t\"Record Out\"\t\"Name\"\t\"Comments\"\t\"Source Start\"\t\"Source End\"\t\"Source Duration\"\t\"Codec\"\t\"Source FPS\"\t\"Resolution\"\t\"Color\"\t\"Notes\"\t\"EDL Clip Name\"\t\"Marker Keywords\"\n" +
+			"\"1\"\t\"\"\t\"\"\t\"V1\"\t\"C\"\t\"\"\t\"01:00:06:16\"\t\"01:00:06:17\"\t\"01:00:06:16\"\t\"01:00:06:17\"\t\"CLAVDIVS_the_1st\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"0.000\"\t\"1920x1080\"\t\"Red\"\t\"Looks funny; 1\"\t\"\"\t\"\"\n" +
+			"\"2\"\t\"\"\t\"\"\t\"A1\"\t\"C\"\t\"\"\t\"01:00:16:12\"\t\"01:00:16:13\"\t\"01:00:16:12\"\t\"01:00:16:13\"\t\"CLAVDIVS_the_1st\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"0.000\"\t\"1920x1080\"\t\"Cyan\"\t\"Sounds funny; 2\"\t\"\"\t\"\"\n" +
+			"\"3\"\t\"\"\t\"\"\t\"V1\"\t\"C\"\t\"\"\t\"01:00:21:13\"\t\"01:00:21:14\"\t\"01:00:21:13\"\t\"01:00:21:14\"\t\"CLAVDIVS_the_1st\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"0.000\"\t\"1920x1080\"\t\"Red\"\t\"Looks like \"\"A weird thing\"\" again; 3\"\t\"\"\t\"\"\n"
+
+			document.getElementById('input').value = str;
+		}
+
+		function getAvidSample () {
+			var str =
+			"Test\t01:00:06:16\tV1\tred\tLooks funny; 1\t1\n" +
+			"Test\t01:00:21:13\tV1\tred\tLooks like \"A weird thing\" again; 3\t1\n" +
+			"Test\t01:00:16:12\tA1\tcyan\tSounds funny; 2\t1\n"
+
+			document.getElementById('input').value = str;
+		}
+
+		function copyOutput () {
+			document.querySelector("#output").select();
+
+			document.execCommand('copy');
+		}
+	</script>
+	<style>
+		body {
+			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+		}
+
+		h1 {
+			color: rgb(64, 64, 64);
+		}
+
+		textarea {
+			font-family: monospace;
+			width: 100%;
+		}
+
+		.copypaster {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+			color: rgb(68, 139, 196);
+			cursor: pointer;
+		}
+
+		.copypaster_separater {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+		}
+		
+		.buttonrow {
+			margin-top: 6px;
+			margin-bottom: -24px;
+		}
+
+		input {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: rgb(255, 255, 255);
+			background-color: rgb(128, 128, 128);
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px rgb(64, 64, 64);
+		}
+
+		input:hover, input:active {
+			background-color: rgb(96, 96, 96);
+		}
+
+		input:active {
+			box-shadow: 0 5px rgb(64, 64, 64);
+			transform: translateY(4px);
+		}
+		
+		.notes {
+			margin-top: 100px;
+			font-family: monospace;
+		}
+	</style>
+</head>
+<body>
+	<h1>
+		Marker List Converter
+	</h1>
+	<div>
+		<h4>
+			Operator Name
+		</h4>
+		<textarea id="operator" rows="1" placeholder="Operator name here"></textarea>
+	</div>	<div>
+		<h3>
+			Input Text
+			<!-- This is in backwards order -->
+			<span class="copypaster" onclick="getAvidSample()">get Avid sample</span>
+			<span class="copypaster_separater"> | </span>
+			<span class="copypaster" onclick="getResolveTSVSample()">get Resolve TXT sample</span>
+			<span class="copypaster_separater"> | </span>
+			<span class="copypaster" onclick="getResolveCSVSample()">get Resolve CSV sample</span>
+		</h3>
+		<textarea id="input" autofocus="" rows="16" placeholder="Paste here"></textarea>
+	</div>
+	<div class="buttonrow" align="center">
+		<input type="button" value="Resolve CSV to Avid" onclick="resolveCSVtoAvidInput();" title="Change from the Resolve Edit List CSV format to the Avid Marker List format">
+		<input type="button" value="Resolve tabbed TXT to Avid" onclick="resolveTSVtoAvidInput();" title="Change from the Resolve Edit List tab-separated TXT format to the Avid Marker List format">
+	</div>
+	<div>
+		<h3>
+			Output Text
+			<span class="copypaster" onclick="copyOutput();">Copy Output</span>
+		</h3>
+		<textarea id="output" rows="16" placeholder="Output"></textarea>			
+	</div>
+	<div class="notes">
+		Notes<br>
+		
+	</div>
+
+
+</body></html>
