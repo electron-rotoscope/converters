@@ -103,12 +103,6 @@
 		</h3>
 		<textarea id="output" rows="20" placeholder="Output"></textarea>			
 	</div>
-	<div>
-		<h3>
-			Console
-		</h3>
-		<textarea id="console" rows="4" placeholder=""></textarea>			
-	</div>
 		<div class="notes">
 		Notes<br />
 		- Each button replaces what was in the Output box<br />
@@ -116,20 +110,20 @@
 		
 	</div>
 
-<!-- import and test pyodide, question whether this is all worth it -->
+<!-- import and test pyodide, import js, import all the functions at the end of the doc -->
 <script language="javascript" type="text/javascript">
 var function_importer = `
 import js
 exec(js.document.getElementById("functions").innerText)
 `
-//	console.log(new Date())
+	console.log(new Date())
 	async function main(){
 		let pyodide = await loadPyodide();
 //		await pyodide.loadPackage("regex"); #if you need things not included in re
 		pyodide.runPython( function_importer );
 		console.log(pyodide.runPython( "import sys; sys.version" ));
 		document.getElementById("status").innerText += " Ready";
-//		console.log(new Date())
+		console.log(new Date())
 		return pyodide;
 	}
 	let pyodideReadyPromise = main();
@@ -137,7 +131,7 @@ exec(js.document.getElementById("functions").innerText)
 
 <script language="javascript" type="text/javascript">
 
-// pyodide.globals.set() this will push things direct into python if needed
+// pyodide.globals.set() will push things direct into python if needed
 
 var get_sample_code = `
 str = sample
@@ -148,9 +142,7 @@ async function get_sample () {
 	let pyodide = await pyodideReadyPromise;
 	try {
 		pyodide.runPython(get_sample_code);
-	} catch (err) {
-		document.getElementById('console').value = err.message;
-	}
+	} catch (err) { console.log(err); }
 }
 
 var deparity_code = `
@@ -166,9 +158,7 @@ async function deparity () {
 	let pyodide = await pyodideReadyPromise;
 	try {
 		pyodide.runPython(deparity_code);
-	} catch (err) {
-		document.getElementById('console').value = err.message;
-	}
+	} catch (err) { console.log(err); }
 }
 
 var decodeSCC_code = `
@@ -184,9 +174,7 @@ async function decodeSCC () {
 	let pyodide = await pyodideReadyPromise;
 	try {
 		pyodide.runPython(decodeSCC_code);
-	} catch (err) {
-		document.getElementById('console').value = err.message;
-	}
+	} catch (err) { console.log(err); }
 }
 
 var decodeSCCandclean_code = `
@@ -203,9 +191,7 @@ async function decodeSCCandclean () {
 	let pyodide = await pyodideReadyPromise;
 	try {
 		pyodide.runPython(decodeSCCandclean_code);
-	} catch (err) {
-		document.getElementById('console').value = err.message;
-	}
+	} catch (err) { console.log(err); }
 }
 
 var decodeSCCandcleannocomms_code = `
@@ -223,9 +209,7 @@ async function decodeSCCandcleannocomms () {
 	let pyodide = await pyodideReadyPromise;
 	try {
 		pyodide.runPython(decodeSCCandcleannocomms_code);
-	} catch (err) {
-		document.getElementById('console').value = err.message;
-	}
+	} catch (err) { console.log(err); }
 }
 
 function copyOutput () {
