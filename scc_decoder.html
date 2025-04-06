@@ -1,311 +1,20 @@
-<!-- template from https://codebeautify.org which is really quite amazing -->
+<!-- layout and button template from https://codebeautify.org which is really quite amazing -->
+<!-- python in the browser made possible by https://pyodide.org -->
 <!-- SCC documentation at http://www.theneitherworld.com/mcpoodle/SCC_TOOLS/DOCS/CC_CHARS.HTML -->
 <!-- SCC documentation at http://www.theneitherworld.com/mcpoodle/SCC_TOOLS/DOCS/CC_CODES.HTML -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html lang="en" xml:lang="en" xmlns="https://www.w3.org/1999/xhtml">
 <head>
+	<script language="javascript" type="text/javascript">console.log("pageload start")</script>
 	<meta charset="UTF-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="robots" content="noindex,nofollow">
 	<meta name="google" content="notranslate">
 	<link rel="shortcut icon" href="https://electron-rotoscope.github.io/converters/favicon.ico" type="image/ico" />
+	<script src="https://cdn.jsdelivr.net/pyodide/v0.27.5/full/pyodide.js"></script>
+	<!-- <script src="pyodide/pyodide-0.27.5/pyodide/pyodide.js"></script> -->
 	<title>SCC Decoder</title>
-	<script language="javascript" type="text/javascript">
-		function separateintobytes(str){
-			str = str.replace(/Scenarist SCC V1\.0/g, "Decoded");
-			str = str.replace(/Scenarist_SCC V1\.0/g, "Decoded");
-			str = str.replace(/\t(..)(..)/g, "\t{{$1}}{{$2}}");
-			str = str.replace(/ (..)(..)/g, "_{{$1}}{{$2}}");
-			return str;
-		}
-		
-		function zerofirstparitybit(str){
-			str = str.replace(/\{\{8(.)\}\}/g, "{{0$1}}");
-			str = str.replace(/\{\{9(.)\}\}/g, "{{1$1}}");
-			str = str.replace(/\{\{a(.)\}\}/g, "{{2$1}}");
-			str = str.replace(/\{\{b(.)\}\}/g, "{{3$1}}");
-			str = str.replace(/\{\{c(.)\}\}/g, "{{4$1}}");
-			str = str.replace(/\{\{d(.)\}\}/g, "{{5$1}}");
-			str = str.replace(/\{\{e(.)\}\}/g, "{{6$1}}");
-			str = str.replace(/\{\{f(.)\}\}/g, "{{7$1}}");
-			return str;
-		}
-		
-		function turnbytesinto608commands(str){
-			str = str.replace(/\{\{11\}\}\{\{(..)\}\}/g, "{{11$1}}");
-			str = str.replace(/\{\{14\}\}\{\{(..)\}\}/g, "{{14$1}}");
-			str = str.replace(/\{\{17\}\}\{\{(..)\}\}/g, "{{17$1}}");
-			str = str.replace(/\{\{1420\}\}/g, "{Start Caption}");
-			str = str.replace(/\{\{142c\}\}/g, "{Clear Screen}");
-			str = str.replace(/\{\{142e\}\}/g, "{Clear Buffer}");
-			str = str.replace(/\{\{142f\}\}/g, "{End Caption}");
-			str = str.replace(/\{\{1425\}\}/g, "{Roll-Up 2}");
-			str = str.replace(/\{\{1426\}\}/g, "{Roll-Up 3}");
-			str = str.replace(/\{\{1427\}\}/g, "{Roll-Up 4}");
-			str = str.replace(/\{\{142d\}\}/g, "{New Line}");
-			str = str.replace(/\{\{1120\}\}/g, "{Type in WHITE}");
-			str = str.replace(/\{\{1121\}\}/g, "{Type in WHITE UNDERLINE}");
-			str = str.replace(/\{\{1122\}\}/g, "{Type in GREEN}");
-			str = str.replace(/\{\{1123\}\}/g, "{Type in GREEN UNDERLINE}");
-			str = str.replace(/\{\{1124\}\}/g, "{Type in BLUE}");
-			str = str.replace(/\{\{1125\}\}/g, "{Type in BLUE UNDERLINE}");
-			str = str.replace(/\{\{1126\}\}/g, "{Type in CYAN}");
-			str = str.replace(/\{\{1127\}\}/g, "{Type in CYAN UNDERLINE}");
-			str = str.replace(/\{\{1128\}\}/g, "{Type in RED}");
-			str = str.replace(/\{\{1129\}\}/g, "{Type in RED UNDERLINE}");
-			str = str.replace(/\{\{112a\}\}/g, "{Type in YELLOW}");
-			str = str.replace(/\{\{112b\}\}/g, "{Type in YELLOW UNDERLINE}");
-			str = str.replace(/\{\{112c\}\}/g, "{Type in MAGENTA}");
-			str = str.replace(/\{\{112d\}\}/g, "{Type in MAGENTA UNDERLINE}");
-			str = str.replace(/\{\{112e\}\}/g, "{Type in ITALICS}");
-			str = str.replace(/\{\{112f\}\}/g, "{Type in ITALICS UNDERLINE}");
-			str = str.replace(/\{\{1150\}\}/g, "{Go To Row 00 Col 00}");
-			str = str.replace(/\{\{1152\}\}/g, "{Go To Row 00 Col 04}");
-			str = str.replace(/\{\{1154\}\}/g, "{Go To Row 00 Col 08}");
-			str = str.replace(/\{\{1156\}\}/g, "{Go To Row 00 Col 12}");
-			str = str.replace(/\{\{1158\}\}/g, "{Go To Row 00 Col 16}");
-			str = str.replace(/\{\{115a\}\}/g, "{Go To Row 00 Col 20}");
-			str = str.replace(/\{\{115c\}\}/g, "{Go To Row 00 Col 24}");
-			str = str.replace(/\{\{115e\}\}/g, "{Go To Row 00 Col 28}");
-			str = str.replace(/\{\{1170\}\}/g, "{Go To Row 02 Col 00}");
-			str = str.replace(/\{\{1172\}\}/g, "{Go To Row 02 Col 04}");
-			str = str.replace(/\{\{1174\}\}/g, "{Go To Row 02 Col 08}");
-			str = str.replace(/\{\{1176\}\}/g, "{Go To Row 02 Col 12}");
-			str = str.replace(/\{\{1178\}\}/g, "{Go To Row 02 Col 16}");
-			str = str.replace(/\{\{117a\}\}/g, "{Go To Row 02 Col 20}");
-			str = str.replace(/\{\{117c\}\}/g, "{Go To Row 02 Col 24}");
-			str = str.replace(/\{\{117e\}\}/g, "{Go To Row 02 Col 28}");
-			str = str.replace(/\{\{1450\}\}/g, "{Go To Row 14 Col 00}");
-			str = str.replace(/\{\{1452\}\}/g, "{Go To Row 14 Col 04}");
-			str = str.replace(/\{\{1454\}\}/g, "{Go To Row 14 Col 08}");
-			str = str.replace(/\{\{1456\}\}/g, "{Go To Row 14 Col 12}");
-			str = str.replace(/\{\{1458\}\}/g, "{Go To Row 14 Col 16}");
-			str = str.replace(/\{\{145a\}\}/g, "{Go To Row 14 Col 20}");
-			str = str.replace(/\{\{145c\}\}/g, "{Go To Row 14 Col 24}");
-			str = str.replace(/\{\{145e\}\}/g, "{Go To Row 14 Col 28}");
-			str = str.replace(/\{\{1470\}\}/g, "{Go To Row 15 Col 00}");
-			str = str.replace(/\{\{1472\}\}/g, "{Go To Row 15 Col 04}");
-			str = str.replace(/\{\{1474\}\}/g, "{Go To Row 15 Col 08}");
-			str = str.replace(/\{\{1476\}\}/g, "{Go To Row 15 Col 12}");
-			str = str.replace(/\{\{1478\}\}/g, "{Go To Row 15 Col 16}");
-			str = str.replace(/\{\{147a\}\}/g, "{Go To Row 15 Col 20}");
-			str = str.replace(/\{\{147c\}\}/g, "{Go To Row 15 Col 24}");
-			str = str.replace(/\{\{147e\}\}/g, "{Go To Row 15 Col 28}");
-			str = str.replace(/\{\{1721\}\}/g, "{Col +1}");
-			str = str.replace(/\{\{1722\}\}/g, "{Col +2}");
-			str = str.replace(/\{\{1723\}\}/g, "{Col +3}");
-			str = str.replace(/\{\{1130\}\}/g, "®");
-			str = str.replace(/\{\{1131\}\}/g, "°");
-			str = str.replace(/\{\{1132\}\}/g, "½");
-			str = str.replace(/\{\{1133\}\}/g, "¿");
-			str = str.replace(/\{\{1134\}\}/g, "™");
-			str = str.replace(/\{\{1135\}\}/g, "¢");
-			str = str.replace(/\{\{1136\}\}/g, "£");
-			str = str.replace(/\{\{1137\}\}/g, "\u266A");
-			str = str.replace(/\{\{1138\}\}/g, "à");
-			str = str.replace(/\{\{1139\}\}/g, "[non breaking space]");
-			str = str.replace(/\{\{113a\}\}/g, "è");
-			str = str.replace(/\{\{113b\}\}/g, "â");
-			str = str.replace(/\{\{113c\}\}/g, "ê");
-			str = str.replace(/\{\{113d\}\}/g, "î");
-			str = str.replace(/\{\{113e\}\}/g, "ô");
-			str = str.replace(/\{\{113f\}\}/g, "û");
-			str = str.replace(/\{\{00\}\}/g, "{null}");
-			str = str.replace(/\{\{20\}\}/g, " ");
-			str = str.replace(/\{\{21\}\}/g, "!");
-			str = str.replace(/\{\{22\}\}/g, "\"");
-			str = str.replace(/\{\{23\}\}/g, "#");
-			str = str.replace(/\{\{24\}\}/g, "\$");
-			str = str.replace(/\{\{25\}\}/g, "%");
-			str = str.replace(/\{\{26\}\}/g, "&");
-			str = str.replace(/\{\{27\}\}/g, "’");
-			str = str.replace(/\{\{28\}\}/g, "(");
-			str = str.replace(/\{\{29\}\}/g, ")");
-			str = str.replace(/\{\{2a\}\}/g, "á");
-			str = str.replace(/\{\{2b\}\}/g, "+");
-			str = str.replace(/\{\{2c\}\}/g, ",");
-			str = str.replace(/\{\{2d\}\}/g, "-");
-			str = str.replace(/\{\{2e\}\}/g, ".");
-			str = str.replace(/\{\{2f\}\}/g, "/");
-			str = str.replace(/\{\{30\}\}/g, "0");
-			str = str.replace(/\{\{31\}\}/g, "1");
-			str = str.replace(/\{\{32\}\}/g, "2");
-			str = str.replace(/\{\{33\}\}/g, "3");
-			str = str.replace(/\{\{34\}\}/g, "4");
-			str = str.replace(/\{\{35\}\}/g, "5");
-			str = str.replace(/\{\{36\}\}/g, "6");
-			str = str.replace(/\{\{37\}\}/g, "7");
-			str = str.replace(/\{\{38\}\}/g, "8");
-			str = str.replace(/\{\{39\}\}/g, "9");
-			str = str.replace(/\{\{3a\}\}/g, ":");
-			str = str.replace(/\{\{3b\}\}/g, ";");
-			str = str.replace(/\{\{3c\}\}/g, "<");
-			str = str.replace(/\{\{3d\}\}/g, "=");
-			str = str.replace(/\{\{3e\}\}/g, ">");
-			str = str.replace(/\{\{3f\}\}/g, "?");
-			str = str.replace(/\{\{40\}\}/g, "@");
-			str = str.replace(/\{\{41\}\}/g, "A");
-			str = str.replace(/\{\{42\}\}/g, "B");
-			str = str.replace(/\{\{43\}\}/g, "C");
-			str = str.replace(/\{\{44\}\}/g, "D");
-			str = str.replace(/\{\{45\}\}/g, "E");
-			str = str.replace(/\{\{46\}\}/g, "F");
-			str = str.replace(/\{\{47\}\}/g, "G");
-			str = str.replace(/\{\{48\}\}/g, "H");
-			str = str.replace(/\{\{49\}\}/g, "I");
-			str = str.replace(/\{\{4a\}\}/g, "J");
-			str = str.replace(/\{\{4b\}\}/g, "K");
-			str = str.replace(/\{\{4c\}\}/g, "L");
-			str = str.replace(/\{\{4d\}\}/g, "M");
-			str = str.replace(/\{\{4e\}\}/g, "N");
-			str = str.replace(/\{\{4f\}\}/g, "O");
-			str = str.replace(/\{\{50\}\}/g, "P");
-			str = str.replace(/\{\{51\}\}/g, "Q");
-			str = str.replace(/\{\{52\}\}/g, "R");
-			str = str.replace(/\{\{53\}\}/g, "S");
-			str = str.replace(/\{\{54\}\}/g, "T");
-			str = str.replace(/\{\{55\}\}/g, "U");
-			str = str.replace(/\{\{56\}\}/g, "V");
-			str = str.replace(/\{\{57\}\}/g, "W");
-			str = str.replace(/\{\{58\}\}/g, "X");
-			str = str.replace(/\{\{59\}\}/g, "Y");
-			str = str.replace(/\{\{5a\}\}/g, "Z");
-			str = str.replace(/\{\{5b\}\}/g, "[");
-			str = str.replace(/\{\{5c\}\}/g, "é");
-			str = str.replace(/\{\{5d\}\}/g, "]");
-			str = str.replace(/\{\{5e\}\}/g, "í");
-			str = str.replace(/\{\{5f\}\}/g, "ó");
-			str = str.replace(/\{\{60\}\}/g, "ú");
-			str = str.replace(/\{\{61\}\}/g, "a");
-			str = str.replace(/\{\{62\}\}/g, "b");
-			str = str.replace(/\{\{63\}\}/g, "c");
-			str = str.replace(/\{\{64\}\}/g, "d");
-			str = str.replace(/\{\{65\}\}/g, "e");
-			str = str.replace(/\{\{66\}\}/g, "f");
-			str = str.replace(/\{\{67\}\}/g, "g");
-			str = str.replace(/\{\{68\}\}/g, "h");
-			str = str.replace(/\{\{69\}\}/g, "i");
-			str = str.replace(/\{\{6a\}\}/g, "j");
-			str = str.replace(/\{\{6b\}\}/g, "k");
-			str = str.replace(/\{\{6c\}\}/g, "l");
-			str = str.replace(/\{\{6d\}\}/g, "m");
-			str = str.replace(/\{\{6e\}\}/g, "n");
-			str = str.replace(/\{\{6f\}\}/g, "o");
-			str = str.replace(/\{\{70\}\}/g, "p");
-			str = str.replace(/\{\{71\}\}/g, "q");
-			str = str.replace(/\{\{72\}\}/g, "r");
-			str = str.replace(/\{\{73\}\}/g, "s");
-			str = str.replace(/\{\{74\}\}/g, "t");
-			str = str.replace(/\{\{75\}\}/g, "u");
-			str = str.replace(/\{\{76\}\}/g, "v");
-			str = str.replace(/\{\{77\}\}/g, "w");
-			str = str.replace(/\{\{78\}\}/g, "x");
-			str = str.replace(/\{\{79\}\}/g, "y");
-			str = str.replace(/\{\{7a\}\}/g, "z");
-			str = str.replace(/\{\{7b\}\}/g, "ç");
-			str = str.replace(/\{\{7c\}\}/g, "÷");
-			str = str.replace(/\{\{7d\}\}/g, "Ñ");
-			str = str.replace(/\{\{7e\}\}/g, "ñ");
-			str = str.replace(/\{\{7f\}\}/g, "█");
-			return str;
-		}
-		
-		function removeunderscoresandnulls(str){
-			str = str.replace(/_/g, "");
-			str = str.replace(/\{null\}/g, "");
-			return str;
-		}
-		
-		function removecommands(str){
-			str = str.replace(/^(\d\d.\d\d.\d\d.\d\d)/gm, "Preload Starts at $1 -- ");
-			str = str.replace(/\t/g, "TAB");
-			str = str.replace(/\{Go To.*?\}/g, "\t");
-			str = str.replace(/\{Clear Screen}\}/g, "");
-			str = str.replace(/\{.*?\}/g, "");
-			str = str.replace(/TAB\t/g, "");
-			str = str.replace(/TAB\n/g, "\n");
-			return str;
-		}
-		
-		function removecurlysandunderscores(str){
-			str = str.replace(/\{/g, "");
-			str = str.replace(/\}/g, "");
-			str = str.replace(/_/g, " ");
-			return str;
-		}
-		
-		function deparity () {
-
-			var str = document.getElementById("input").value;
-		
-			str = separateintobytes(str);
-		
-			str = zerofirstparitybit(str);
-		
-			str = removecurlysandunderscores(str);
-		
-			document.getElementById('output').value = str;
-		}
-		
-		function decodeSCC () {
-
-			var str = document.getElementById("input").value;
-		
-			str = separateintobytes(str);
-		
-			str = zerofirstparitybit(str);
-		
-			str = turnbytesinto608commands(str);
-		
-			document.getElementById('output').value = str;
-		}
-		
-		function decodeSCCandclean () {
-
-			var str = document.getElementById("input").value;
-		
-			str = separateintobytes(str);
-		
-			str = zerofirstparitybit(str);
-		
-			str = turnbytesinto608commands(str);
-		
-			str = removeunderscoresandnulls(str);
-		
-			document.getElementById('output').value = str;
-		}
-		
-		
-		function decodeSCCandcleannocomms () {
-
-			var str = document.getElementById("input").value;
-		
-			str = separateintobytes(str);
-		
-			str = zerofirstparitybit(str);
-		
-			str = turnbytesinto608commands(str);
-		
-			str = removeunderscoresandnulls(str);
-		
-			str = removecommands(str);
-		
-			document.getElementById('output').value = str;
-		}
-
-		function getSample () {
-			var str = "Scenarist_SCC V1.0\n\n00:00:00;06\t9420 94ae 9454 5468 e973 20e9 7320 6120 7361 6d70 ece5 94f4 efe6 2061 ecec 20e3 6861 f261 e3f4 e5f2 7380 942f\n\n00:00:01;01\t9420 94ae 9452 97a2 f468 61f4 2061 f2e5 2070 ef73 73e9 62ec e520 e96e 94f2 97a2 6120 ceef f2f4 6820 c16d e5f2 e9e3 616e 20d3 4343 942f\n\n00:00:02;27\t942c\n\n00:00:03;20\t9420 94ae 9476 a120 a223 a425 26a7 942f\n\n00:00:04;20\t9420 94ae 9476 a829 2aab 2cad ae2f 942f\n\n00:00:05;20\t9420 94ae 9476 b031 32b3 34b5 b637 942f\n\n00:00:06;20\t9420 94ae 9476 38b9 ba3b bc3d 3ebf 942f\n\n00:00:07;27\t942c\n\n00:00:08;20\t9420 94ae 9476 40c1 c243 c445 46c7 942f\n\n00:00:09;20\t9420 94ae 9476 c849 4acb 4ccd ce4f 942f\n\n00:00:10;20\t9420 94ae 9476 d051 52d3 54d5 d657 942f\n\n00:00:11;20\t9420 94ae 9476 58d9 da5b dc5d 5edf 942f\n\n00:00:12;27\t942c\n\n00:00:13;20\t9420 94ae 9476 e061 62e3 64e5 e667 942f\n\n00:00:14;20\t9420 94ae 9476 68e9 ea6b ec6d 6eef 942f\n\n00:00:15;20\t9420 94ae 9476 70f1 f273 f475 76f7 942f\n\n00:00:16;20\t9420 94ae 9476 f879 7afb 7cfd fe7f 942f\n\n00:00:17;27\t942c\n\n00:00:18;19\t9420 94ae 9476 97a2 91b0 9131 9132 91b3 942f\n\n00:00:19;19\t9420 94ae 9476 97a2 9134 91b5 91b6 9137 942f\n\n00:00:20;18\t9420 94ae 9476 97a2 9138 91b9 91ba 913b 942f\n\n00:00:21;19\t9420 94ae 9476 97a2 91bc 913d 913e 91bf 942f\n\n00:00:22;27\t942c\n\n"
-
-			document.getElementById('input').value = str;
-		}
-
-		function copyOutput () {
-			document.querySelector("#output").select();
-
-			document.execCommand('copy');
-		}
-	</script>
 	<style>
 		body {
 			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
@@ -313,6 +22,10 @@
 
 		h1 {
 			color: rgb(64, 64, 64);
+		}
+
+		#status {
+			font-family: monospace;
 		}
 
 		textarea {
@@ -363,14 +76,17 @@
 		}
 	</style>
 </head>
+
 <body>
+
 	<h1>
 		SCC Decoder
 	</h1>
+	<div id="status">Python:</div> <!-- this should load " Ready" when pyodide spins up -->
 	<div>
 		<h3>
 			Input Text
-			<span class="copypaster" onclick="getSample()">get sample</span>
+			<span class="copypaster" onclick="get_sample()">get sample</span>
 		</h3>
 		<textarea id="input" autofocus rows="20" placeholder="Paste here"></textarea>
 	</div>
@@ -387,12 +103,413 @@
 		</h3>
 		<textarea id="output" rows="20" placeholder="Output"></textarea>			
 	</div>
+	<div>
+		<h3>
+			Console
+		</h3>
+		<textarea id="console" rows="4" placeholder=""></textarea>			
+	</div>
 		<div class="notes">
 		Notes<br />
 		- Each button replaces what was in the Output box<br />
 		- The mid-line commands (eg {Type in WHITE}) "are spacing attributes which appear in the display just as if a standard space (20h) had been received."<br />
 		
 	</div>
+
+<!-- import and test pyodide, question whether this is all worth it -->
+<script language="javascript" type="text/javascript">
+var function_importer = `
+import js
+exec(js.document.getElementById("functions").innerText)
+`
+//	console.log(new Date())
+	async function main(){
+		let pyodide = await loadPyodide();
+//		await pyodide.loadPackage("regex"); #if you need things not included in re
+		pyodide.runPython( function_importer );
+		console.log(pyodide.runPython( "import sys; sys.version" ));
+		document.getElementById("status").innerText += " Ready";
+//		console.log(new Date())
+		return pyodide;
+	}
+	let pyodideReadyPromise = main();
+</script>
+
+<script language="javascript" type="text/javascript">
+
+// pyodide.globals.set() this will push things direct into python if needed
+
+var get_sample_code = `
+str = sample
+
+js.document.getElementById('input').value = str
+`
+async function get_sample () {
+	let pyodide = await pyodideReadyPromise;
+	try {
+		pyodide.runPython(get_sample_code);
+	} catch (err) {
+		document.getElementById('console').value = err.message;
+	}
+}
+
+var deparity_code = `
+str = js.document.getElementById('input').value
+
+str = separate_into_bytes(str)
+str = zero_first_parity_bit(str)
+str = remove_curlys_and_underscores(str)
+
+js.document.getElementById('output').value = str
+`
+async function deparity () {
+	let pyodide = await pyodideReadyPromise;
+	try {
+		pyodide.runPython(deparity_code);
+	} catch (err) {
+		document.getElementById('console').value = err.message;
+	}
+}
+
+var decodeSCC_code = `
+str = js.document.getElementById('input').value
+
+str = separate_into_bytes(str)
+str = zero_first_parity_bit(str)
+str = turn_bytes_into_608_commands(str)
+
+js.document.getElementById('output').value = str
+`
+async function decodeSCC () {
+	let pyodide = await pyodideReadyPromise;
+	try {
+		pyodide.runPython(decodeSCC_code);
+	} catch (err) {
+		document.getElementById('console').value = err.message;
+	}
+}
+
+var decodeSCCandclean_code = `
+str = js.document.getElementById('input').value
+
+str = separate_into_bytes(str)
+str = zero_first_parity_bit(str)
+str = turn_bytes_into_608_commands(str)
+str = remove_underscores_and_nulls(str)
+
+js.document.getElementById('output').value = str
+`
+async function decodeSCCandclean () {
+	let pyodide = await pyodideReadyPromise;
+	try {
+		pyodide.runPython(decodeSCCandclean_code);
+	} catch (err) {
+		document.getElementById('console').value = err.message;
+	}
+}
+
+var decodeSCCandcleannocomms_code = `
+str = js.document.getElementById('input').value
+
+str = separate_into_bytes(str)
+str = zero_first_parity_bit(str)
+str = turn_bytes_into_608_commands(str)
+str = remove_underscores_and_nulls(str)
+str = remove_commands(str)
+
+js.document.getElementById('output').value = str
+`
+async function decodeSCCandcleannocomms () {
+	let pyodide = await pyodideReadyPromise;
+	try {
+		pyodide.runPython(decodeSCCandcleannocomms_code);
+	} catch (err) {
+		document.getElementById('console').value = err.message;
+	}
+}
+
+function copyOutput () {
+	document.querySelector("#output").select();
+	document.execCommand('copy');
+}
+
+</script>
+
+<!-- Putting all the functions down here means a lot less character escaping is needed -->
+
+<code hidden id="functions" class="language-python">
+#!/usr/bin/env python
+
+import re
+
+sample = """Scenarist_SCC V1.0
+
+00:00:00;06	9420 94ae 9454 5468 e973 20e9 7320 6120 7361 6d70 ece5 94f4 efe6 2061 ecec 20e3 6861 f261 e3f4 e5f2 7380 942f
+
+00:00:01;01	9420 94ae 9452 97a2 f468 61f4 2061 f2e5 2070 ef73 73e9 62ec e520 e96e 94f2 97a2 6120 ceef f2f4 6820 c16d e5f2 e9e3 616e 20d3 4343 942f
+
+00:00:02;27	942c
+
+00:00:03;20	9420 94ae 9476 a120 a223 a425 26a7 942f
+
+00:00:04;20	9420 94ae 9476 a829 2aab 2cad ae2f 942f
+
+00:00:05;20	9420 94ae 9476 b031 32b3 34b5 b637 942f
+
+00:00:06;20	9420 94ae 9476 38b9 ba3b bc3d 3ebf 942f
+
+00:00:07;27	942c
+
+00:00:08;20	9420 94ae 9476 40c1 c243 c445 46c7 942f
+
+00:00:09;20	9420 94ae 9476 c849 4acb 4ccd ce4f 942f
+
+00:00:10;20	9420 94ae 9476 d051 52d3 54d5 d657 942f
+
+00:00:11;20	9420 94ae 9476 58d9 da5b dc5d 5edf 942f
+
+00:00:12;27	942c
+
+00:00:13;20	9420 94ae 9476 e061 62e3 64e5 e667 942f
+
+00:00:14;20	9420 94ae 9476 68e9 ea6b ec6d 6eef 942f
+
+00:00:15;20	9420 94ae 9476 70f1 f273 f475 76f7 942f
+
+00:00:16;20	9420 94ae 9476 f879 7afb 7cfd fe7f 942f
+
+00:00:17;27	942c
+
+00:00:18;19	9420 94ae 9476 97a2 91b0 9131 9132 91b3 942f
+
+00:00:19;19	9420 94ae 9476 97a2 9134 91b5 91b6 9137 942f
+
+00:00:20;18	9420 94ae 9476 97a2 9138 91b9 91ba 913b 942f
+
+00:00:21;19	9420 94ae 9476 97a2 91bc 913d 913e 91bf 942f
+
+00:00:22;27	942c
+
+"""
+
+def separate_into_bytes(str):
+	str = re.sub(r'Scenarist SCC V1\.0' , 'Decoded' ,str)
+	str = re.sub(r'Scenarist_SCC V1\.0' , 'Decoded' ,str)
+	str = re.sub(r'\t(..)(..)' , r'\t{{\1}}{{\2}}' ,str)
+	str = re.sub(r' (..)(..)'  ,  r'_{{\1}}{{\2}}' ,str)
+	return str
+
+def zero_first_parity_bit(str): #minus 8 to the first digit of a hex pair
+	str = re.sub(r'\{\{8(.)\}\}' , r'{{0\1}}' ,str)
+	str = re.sub(r'\{\{9(.)\}\}' , r'{{1\1}}' ,str)
+	str = re.sub(r'\{\{a(.)\}\}' , r'{{2\1}}' ,str)
+	str = re.sub(r'\{\{b(.)\}\}' , r'{{3\1}}' ,str)
+	str = re.sub(r'\{\{c(.)\}\}' , r'{{4\1}}' ,str)
+	str = re.sub(r'\{\{d(.)\}\}' , r'{{5\1}}' ,str)
+	str = re.sub(r'\{\{e(.)\}\}' , r'{{6\1}}' ,str)
+	str = re.sub(r'\{\{f(.)\}\}' , r'{{7\1}}' ,str)
+	return str
+
+def turn_bytes_into_608_commands(str):
+	str = re.sub(r'\{\{11\}\}\{\{(..)\}\}' , r'{{11\1}}' ,str)
+	str = re.sub(r'\{\{14\}\}\{\{(..)\}\}' , r'{{14\1}}' ,str)
+	str = re.sub(r'\{\{17\}\}\{\{(..)\}\}' , r'{{17\1}}' ,str)
+	str = re.sub(r'\{\{1420\}\}' , r'{Start Caption}' ,str)
+	str = re.sub(r'\{\{142c\}\}' , r'{Clear Screen}' ,str)
+	str = re.sub(r'\{\{142e\}\}' , r'{Clear Buffer}' ,str)
+	str = re.sub(r'\{\{142f\}\}' , r'{End Caption}' ,str)
+	str = re.sub(r'\{\{1425\}\}' , r'{Roll-Up 2}' ,str)
+	str = re.sub(r'\{\{1426\}\}' , r'{Roll-Up 3}' ,str)
+	str = re.sub(r'\{\{1427\}\}' , r'{Roll-Up 4}' ,str)
+	str = re.sub(r'\{\{142d\}\}' , r'{New Line}' ,str)
+	str = re.sub(r'\{\{1120\}\}' , r'{Type in WHITE}' ,str)
+	str = re.sub(r'\{\{1121\}\}' , r'{Type in WHITE UNDERLINE}' ,str)
+	str = re.sub(r'\{\{1122\}\}' , r'{Type in GREEN}' ,str)
+	str = re.sub(r'\{\{1123\}\}' , r'{Type in GREEN UNDERLINE}' ,str)
+	str = re.sub(r'\{\{1124\}\}' , r'{Type in BLUE}' ,str)
+	str = re.sub(r'\{\{1125\}\}' , r'{Type in BLUE UNDERLINE}' ,str)
+	str = re.sub(r'\{\{1126\}\}' , r'{Type in CYAN}' ,str)
+	str = re.sub(r'\{\{1127\}\}' , r'{Type in CYAN UNDERLINE}' ,str)
+	str = re.sub(r'\{\{1128\}\}' , r'{Type in RED}' ,str)
+	str = re.sub(r'\{\{1129\}\}' , r'{Type in RED UNDERLINE}' ,str)
+	str = re.sub(r'\{\{112a\}\}' , r'{Type in YELLOW}' ,str)
+	str = re.sub(r'\{\{112b\}\}' , r'{Type in YELLOW UNDERLINE}' ,str)
+	str = re.sub(r'\{\{112c\}\}' , r'{Type in MAGENTA}' ,str)
+	str = re.sub(r'\{\{112d\}\}' , r'{Type in MAGENTA UNDERLINE}' ,str)
+	str = re.sub(r'\{\{112e\}\}' , r'{Type in ITALICS}' ,str)
+	str = re.sub(r'\{\{112f\}\}' , r'{Type in ITALICS UNDERLINE}' ,str)
+	str = re.sub(r'\{\{1150\}\}' , r'{Go To Row 00 Col 00}' ,str)
+	str = re.sub(r'\{\{1152\}\}' , r'{Go To Row 00 Col 04}' ,str)
+	str = re.sub(r'\{\{1154\}\}' , r'{Go To Row 00 Col 08}' ,str)
+	str = re.sub(r'\{\{1156\}\}' , r'{Go To Row 00 Col 12}' ,str)
+	str = re.sub(r'\{\{1158\}\}' , r'{Go To Row 00 Col 16}' ,str)
+	str = re.sub(r'\{\{115a\}\}' , r'{Go To Row 00 Col 20}' ,str)
+	str = re.sub(r'\{\{115c\}\}' , r'{Go To Row 00 Col 24}' ,str)
+	str = re.sub(r'\{\{115e\}\}' , r'{Go To Row 00 Col 28}' ,str)
+	str = re.sub(r'\{\{1170\}\}' , r'{Go To Row 02 Col 00}' ,str)
+	str = re.sub(r'\{\{1172\}\}' , r'{Go To Row 02 Col 04}' ,str)
+	str = re.sub(r'\{\{1174\}\}' , r'{Go To Row 02 Col 08}' ,str)
+	str = re.sub(r'\{\{1176\}\}' , r'{Go To Row 02 Col 12}' ,str)
+	str = re.sub(r'\{\{1178\}\}' , r'{Go To Row 02 Col 16}' ,str)
+	str = re.sub(r'\{\{117a\}\}' , r'{Go To Row 02 Col 20}' ,str)
+	str = re.sub(r'\{\{117c\}\}' , r'{Go To Row 02 Col 24}' ,str)
+	str = re.sub(r'\{\{117e\}\}' , r'{Go To Row 02 Col 28}' ,str)
+	str = re.sub(r'\{\{1450\}\}' , r'{Go To Row 14 Col 00}' ,str)
+	str = re.sub(r'\{\{1452\}\}' , r'{Go To Row 14 Col 04}' ,str)
+	str = re.sub(r'\{\{1454\}\}' , r'{Go To Row 14 Col 08}' ,str)
+	str = re.sub(r'\{\{1456\}\}' , r'{Go To Row 14 Col 12}' ,str)
+	str = re.sub(r'\{\{1458\}\}' , r'{Go To Row 14 Col 16}' ,str)
+	str = re.sub(r'\{\{145a\}\}' , r'{Go To Row 14 Col 20}' ,str)
+	str = re.sub(r'\{\{145c\}\}' , r'{Go To Row 14 Col 24}' ,str)
+	str = re.sub(r'\{\{145e\}\}' , r'{Go To Row 14 Col 28}' ,str)
+	str = re.sub(r'\{\{1470\}\}' , r'{Go To Row 15 Col 00}' ,str)
+	str = re.sub(r'\{\{1472\}\}' , r'{Go To Row 15 Col 04}' ,str)
+	str = re.sub(r'\{\{1474\}\}' , r'{Go To Row 15 Col 08}' ,str)
+	str = re.sub(r'\{\{1476\}\}' , r'{Go To Row 15 Col 12}' ,str)
+	str = re.sub(r'\{\{1478\}\}' , r'{Go To Row 15 Col 16}' ,str)
+	str = re.sub(r'\{\{147a\}\}' , r'{Go To Row 15 Col 20}' ,str)
+	str = re.sub(r'\{\{147c\}\}' , r'{Go To Row 15 Col 24}' ,str)
+	str = re.sub(r'\{\{147e\}\}' , r'{Go To Row 15 Col 28}' ,str)
+	str = re.sub(r'\{\{1721\}\}' , r'{Col +1}' ,str)
+	str = re.sub(r'\{\{1722\}\}' , r'{Col +2}' ,str)
+	str = re.sub(r'\{\{1723\}\}' , r'{Col +3}' ,str)
+	str = re.sub(r'\{\{1130\}\}' , r'®' ,str)
+	str = re.sub(r'\{\{1131\}\}' , r'°' ,str)
+	str = re.sub(r'\{\{1132\}\}' , r'½' ,str)
+	str = re.sub(r'\{\{1133\}\}' , r'¿' ,str)
+	str = re.sub(r'\{\{1134\}\}' , r'™' ,str)
+	str = re.sub(r'\{\{1135\}\}' , r'¢' ,str)
+	str = re.sub(r'\{\{1136\}\}' , r'£' ,str)
+	str = re.sub(r'\{\{1137\}\}' , r'♪' ,str)
+	str = re.sub(r'\{\{1138\}\}' , r'à' ,str)
+	str = re.sub(r'\{\{1139\}\}' , r'[non breaking space]' ,str)
+	str = re.sub(r'\{\{113a\}\}' , r'è' ,str)
+	str = re.sub(r'\{\{113b\}\}' , r'â' ,str)
+	str = re.sub(r'\{\{113c\}\}' , r'ê' ,str)
+	str = re.sub(r'\{\{113d\}\}' , r'î' ,str)
+	str = re.sub(r'\{\{113e\}\}' , r'ô' ,str)
+	str = re.sub(r'\{\{113f\}\}' , r'û' ,str)
+	str = re.sub(r'\{\{00\}\}' , r'{null}' ,str)
+	str = re.sub(r'\{\{20\}\}' , r' ' ,str)
+	str = re.sub(r'\{\{21\}\}' , r'!' ,str)
+	str = re.sub(r'\{\{22\}\}' , r'\\' ,str)
+	str = re.sub(r'\{\{23\}\}' , r'#' ,str)
+	str = re.sub(r'\{\{24\}\}' , r'$' ,str)
+	str = re.sub(r'\{\{25\}\}' , r'%' ,str)
+	str = re.sub(r'\{\{26\}\}' , r'&' ,str)
+	str = re.sub(r'\{\{27\}\}' , r'’' ,str)
+	str = re.sub(r'\{\{28\}\}' , r'(' ,str)
+	str = re.sub(r'\{\{29\}\}' , r')' ,str)
+	str = re.sub(r'\{\{2a\}\}' , r'á' ,str)
+	str = re.sub(r'\{\{2b\}\}' , r'+' ,str)
+	str = re.sub(r'\{\{2c\}\}' , r',' ,str)
+	str = re.sub(r'\{\{2d\}\}' , r'-' ,str)
+	str = re.sub(r'\{\{2e\}\}' , r'.' ,str)
+	str = re.sub(r'\{\{2f\}\}' , r'/' ,str)
+	str = re.sub(r'\{\{30\}\}' , r'0' ,str)
+	str = re.sub(r'\{\{31\}\}' , r'1' ,str)
+	str = re.sub(r'\{\{32\}\}' , r'2' ,str)
+	str = re.sub(r'\{\{33\}\}' , r'3' ,str)
+	str = re.sub(r'\{\{34\}\}' , r'4' ,str)
+	str = re.sub(r'\{\{35\}\}' , r'5' ,str)
+	str = re.sub(r'\{\{36\}\}' , r'6' ,str)
+	str = re.sub(r'\{\{37\}\}' , r'7' ,str)
+	str = re.sub(r'\{\{38\}\}' , r'8' ,str)
+	str = re.sub(r'\{\{39\}\}' , r'9' ,str)
+	str = re.sub(r'\{\{3a\}\}' , r':' ,str)
+	str = re.sub(r'\{\{3b\}\}' , r';' ,str)
+	str = re.sub(r'\{\{3c\}\}' , r'<' ,str)
+	str = re.sub(r'\{\{3d\}\}' , r'=' ,str)
+	str = re.sub(r'\{\{3e\}\}' , r'>' ,str)
+	str = re.sub(r'\{\{3f\}\}' , r'?' ,str)
+	str = re.sub(r'\{\{40\}\}' , r'@' ,str)
+	str = re.sub(r'\{\{41\}\}' , r'A' ,str)
+	str = re.sub(r'\{\{42\}\}' , r'B' ,str)
+	str = re.sub(r'\{\{43\}\}' , r'C' ,str)
+	str = re.sub(r'\{\{44\}\}' , r'D' ,str)
+	str = re.sub(r'\{\{45\}\}' , r'E' ,str)
+	str = re.sub(r'\{\{46\}\}' , r'F' ,str)
+	str = re.sub(r'\{\{47\}\}' , r'G' ,str)
+	str = re.sub(r'\{\{48\}\}' , r'H' ,str)
+	str = re.sub(r'\{\{49\}\}' , r'I' ,str)
+	str = re.sub(r'\{\{4a\}\}' , r'J' ,str)
+	str = re.sub(r'\{\{4b\}\}' , r'K' ,str)
+	str = re.sub(r'\{\{4c\}\}' , r'L' ,str)
+	str = re.sub(r'\{\{4d\}\}' , r'M' ,str)
+	str = re.sub(r'\{\{4e\}\}' , r'N' ,str)
+	str = re.sub(r'\{\{4f\}\}' , r'O' ,str)
+	str = re.sub(r'\{\{50\}\}' , r'P' ,str)
+	str = re.sub(r'\{\{51\}\}' , r'Q' ,str)
+	str = re.sub(r'\{\{52\}\}' , r'R' ,str)
+	str = re.sub(r'\{\{53\}\}' , r'S' ,str)
+	str = re.sub(r'\{\{54\}\}' , r'T' ,str)
+	str = re.sub(r'\{\{55\}\}' , r'U' ,str)
+	str = re.sub(r'\{\{56\}\}' , r'V' ,str)
+	str = re.sub(r'\{\{57\}\}' , r'W' ,str)
+	str = re.sub(r'\{\{58\}\}' , r'X' ,str)
+	str = re.sub(r'\{\{59\}\}' , r'Y' ,str)
+	str = re.sub(r'\{\{5a\}\}' , r'Z' ,str)
+	str = re.sub(r'\{\{5b\}\}' , r'[' ,str)
+	str = re.sub(r'\{\{5c\}\}' , r'é' ,str)
+	str = re.sub(r'\{\{5d\}\}' , r']' ,str)
+	str = re.sub(r'\{\{5e\}\}' , r'í' ,str)
+	str = re.sub(r'\{\{5f\}\}' , r'ó' ,str)
+	str = re.sub(r'\{\{60\}\}' , r'ú' ,str)
+	str = re.sub(r'\{\{61\}\}' , r'a' ,str)
+	str = re.sub(r'\{\{62\}\}' , r'b' ,str)
+	str = re.sub(r'\{\{63\}\}' , r'c' ,str)
+	str = re.sub(r'\{\{64\}\}' , r'd' ,str)
+	str = re.sub(r'\{\{65\}\}' , r'e' ,str)
+	str = re.sub(r'\{\{66\}\}' , r'f' ,str)
+	str = re.sub(r'\{\{67\}\}' , r'g' ,str)
+	str = re.sub(r'\{\{68\}\}' , r'h' ,str)
+	str = re.sub(r'\{\{69\}\}' , r'i' ,str)
+	str = re.sub(r'\{\{6a\}\}' , r'j' ,str)
+	str = re.sub(r'\{\{6b\}\}' , r'k' ,str)
+	str = re.sub(r'\{\{6c\}\}' , r'l' ,str)
+	str = re.sub(r'\{\{6d\}\}' , r'm' ,str)
+	str = re.sub(r'\{\{6e\}\}' , r'n' ,str)
+	str = re.sub(r'\{\{6f\}\}' , r'o' ,str)
+	str = re.sub(r'\{\{70\}\}' , r'p' ,str)
+	str = re.sub(r'\{\{71\}\}' , r'q' ,str)
+	str = re.sub(r'\{\{72\}\}' , r'r' ,str)
+	str = re.sub(r'\{\{73\}\}' , r's' ,str)
+	str = re.sub(r'\{\{74\}\}' , r't' ,str)
+	str = re.sub(r'\{\{75\}\}' , r'u' ,str)
+	str = re.sub(r'\{\{76\}\}' , r'v' ,str)
+	str = re.sub(r'\{\{77\}\}' , r'w' ,str)
+	str = re.sub(r'\{\{78\}\}' , r'x' ,str)
+	str = re.sub(r'\{\{79\}\}' , r'y' ,str)
+	str = re.sub(r'\{\{7a\}\}' , r'z' ,str)
+	str = re.sub(r'\{\{7b\}\}' , r'ç' ,str)
+	str = re.sub(r'\{\{7c\}\}' , r'÷' ,str)
+	str = re.sub(r'\{\{7d\}\}' , r'Ñ' ,str)
+	str = re.sub(r'\{\{7e\}\}' , r'ñ' ,str)
+	str = re.sub(r'\{\{7f\}\}' , r'█' ,str)
+	return str
+
+def remove_underscores_and_nulls(str):
+	str = re.sub(r'_'        , r'' ,str)
+	str = re.sub(r'\{null\}' , r'' ,str)
+	return str
+
+def remove_commands(str):
+	str = re.sub(r'^(\d\d.\d\d.\d\d.\d\d)' , r'Preload Starts at \1 -- ' ,str, flags=re.MULTILINE) #flag makes ^ work
+	str = re.sub(r'\t'                , r'TAB' ,str)
+	str = re.sub(r'\{Go To.*?\}'      , r'\t' ,str)
+	str = re.sub(r'\{Clear Screen}\}' , r'' ,str)
+	str = re.sub(r'\{.*?\}'           , r'' ,str)
+	str = re.sub(r'TAB\t'             , r'' ,str)
+	str = re.sub(r'TAB\n'             , r'\n' ,str)
+	return str
+
+def remove_curlys_and_underscores(str):
+	str = re.sub(r'{' ,  r'' ,str)
+	str = re.sub(r'}' ,  r'' ,str)
+	str = re.sub(r'_' , r' ' ,str)
+	return str
+
+</code>
 
 </body>
 </html>
