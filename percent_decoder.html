@@ -90,7 +90,8 @@
 		<textarea id="input" autofocus rows="20" placeholder="Paste here"></textarea>
 	</div>
 	<div align="center" class="buttonrow">
-		<input type="button" value="Decode" onclick="decode_percents();" title="Decode SCC">
+		<input type="button" value="Decode" onclick="decode_percents();" title="Decode percent-encoded reserved characters">
+		<input type="button" value="Encode" onclick="encode_percents();" title="Percent-encode reserved characters">
 	</div>
 	<div>
 		<h3>
@@ -154,6 +155,20 @@ async function decode_percents () {
 	} catch (err) { console.log(err); }
 }
 
+var encode_percents_code = `
+str = js.document.getElementById('input').value
+
+str = encode_reserved(str)
+
+js.document.getElementById('output').value = str
+`
+async function encode_percents () {
+	let pyodide = await pyodideReadyPromise;
+	try {
+		pyodide.runPython(encode_percents_code);
+	} catch (err) { console.log(err); }
+}
+
 function copy_output () {
 	document.querySelector("#output").select();
 	document.execCommand('copy');
@@ -171,6 +186,8 @@ import re
 sample = """Standard Percent Encodes
 
 %21  %23  %24  %26  %27  %28  %29  %2A  %2B  %2C  %2F  %3A  %3B  %3D  %3F  %40  %5B  %5D
+
+!  #  $  &  '  (  )  *  +  ,  /  :  ;  =  ?  @  [  ]
 """
 
 def decode_reserved(str):
@@ -192,6 +209,27 @@ def decode_reserved(str):
 	str = re.sub(r'%40' , '\x40' ,str)
 	str = re.sub(r'%5B' , '\x5B' ,str)
 	str = re.sub(r'%5D' , '\x5D' ,str)
+	return str
+
+def encode_reserved(str):
+	str = re.sub(r'\x21' , '%21' ,str)
+	str = re.sub(r'\x23' , '%23' ,str)
+	str = re.sub(r'\x24' , '%24' ,str)
+	str = re.sub(r'\x26' , '%26' ,str)
+	str = re.sub(r'\x27' , '%27' ,str)
+	str = re.sub(r'\x28' , '%28' ,str)
+	str = re.sub(r'\x29' , '%29' ,str)
+	str = re.sub(r'\x2A' , '%2A' ,str)
+	str = re.sub(r'\x2B' , '%2B' ,str)
+	str = re.sub(r'\x2C' , '%2C' ,str)
+	str = re.sub(r'\x2F' , '%2F' ,str)
+	str = re.sub(r'\x3A' , '%3A' ,str)
+	str = re.sub(r'\x3B' , '%3B' ,str)
+	str = re.sub(r'\x3D' , '%3D' ,str)
+	str = re.sub(r'\x3F' , '%3F' ,str)
+	str = re.sub(r'\x40' , '%40' ,str)
+	str = re.sub(r'\x5B' , '%5B' ,str)
+	str = re.sub(r'\x5D' , '%5D' ,str)
 	return str
 
 </code>
