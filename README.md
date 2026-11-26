@@ -1,5 +1,8 @@
 # converters
 
+[Percent Decoder](https://electron-rotoscope.github.io/converters/percent_decoder.html "Click here for live version")  
+This is a tool to locally convert [Percent-encoded](https://en.wikipedia.org/wiki/Percent-encoding) text back to the actual characters
+
 [SCC Decoder](https://electron-rotoscope.github.io/converters/scc_decoder.html "Click here for live version")  
 This is a tool to convert the SCC format for recording North American captions
 in the format described at [https://en.wikipedia.org/wiki/EIA-608](https://en.wikipedia.org/wiki/EIA-608) into something
