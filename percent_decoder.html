@@ -1,0 +1,200 @@
+<!-- layout and button template from https://codebeautify.org which is really quite amazing -->
+<!-- python in the browser made possible by https://pyodide.org -->
+<!-- SCC documentation at http://www.theneitherworld.com/mcpoodle/SCC_TOOLS/DOCS/CC_CHARS.HTML -->
+<!-- SCC documentation at http://www.theneitherworld.com/mcpoodle/SCC_TOOLS/DOCS/CC_CODES.HTML -->
+<!DOCTYPE html>
+<html lang="en" xml:lang="en" xmlns="https://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="robots" content="noindex,nofollow">
+	<meta name="google" content="notranslate">
+	<link rel="shortcut icon" href="https://electron-rotoscope.github.io/converters/favicon.ico" type="image/ico" />
+	<script src="https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pyodide.js"></script>
+	<!-- <script src="pyodide/pyodide-0.27.5/pyodide/pyodide.js"></script> -->
+	<title>Percent Decoder</title>
+	<style>
+		body {
+			font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+		}
+
+		h1 {
+			color: rgb(64, 64, 64);
+		}
+
+		#status {
+			font-family: monospace;
+		}
+
+		textarea {
+			font-family: monospace;
+			width: 100%;
+		}
+
+		.copypaster {
+			display: inline-block;
+			float: right;
+			font-weight: bold;
+			color: rgb(68, 139, 196);
+			cursor: pointer;
+		}
+		
+		.buttonrow {
+			margin-top: 6px;
+			margin-bottom: -24px;
+		}
+
+		input {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: rgb(255, 255, 255);
+			background-color: rgb(128, 128, 128);
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px rgb(64, 64, 64);
+		}
+
+		input:hover, input:active {
+			background-color: rgb(96, 96, 96);
+		}
+
+		input:active {
+			box-shadow: 0 5px rgb(64, 64, 64);
+			transform: translateY(4px);
+		}
+		
+		.notes {
+			margin-top: 100px;
+			font-family: monospace;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>
+		Percent Decoder
+	</h1>
+	<div id="status">Python:</div> <!-- this should load " Ready" when pyodide spins up -->
+	<div>
+		<h3>
+			Input Text
+			<span class="copypaster" onclick="get_sample()">get sample</span>
+		</h3>
+		<textarea id="input" autofocus rows="20" placeholder="Paste here"></textarea>
+	</div>
+	<div align="center" class="buttonrow">
+		<input type="button" value="Decode" onclick="decode_percents();" title="Decode SCC">
+	</div>
+	<div>
+		<h3>
+			Output Text
+			<span class="copypaster" onclick="copy_output();">Copy Output</span>
+		</h3>
+		<textarea id="output" rows="20" placeholder="Output"></textarea>			
+	</div>
+		<div class="notes">
+		Notes<br />
+		- These notes intentionally left blank<br />
+		
+	</div>
+
+<!-- import and test pyodide, import js, import all the functions at the end of the doc -->
+<script language="javascript" type="text/javascript">
+var function_importer = `
+import js
+exec(js.document.getElementById("functions").innerText)
+`
+	console.log(new Date())
+	async function main(){
+		let pyodide = await loadPyodide();
+//		await pyodide.loadPackage("regex"); #if you need things not included in re
+		pyodide.runPython( function_importer );
+		console.log(pyodide.runPython( "import sys; sys.version" ));
+		document.getElementById("status").innerText += " Ready";
+		console.log(new Date())
+		return pyodide;
+	}
+	let pyodideReadyPromise = main();
+</script>
+
+<script language="javascript" type="text/javascript">
+
+// pyodide.globals.set() will push things direct into python if needed
+
+var get_sample_code = `
+str = sample
+
+js.document.getElementById('input').value = str
+`
+async function get_sample () {
+	let pyodide = await pyodideReadyPromise;
+	try {
+		pyodide.runPython(get_sample_code);
+	} catch (err) { console.log(err); }
+}
+
+var decode_percents_code = `
+str = js.document.getElementById('input').value
+
+str = decode_reserved(str)
+
+js.document.getElementById('output').value = str
+`
+async function decode_percents () {
+	let pyodide = await pyodideReadyPromise;
+	try {
+		pyodide.runPython(decode_percents_code);
+	} catch (err) { console.log(err); }
+}
+
+function copy_output () {
+	document.querySelector("#output").select();
+	document.execCommand('copy');
+}
+
+</script>
+
+<!-- Putting all the functions down here means a lot less character escaping is needed -->
+
+<code hidden id="functions" class="language-python">
+#!/usr/bin/env python
+
+import re
+
+sample = """Standard Percent Encodes
+
+%21  %23  %24  %26  %27  %28  %29  %2A  %2B  %2C  %2F  %3A  %3B  %3D  %3F  %40  %5B  %5D
+"""
+
+def decode_reserved(str):
+	str = re.sub(r'%21' , '\x21' ,str)
+	str = re.sub(r'%23' , '\x23' ,str)
+	str = re.sub(r'%24' , '\x24' ,str)
+	str = re.sub(r'%26' , '\x26' ,str)
+	str = re.sub(r'%27' , '\x27' ,str)
+	str = re.sub(r'%28' , '\x28' ,str)
+	str = re.sub(r'%29' , '\x29' ,str)
+	str = re.sub(r'%2A' , '\x2A' ,str)
+	str = re.sub(r'%2B' , '\x2B' ,str)
+	str = re.sub(r'%2C' , '\x2C' ,str)
+	str = re.sub(r'%2F' , '\x2F' ,str)
+	str = re.sub(r'%3A' , '\x3A' ,str)
+	str = re.sub(r'%3B' , '\x3B' ,str)
+	str = re.sub(r'%3D' , '\x3D' ,str)
+	str = re.sub(r'%3F' , '\x3F' ,str)
+	str = re.sub(r'%40' , '\x40' ,str)
+	str = re.sub(r'%5B' , '\x5B' ,str)
+	str = re.sub(r'%5D' , '\x5D' ,str)
+	return str
+
+</code>
+
+</body>
+</html>
